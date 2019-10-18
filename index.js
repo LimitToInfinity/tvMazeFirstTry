@@ -14,7 +14,7 @@ function postLoad()
     searchBarLabel = document.querySelector("label[for=search]");
     genreSelector = document.querySelector(".genre-selector")
 
-    fetch("http://api.tvmaze.com/shows")
+    fetch("https://api.tvmaze.com/shows")
     .then(parseJSON)
     .then(setAllShows)
     .then(displayShows);
