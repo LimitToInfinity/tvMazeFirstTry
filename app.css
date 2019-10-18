@@ -1,0 +1,190 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* END MEYER RESET */
+
+main
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1
+{
+    text-align: center;
+    font-size: 10rem;
+    margin: 5rem 0;
+}
+
+.search-container
+{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#search-bar
+{
+    height: 5rem;
+    width: 30%;
+    border: none;
+    background-color: rgba(235, 235, 235, 0.221);
+    padding-top: 1.2rem;
+    padding-left: 0.5rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: hsla(197, 3%, 53%, 0.386);
+    border-bottom-style: solid;
+    border-bottom-width: 1.3px;
+    z-index: 1;
+}
+
+#search-bar:hover
+{
+  background-color: rgba(228, 228, 228, 0.35);
+  border-bottom: #333;
+  border-bottom-style: solid;
+  border-bottom-width: 1.3px;
+}
+
+#search-bar:focus
+{
+    background-color: rgba(216, 216, 216, 0.6);
+    border-bottom: #136b9b;
+    border-bottom-style: solid;
+    border-bottom-width: 1.3px;
+    caret-color: #136b9b;
+    outline: none;  
+    transition: all 0.3s;
+}
+
+label[for=search]
+{
+    position: absolute;
+    padding: 1rem 0 0 0.5rem;
+    font-size: 0.7rem;
+    color: rgb(72, 72, 72);
+    font-family: Roboto, sans-serif;
+    transition: all 0.3s;
+}
+
+.shrink-colored
+{
+    color: #136b9b;
+    font-size: 0.6rem;
+    transform: translateY(-8px);
+    transition: all 0.3s;
+    z-index: 2;
+}
+
+.shrink-uncolored
+{
+    font-size: 0.6rem;
+    transform: translateY(-8px);
+}
+
+.cards-container
+{
+    display: flex;
+    flex-flow: wrap;
+    margin: 5rem 0 20rem;
+    width: 70%;
+}
+
+.card
+{
+    display: inline-block;
+    margin: 40px;
+    height: 15%;
+    width: 15%;
+    box-shadow: 30px 30px 10px rgb(172, 172, 172);
+    cursor: pointer;
+}
+
+.card:hover
+{
+    transform: scale3d(1.5, 1.5, 1.5);
+    box-shadow: 10px 10px 8px rgb(167, 109, 0), -10px 10px 8px rgb(167, 109, 0), 10px -10px 8px rgb(167, 109, 0), -10px -10px 8px rgb(167, 109, 0);
+}
+
+.show-image
+{
+    height: 100%;
+    width: 100%;
+}
+
+.movie-info
+{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    font-size: 4rem;
+    background-color: rgba(255, 232, 232, 0.845);
+}
+
+.shown
+{
+    display: flex;
+}
+
+.movie-title
+{
+    font-weight: 700;
+}
+
+.movie-info > p
+{
+    margin-bottom: 0.5rem;
+}
