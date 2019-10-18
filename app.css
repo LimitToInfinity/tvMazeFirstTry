@@ -133,6 +133,17 @@ label[for=search-bar]
     transform: translateY(-8px);
 }
 
+.genre-selector-container
+{
+    margin: 2rem 0;
+}
+
+.genre-selector
+{
+    font-size: 1rem;
+    height: 1.8rem;
+}
+
 .cards-container
 {
     display: flex;

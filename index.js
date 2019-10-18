@@ -26,21 +26,29 @@ function postLoad()
 
 function filterByGenre(event)
 {
+    const selectedGenre = event.target.value;
+    
     removeCards();
 
-    filteredShows = filteredShows.filter(show => {
-        return show.genres.some(genre => event.target.value === genre);
-    });
+    if (selectedGenre === "show-all" || selectedGenre === "") { filteredShows = allShows; }
+    else
+    {
+        filteredShows = filteredShows.filter(show => {
+            return show.genres.some(genre => selectedGenre === genre);
+        });
+    }
 
     displayShows(filteredShows);
 }
 
 function filterMovies(event)
 {
+    const searchTerm = event.target.value;
     removeCards();
 
-    filteredShows = allShows.filter(show => show.name.toLowerCase().includes(event.target.value.toLowerCase()));
-    if (filteredShows.length === 0) { genres.clear() }
+    filteredShows = filteredShows.filter(show => show.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    if (filteredShows.length === 0) { genres.clear(); }
+    if (searchTerm.length === 0) { filteredShows = allShows; }
     
     displayShows(filteredShows);
 }
@@ -54,7 +62,11 @@ function removeCards()
 function setGenreSelectors()
 {
     const previousSelectors = Array.from(genreSelector.querySelectorAll("option"));
-    const previouslyAddedSelectors = previousSelectors.filter(selector => selector.value.length > 0);
+    const previouslyAddedSelectors = previousSelectors.filter(selector => 
+        selector.value.length > 0
+        && 
+        selector.value != "show-all"
+    );
     previouslyAddedSelectors.forEach(selector => selector.remove());
 
     genres.forEach(createGenreSelectors);
