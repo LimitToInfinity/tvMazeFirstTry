@@ -5,13 +5,12 @@ let searchBarLabel;
 let genreSelector;
 let allShows;
 let filteredShows;
-let genres;
-let genreDictionary = {};
+const genres = new Set();
 
 function postLoad()
 {
     searchBar = document.querySelector("#search-bar");
-    searchBarLabel = document.querySelector("label[for=search]");
+    searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector")
 
     fetch("https://api.tvmaze.com/shows")
@@ -27,11 +26,13 @@ function postLoad()
 
 function filterByGenre(event)
 {
-    console.log(event.target.value);
-
     removeCards();
 
-    filteredShows.some(show => genres.includes(show))
+    filteredShows = filteredShows.filter(show => {
+        return show.genres.some(genre => event.target.value === genre);
+    });
+
+    displayShows(filteredShows);
 }
 
 function filterMovies(event)
@@ -39,9 +40,8 @@ function filterMovies(event)
     removeCards();
 
     filteredShows = allShows.filter(show => show.name.toLowerCase().includes(event.target.value.toLowerCase()));
-    if (filteredShows.length === 0) { genres = [] }
+    if (filteredShows.length === 0) { genres.clear() }
     
-    genreDictionary = {};
     displayShows(filteredShows);
 }
 
@@ -72,7 +72,7 @@ function createGenreSelectors(genre)
 
 function addShrinkClass()
 {
-    console.log("shrink")
+    // console.log("shrink")
     searchBarLabel.classList.remove("shrink-uncolored");
     searchBarLabel.classList.add("shrink-colored");
 }
@@ -81,13 +81,13 @@ function removeShrinkClass()
 {
     if (!searchBar.value)
     {
-        console.log("unshrink no value")
+        // console.log("unshrink no value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.remove("shrink-uncolored");
     }
     else
     {
-        console.log("unshrink value")
+        // console.log("unshrink value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.add("shrink-uncolored");
     }
@@ -96,6 +96,7 @@ function removeShrinkClass()
 function setAllShows(shows)
 {
     allShows = shows;
+    filteredShows = shows;
 
     return shows;
 }
@@ -104,13 +105,13 @@ function displayShows(shows)
 {
     const cardsContainer = document.querySelector(".cards-container");
 
+    genres.clear();
     shows.forEach(show => createShowCard(show, cardsContainer));
 }
 
 function createShowCard(show, cardsContainer)
 {
-    show.genres.forEach(genre => genreDictionary[genre] = true);
-    genres = Object.keys(genreDictionary);
+    show.genres.forEach(genre => genres.add(genre));
     setGenreSelectors();
 
     const card = document.createElement("div");

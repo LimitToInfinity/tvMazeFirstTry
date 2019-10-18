@@ -59,8 +59,8 @@ main
 h1
 {
     text-align: center;
-    font-size: 10rem;
-    margin: 5rem 0;
+    font-size: 5rem;
+    margin: 4rem 0;
 }
 
 .search-container
@@ -74,7 +74,7 @@ h1
 
 #search-bar
 {
-    height: 5rem;
+    height: 2rem;
     width: 30%;
     border: none;
     background-color: rgba(235, 235, 235, 0.221);
@@ -107,7 +107,7 @@ h1
     transition: all 0.3s;
 }
 
-label[for=search]
+label[for=search-bar]
 {
     position: absolute;
     padding: 1rem 0 0 0.5rem;
@@ -115,6 +115,7 @@ label[for=search]
     color: rgb(72, 72, 72);
     font-family: Roboto, sans-serif;
     transition: all 0.3s;
+    pointer-events: none;
 }
 
 .shrink-colored
@@ -136,24 +137,25 @@ label[for=search]
 {
     display: flex;
     flex-flow: wrap;
-    margin: 5rem 0 20rem;
+    margin: 1rem 0 15rem;
     width: 70%;
 }
 
 .card
 {
     display: inline-block;
-    margin: 40px;
+    margin: 17px;
     height: 15%;
     width: 15%;
-    box-shadow: 30px 30px 10px rgb(172, 172, 172);
+    box-shadow: 15px 15px 10px rgb(148, 148, 148);
     cursor: pointer;
 }
 
 .card:hover
 {
-    transform: scale3d(1.5, 1.5, 1.5);
-    box-shadow: 10px 10px 8px rgb(167, 109, 0), -10px 10px 8px rgb(167, 109, 0), 10px -10px 8px rgb(167, 109, 0), -10px -10px 8px rgb(167, 109, 0);
+    transform: scale3d(1.7, 1.7, 1.7);
+    box-shadow: 1px 1px 8px rgb(123, 80, 1), -1px 1px 8px rgb(123, 80, 1), 1px -1px 8px rgb(123, 80, 1), -1px -1px 8px rgb(123, 80, 1);
+    z-index: 10;
 }
 
 .show-image
@@ -170,7 +172,7 @@ label[for=search]
     text-align: center;
     height: 100%;
     width: 100%;
-    font-size: 4rem;
+    font-size: 1rem;
     background-color: rgba(255, 232, 232, 0.845);
 }
 
