@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", postLoad);
 
+const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
 let genreSelector;
-let allShows;
-let filteredShows;
+let allShows = [];
+let filteredShows = [];
 const genres = new Set();
 const selectedGenres = new Set();
 
@@ -12,12 +13,17 @@ function postLoad()
 {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
-    genreSelector = document.querySelector(".genre-selector")
+    genreSelector = document.querySelector(".genre-selector");
 
-    fetch("https://api.tvmaze.com/shows")
-    .then(parseJSON)
-    .then(setAllShows)
-    .then(displayShows);
+    const showsPages = createRange(5);
+    showsPages.map(makeFetchCalls);
+
+    Promise.all(fetchCalls)
+        .then(parseAllToJSON)
+        .then(flattenResponses)
+        .then(setAllShows)
+        .then(displayShows);
+    
 
     searchBar.addEventListener("input", filterMovies);
     searchBar.addEventListener("focus", addShrinkClass);
@@ -27,7 +33,11 @@ function postLoad()
 
 function filterByGenre(event)
 {
-    const selectedGenre = event.target.value; 
+    let selectedGenre = null;
+    if (event)
+    {
+        selectedGenre = event.target.value; 
+    }
 
     showSelectedGenres(selectedGenre);
     
@@ -43,8 +53,8 @@ function filterByGenre(event)
     }
     else
     {
-        filteredShows = filteredShows.filter(show => {
-            return show.genres.some(genre => selectedGenre === genre);
+        filteredShows = allShows.filter(show => {
+            return Array.from(selectedGenres).every(selectedGenre => show.genres.includes(selectedGenre));
         });
     }
 
@@ -54,7 +64,9 @@ function filterByGenre(event)
 function showSelectedGenres(currentSelectedGenre)
 {
 
-    if (currentSelectedGenre != "show-all" && currentSelectedGenre != "")
+    if (currentSelectedGenre != "show-all"
+        && currentSelectedGenre != ""
+        && currentSelectedGenre != null)
     { 
         selectedGenres.add(currentSelectedGenre);
     }
@@ -65,10 +77,23 @@ function showSelectedGenres(currentSelectedGenre)
         const selectedGenreLi = document.createElement("li");
         selectedGenreLi.classList.add("selected-genre");
         selectedGenreLi.textContent = selectedGenre;
+
+        const deleteImage = document.createElement("i");
+        deleteImage.className = ("fa fa-times");
         
+        selectedGenreLi.append(deleteImage);
+
+        selectedGenreLi.addEventListener("click", () => removeGenre(selectedGenre));
+
         const selectedGenresUl = document.querySelector(".selected-genres");
         selectedGenresUl.append(selectedGenreLi);
     });
+}
+
+function removeGenre(selectedGenre)
+{
+    selectedGenres.delete(selectedGenre);
+    filterByGenre(null);
 }
 
 function filterMovies(event)
@@ -76,7 +101,7 @@ function filterMovies(event)
     const searchTerm = event.target.value;
     removeCards();
 
-    filteredShows = filteredShows.filter(show => 
+    filteredShows = allShows.filter(show => 
         show.name.toLowerCase()
         .includes(
             searchTerm.toLowerCase()
@@ -117,7 +142,7 @@ function createGenreSelectors(genre)
     const selector = document.createElement("option");
     selector.classList.add("genre-option");
     selector.value = genre;
-    selector.innerText = genre;
+    selector.textContent = genre;
 
     genreSelector.append(selector);
 }
@@ -147,10 +172,10 @@ function removeShrinkClass()
 
 function setAllShows(shows)
 {
-    allShows = shows;
-    filteredShows = shows;
+    allShows = shows.filter(show => show.image);
+    filteredShows = allShows;
 
-    return shows;
+    return allShows;
 }
 
 function displayShows(shows)
@@ -160,7 +185,25 @@ function displayShows(shows)
     clearDisplayedSelectedGenresCheck();
 
     genres.clear();
-    shows.forEach(show => createShowCard(show, cardsContainer));
+
+    const sortedShows = shows.sort((a, b) => {
+        let ratingA = a.rating.average;
+        if (!ratingA){ ratingA = 0; }
+        let ratingB = b.rating.average;
+        if (!ratingB){ ratingB = 0; }
+        
+        if (ratingA > ratingB){ return -1; }
+        else if (ratingA < ratingB){ return 1; }
+        else { return 0; }
+    })
+
+    let length;
+    if (shows.length < 150){ length = shows.length; }
+    else { length = 150; }
+    for (let i = 0; i < length; i++)
+    {
+        createShowCard(sortedShows[i], cardsContainer);
+    }
 }
 
 function clearDisplayedSelectedGenresCheck()
@@ -186,7 +229,7 @@ function createShowCard(show, cardsContainer)
     card.classList.add("card");
 
     const image = document.createElement("img");
-    image.classList.add("show-image")
+    image.classList.add("show-image");
     image.src = show.image.medium;
 
     const movieInfo = document.createElement("div");
@@ -194,21 +237,32 @@ function createShowCard(show, cardsContainer)
 
     const name = document.createElement("h4");
     name.classList.add("movie-title");
-    name.innerText = show.name;
+    name.textContent = show.name;
+    
+    const rating = document.createElement("p");
+    if (show.rating.average)
+    {
+        rating.textContent = "Rating " + show.rating.average.toFixed(1);
+    }
+    else
+    {
+        rating.textContent = "No Rating";
+    }
 
     const year = document.createElement("p");
-    year.innerText = "Premiered " + show.premiered.slice(0, 4);
+    if (show.premiered)
+    {
+        year.textContent = "Premiered " + show.premiered.slice(0, 4);
+    }
 
     const runtime = document.createElement("p");
-    runtime.innerText = "Runtime " + show.runtime + " mins";
+    runtime.textContent = "Runtime " + show.runtime + " mins";
 
-    // const officialSite = document.createElement("p");
-    const officialSite = document.createElement("a")
+    const officialSite = document.createElement("a");
     officialSite.textContent = "Official Site";
     officialSite.href = show.officialSite;
 
-    // officialSite.append(link);
-    movieInfo.append(name, year, runtime, officialSite);
+    movieInfo.append(name, rating, year, runtime, officialSite);
     card.append(image);
     cardsContainer.append(card);
 
@@ -225,6 +279,31 @@ function showInfo(card, movieInfo)
     {
         movieInfo.remove();
     }
+}
+
+function makeFetchCalls(showsPage)
+{
+    return fetchCalls.push(fetch(`https://api.tvmaze.com/shows?page=${showsPage}`));
+}
+
+function createRange(number)
+{
+    return [...Array(number).keys()];
+}
+
+function flattenResponses(arrays)
+{
+    return arrays.reduce((flattenedArray, array) =>
+    {
+        return flattenedArray.concat(array);
+    },
+    []
+    );
+}
+
+function parseAllToJSON(responses)
+{
+    return Promise.all(responses.map(parseJSON));
 }
 
 function parseJSON(response)
