@@ -8,12 +8,15 @@ let allShows = [];
 let filteredShows = [];
 const genres = new Set();
 const selectedGenres = new Set();
+let selectedGenresUl;
 
 function postLoad()
 {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
+    selectedGenresUl = document.querySelector(".selected-genres");
+
 
     const showsPages = createRange(5);
     showsPages.map(makeFetchCalls);
@@ -25,14 +28,17 @@ function postLoad()
         .then(displayShows);
     
 
-    searchBar.addEventListener("input", filterMovies);
+    searchBar.addEventListener("input", filterShows);
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
     genreSelector.addEventListener("change", filterByGenre);
+    selectedGenresUl.addEventListener("click", handleGenre);
 }
 
 function filterByGenre(event)
 {
+    removeCards();
+
     let selectedGenre = null;
     if (event)
     {
@@ -40,22 +46,20 @@ function filterByGenre(event)
     }
 
     showSelectedGenres(selectedGenre);
-    
-    removeCards();
-
+        
     if (selectedGenre === "show-all" || selectedGenre === "")
     { 
         filteredShows = allShows;
         searchBar.value = "";
         genreSelector.value = "";
-
+        
         selectedGenres.clear();
     }
     else
     {
-        filteredShows = allShows.filter(show => {
-            return Array.from(selectedGenres).every(selectedGenre => show.genres.includes(selectedGenre));
-        });
+        filteredShows = filterByGenres(
+            filterByName(allShows, searchBar.value)
+        );
     }
 
     displayShows(filteredShows);
@@ -63,56 +67,79 @@ function filterByGenre(event)
 
 function showSelectedGenres(currentSelectedGenre)
 {
-
     if (currentSelectedGenre != "show-all"
         && currentSelectedGenre != ""
         && currentSelectedGenre != null)
     { 
         selectedGenres.add(currentSelectedGenre);
     }
-
+    
     clearDisplayedSelectedGenres();
-
+    
     selectedGenres.forEach(selectedGenre => {
-        const selectedGenreLi = document.createElement("li");
-        selectedGenreLi.classList.add("selected-genre");
-        selectedGenreLi.textContent = selectedGenre;
-
-        const deleteImage = document.createElement("i");
-        deleteImage.className = ("fa fa-times");
+        const selectedGenreLi = createSelectedGenre(selectedGenre);
+        const deleteImage = createDeleteImage();
         
         selectedGenreLi.append(deleteImage);
-
-        selectedGenreLi.addEventListener("click", () => removeGenre(selectedGenre));
-
-        const selectedGenresUl = document.querySelector(".selected-genres");
+        
         selectedGenresUl.append(selectedGenreLi);
     });
+}
+
+function handleGenre(event)
+{
+    const clickedElement = event.target;
+
+    if (clickedElement.classList.contains("selected-genre"))
+    {
+        const selectedGenre = clickedElement.textContent;
+        removeGenre(selectedGenre);
+    }
+    else if (clickedElement.classList.contains("genre-delete"))
+    {
+        const selectedGenre = clickedElement.parentNode.textContent;
+        removeGenre(selectedGenre);
+    }
+}
+
+function createSelectedGenre(selectedGenre)
+{
+    const selectedGenreLi = document.createElement("li");
+    selectedGenreLi.classList.add("selected-genre");
+    selectedGenreLi.textContent = selectedGenre;
+
+    return selectedGenreLi;
+}
+
+function createDeleteImage()
+{
+    const deleteImage = document.createElement("i");
+    deleteImage.className = ("fa fa-times");
+    deleteImage.classList.add("genre-delete");
+
+    return deleteImage;
 }
 
 function removeGenre(selectedGenre)
 {
     selectedGenres.delete(selectedGenre);
-    filterByGenre(null);
+    filterByGenre(false);
 }
 
-function filterMovies(event)
+function filterShows(event)
 {
-    const searchTerm = event.target.value;
     removeCards();
-
-    filteredShows = allShows.filter(show => 
-        show.name.toLowerCase()
-        .includes(
-            searchTerm.toLowerCase()
-        )
+    
+    const searchTerm = event.target.value;
+   
+    filteredShows = filterByGenres(
+        filterByName(allShows, searchTerm)
     );
     
-    if (filteredShows.length === 0) { genres.clear(); }
-    if (searchTerm.length === 0)
-    {
-        filteredShows = allShows;
-        selectedGenres.clear();
+    if (filteredShows.length === 0)
+    { 
+        genres.clear();
+        setGenreSelectors();
     }
     
     displayShows(filteredShows);
@@ -208,7 +235,8 @@ function displayShows(shows)
 
 function clearDisplayedSelectedGenresCheck()
 {
-    if (filteredShows === allShows)
+    if (searchBar.value.length === 0
+        && Array.from(selectedGenres).length === 0)
     {
         clearDisplayedSelectedGenres();
     }
@@ -232,11 +260,11 @@ function createShowCard(show, cardsContainer)
     image.classList.add("show-image");
     image.src = show.image.medium;
 
-    const movieInfo = document.createElement("div");
-    movieInfo.classList.add("movie-info");
+    const showInfo = document.createElement("div");
+    showInfo.classList.add("show-info");
 
     const name = document.createElement("h4");
-    name.classList.add("movie-title");
+    name.classList.add("show-title");
     name.textContent = show.name;
     
     const rating = document.createElement("p");
@@ -262,23 +290,39 @@ function createShowCard(show, cardsContainer)
     officialSite.textContent = "Official Site";
     officialSite.href = show.officialSite;
 
-    movieInfo.append(name, rating, year, runtime, officialSite);
+    showInfo.append(name, rating, year, runtime, officialSite);
     card.append(image);
     cardsContainer.append(card);
 
-    card.addEventListener("click", () => showInfo(card, movieInfo));
+    card.addEventListener("click", () => displayShowInfo(card, showInfo));
 }
 
-function showInfo(card, movieInfo)
+function displayShowInfo(card, showInfo)
 {   
-    if (!card.querySelector(".movie-info"))
+    if (!card.querySelector(".show-info"))
     {
-        card.append(movieInfo);
+        card.append(showInfo);
     }
     else
     {
-        movieInfo.remove();
+        showInfo.remove();
     }
+}
+
+function filterByGenres(shows)
+{
+    return shows.filter(show => {
+        return Array.from(selectedGenres)
+            .every(selectedGenre => show.genres.includes(selectedGenre));
+    });
+}
+
+function filterByName(shows, searchTerm)
+{
+    return shows.filter(show => (
+        show.name.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    ));
 }
 
 function makeFetchCalls(showsPage)
