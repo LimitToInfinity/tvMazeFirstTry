@@ -18,8 +18,8 @@ function postLoad()
     selectedGenresUl = document.querySelector(".selected-genres");
 
 
-    const showsPages = createRange(5);
-    showsPages.map(makeFetchCalls);
+    const showsPagesAPI = createRange(100);
+    showsPagesAPI.forEach(makeFetchCalls);
 
     Promise.all(fetchCalls)
         .then(parseAllToJSON)
@@ -28,16 +28,35 @@ function postLoad()
         .then(displayShows);
     
 
-    searchBar.addEventListener("input", filterShows);
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
+    searchBar.addEventListener("input", filterShows);
     genreSelector.addEventListener("change", filterByGenre);
     selectedGenresUl.addEventListener("click", handleGenre);
 }
 
+function filterShows(event)
+{
+    removeShowCards();
+
+    const searchTerm = event.target.value;
+   
+    filteredShows = filterByGenres(
+        filterByName(allShows, searchTerm)
+    );
+    
+    if (filteredShows.length === 0)
+    { 
+        genres.clear();
+        setGenreSelectors();
+    }
+    
+    displayShows(filteredShows);
+}
+
 function filterByGenre(event)
 {
-    removeCards();
+    removeShowCards();
 
     let selectedGenre = null;
     if (event)
@@ -65,6 +84,22 @@ function filterByGenre(event)
     displayShows(filteredShows);
 }
 
+function filterByName(shows, searchTerm)
+{
+    return shows.filter(show => (
+        show.name.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    ));
+}
+
+function filterByGenres(shows)
+{
+    return shows.filter(show => {
+        return Array.from(selectedGenres)
+            .every(selectedGenre => show.genres.includes(selectedGenre));
+    });
+}
+
 function showSelectedGenres(currentSelectedGenre)
 {
     if (currentSelectedGenre != "show-all"
@@ -86,22 +121,6 @@ function showSelectedGenres(currentSelectedGenre)
     });
 }
 
-function handleGenre(event)
-{
-    const clickedElement = event.target;
-
-    if (clickedElement.classList.contains("selected-genre"))
-    {
-        const selectedGenre = clickedElement.textContent;
-        removeGenre(selectedGenre);
-    }
-    else if (clickedElement.classList.contains("genre-delete"))
-    {
-        const selectedGenre = clickedElement.parentNode.textContent;
-        removeGenre(selectedGenre);
-    }
-}
-
 function createSelectedGenre(selectedGenre)
 {
     const selectedGenreLi = document.createElement("li");
@@ -120,45 +139,42 @@ function createDeleteImage()
     return deleteImage;
 }
 
+function handleGenre(event)
+{
+    const clickedElement = event.target;
+
+    if (clickedElement.classList.contains("selected-genre"))
+    {
+        const selectedGenre = clickedElement.textContent;
+        removeGenre(selectedGenre);
+    }
+    else if (clickedElement.classList.contains("genre-delete"))
+    {
+        const selectedGenre = clickedElement.parentNode.textContent;
+        removeGenre(selectedGenre);
+    }
+}
+
 function removeGenre(selectedGenre)
 {
     selectedGenres.delete(selectedGenre);
     filterByGenre(false);
 }
 
-function filterShows(event)
+function removeShowCards()
 {
-    removeCards();
-    
-    const searchTerm = event.target.value;
-   
-    filteredShows = filterByGenres(
-        filterByName(allShows, searchTerm)
-    );
-    
-    if (filteredShows.length === 0)
-    { 
-        genres.clear();
-        setGenreSelectors();
-    }
-    
-    displayShows(filteredShows);
-}
-
-function removeCards()
-{
-    const cards = Array.from(document.querySelectorAll(".card"));
-    cards.forEach(card => card.remove());
+    const showCards = Array.from(document.querySelectorAll(".show-card"));
+    showCards.forEach(showCard => showCard.remove());
 }
 
 function setGenreSelectors()
 {
     const previousSelectors = Array.from(genreSelector.querySelectorAll("option"));
     const previouslyAddedSelectors = previousSelectors.filter(selector => 
-        selector.value.length > 0
-        && 
-        selector.value != "show-all"
+        selector.value != ""
+        && selector.value != "show-all"
     );
+
     previouslyAddedSelectors.forEach(selector => selector.remove());
 
     genres.forEach(createGenreSelectors);
@@ -207,29 +223,22 @@ function setAllShows(shows)
 
 function displayShows(shows)
 {
-    const cardsContainer = document.querySelector(".cards-container");
+    const showCardsContainer = document.querySelector(".show-cards-container");
 
     clearDisplayedSelectedGenresCheck();
 
     genres.clear();
 
-    const sortedShows = shows.sort((a, b) => {
-        let ratingA = a.rating.average;
-        if (!ratingA){ ratingA = 0; }
-        let ratingB = b.rating.average;
-        if (!ratingB){ ratingB = 0; }
-        
-        if (ratingA > ratingB){ return -1; }
-        else if (ratingA < ratingB){ return 1; }
-        else { return 0; }
-    })
+    const sortedShowsByRating = sortShowsByRating(shows);
+
+    console.log(shows.length, Math.ceil(shows.length/150));
 
     let length;
     if (shows.length < 150){ length = shows.length; }
     else { length = 150; }
     for (let i = 0; i < length; i++)
     {
-        createShowCard(sortedShows[i], cardsContainer);
+        createShowCard(sortedShowsByRating[i], showCardsContainer);
     }
 }
 
@@ -248,13 +257,27 @@ function clearDisplayedSelectedGenres()
     selectedGenreLis.forEach(selectedGenreLi => selectedGenreLi.remove());
 }
 
-function createShowCard(show, cardsContainer)
+function sortShowsByRating(shows)
 {
-    show.genres.forEach(genre => genres.add(genre));
+    return shows.sort((a, b) => {
+        let ratingA = a.rating.average;
+        if (!ratingA){ ratingA = 0; }
+        let ratingB = b.rating.average;
+        if (!ratingB){ ratingB = 0; }
+        
+        if (ratingA > ratingB){ return -1; }
+        else if (ratingA < ratingB){ return 1; }
+        else { return 0; }
+    });
+}
+
+function createShowCard(show, showCardsContainer)
+{
+    setGenres(show)
     setGenreSelectors();
 
-    const card = document.createElement("div");
-    card.classList.add("card");
+    const showCard = document.createElement("div");
+    showCard.classList.add("show-card");
 
     const image = document.createElement("img");
     image.classList.add("show-image");
@@ -291,38 +314,27 @@ function createShowCard(show, cardsContainer)
     officialSite.href = show.officialSite;
 
     showInfo.append(name, rating, year, runtime, officialSite);
-    card.append(image);
-    cardsContainer.append(card);
+    showCard.append(image);
+    showCardsContainer.append(showCard);
 
-    card.addEventListener("click", () => displayShowInfo(card, showInfo));
+    showCard.addEventListener("click", () => displayShowInfo(showCard, showInfo));
 }
 
-function displayShowInfo(card, showInfo)
+function setGenres(show)
+{
+    show.genres.forEach(genre => genres.add(genre));
+}
+
+function displayShowInfo(showCard, showInfo)
 {   
-    if (!card.querySelector(".show-info"))
+    if (!showCard.querySelector(".show-info"))
     {
-        card.append(showInfo);
+        showCard.append(showInfo);
     }
     else
     {
         showInfo.remove();
     }
-}
-
-function filterByGenres(shows)
-{
-    return shows.filter(show => {
-        return Array.from(selectedGenres)
-            .every(selectedGenre => show.genres.includes(selectedGenre));
-    });
-}
-
-function filterByName(shows, searchTerm)
-{
-    return shows.filter(show => (
-        show.name.toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    ));
 }
 
 function makeFetchCalls(showsPage)

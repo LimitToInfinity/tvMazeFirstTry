@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Spectral|Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Spectral|Staatliches|Righteous&display=swap');
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -53,9 +53,11 @@ table {
 
 main
 {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: black;
 }
 
 h1
@@ -63,6 +65,8 @@ h1
     text-align: center;
     font-size: 5rem;
     margin: 4rem 0;
+    color: white;
+    font-family: Righteous, serif;
 }
 
 .search-container
@@ -70,16 +74,15 @@ h1
     height: 100%;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 #search-bar
 {
     height: 2rem;
-    width: 30%;
+    width: 50%;
     border: none;
-    background-color: rgba(235, 235, 235, 0.221);
+    background-color: hsl(0, 0%, 40%);
     padding-top: 1.2rem;
     padding-left: 0.5rem;
     border-top-left-radius: 5px;
@@ -87,12 +90,11 @@ h1
     border-bottom: hsla(197, 3%, 53%, 0.386);
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    z-index: 1;
 }
 
 #search-bar:hover
 {
-  background-color: rgba(228, 228, 228, 0.35);
+  background-color: hsl(0, 0%, 55%);
   border-bottom: #333;
   border-bottom-style: solid;
   border-bottom-width: 1.3px;
@@ -100,11 +102,11 @@ h1
 
 #search-bar:focus
 {
-    background-color: rgba(216, 216, 216, 0.6);
-    border-bottom: #136b9b;
+    background-color: hsl(0, 0%, 70%);
+    border-bottom: purple;
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    caret-color: #136b9b;
+    caret-color: purple;
     outline: none;  
     transition: all 0.3s;
 }
@@ -113,7 +115,7 @@ label[for=search-bar]
 {
     position: absolute;
     padding: 1rem 0 0 0.5rem;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: rgb(72, 72, 72);
     font-family: Roboto, sans-serif;
     transition: all 0.3s;
@@ -149,7 +151,12 @@ label[for=search-bar]
     height: 1.8rem;
 }
 
-.cards-container
+.selected-genre
+{
+    color: white;
+}
+
+.show-cards-container
 {
     display: flex;
     flex-flow: wrap;
@@ -157,17 +164,19 @@ label[for=search-bar]
     width: 70%;
 }
 
-.card
+.show-card
 {
     display: inline-block;
     margin: 17px auto;
     height: 15%;
     width: 17%;
-    box-shadow: 15px 15px 10px rgb(148, 148, 148);
+    box-shadow: 4px 4px 10px white;
+    /* box-shadow: 13px 13px 13px hsl(0, 0%, 15%); */
+    /* box-shadow: 15px 15px 10px rgb(148, 148, 148); */
     cursor: pointer;
 }
 
-.card:hover
+.show-card:hover
 {
     transform: scale3d(1.7, 1.7, 1.7);
     box-shadow: 1px 1px 8px rgb(123, 80, 1), -1px 1px 8px rgb(123, 80, 1), 1px -1px 8px rgb(123, 80, 1), -1px -1px 8px rgb(123, 80, 1);
@@ -215,3 +224,29 @@ label[for=search-bar]
     color: blue;
     text-decoration: none;
 }
+
+/* Moving genre selector into pills on the bottom right of the screen for mobile. */
+
+/* .genre-pills
+{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.genre-pills > li
+{
+    padding: 0.3rem 0;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.genre-pills > li:hover
+{
+    background-color: blue;
+} */
