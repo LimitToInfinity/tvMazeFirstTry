@@ -8,8 +8,7 @@ const genres = new Set();
 const selectedGenres = new Set();
 let selectedGenresUl;
 
-function postLoad()
-{
+function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
@@ -33,8 +32,7 @@ function postLoad()
     selectedGenresUl.addEventListener("click", handleGenre);
 }
 
-function filterShows(event)
-{
+function filterShows(event) {
     removeShowCards();
 
     const searchTerm = event.target.value;
@@ -52,8 +50,7 @@ function filterShows(event)
     displayShows(filteredShows);
 }
 
-function filterByGenre(event)
-{
+function filterByGenre(event) {
     removeShowCards();
 
     let selectedGenre = null;
@@ -82,24 +79,21 @@ function filterByGenre(event)
     displayShows(filteredShows);
 }
 
-function filterByName(shows, searchTerm)
-{
+function filterByName(shows, searchTerm) {
     return shows.filter(show => (
         show.name.toLowerCase()
         .includes(searchTerm.toLowerCase())
     ));
 }
 
-function filterByGenres(shows)
-{
+function filterByGenres(shows) {
     return shows.filter(show => {
         return Array.from(selectedGenres)
             .every(selectedGenre => show.genres.includes(selectedGenre));
     });
 }
 
-function showSelectedGenres(currentSelectedGenre)
-{
+function showSelectedGenres(currentSelectedGenre) {
     if (currentSelectedGenre != "show-all"
         && currentSelectedGenre != ""
         && currentSelectedGenre != null)
@@ -119,8 +113,7 @@ function showSelectedGenres(currentSelectedGenre)
     });
 }
 
-function createSelectedGenre(selectedGenre)
-{
+function createSelectedGenre(selectedGenre) {
     const selectedGenreLi = document.createElement("li");
     selectedGenreLi.classList.add("selected-genre");
     selectedGenreLi.textContent = selectedGenre;
@@ -128,8 +121,7 @@ function createSelectedGenre(selectedGenre)
     return selectedGenreLi;
 }
 
-function createDeleteImage()
-{
+function createDeleteImage() {
     const deleteImage = document.createElement("i");
     deleteImage.className = ("fa fa-times");
     deleteImage.classList.add("genre-delete");
@@ -137,8 +129,7 @@ function createDeleteImage()
     return deleteImage;
 }
 
-function handleGenre(event)
-{
+function handleGenre(event) {
     const clickedElement = event.target;
 
     if (clickedElement.classList.contains("selected-genre"))
@@ -153,20 +144,17 @@ function handleGenre(event)
     }
 }
 
-function removeGenre(selectedGenre)
-{
+function removeGenre(selectedGenre) {
     selectedGenres.delete(selectedGenre);
     filterByGenre(false);
 }
 
-function removeShowCards()
-{
+function removeShowCards() {
     const showCards = Array.from(document.querySelectorAll(".show-card"));
     showCards.forEach(showCard => showCard.remove());
 }
 
-function setGenreSelectors()
-{
+function setGenreSelectors() {
     const previousSelectors = Array.from(genreSelector.querySelectorAll("option"));
     const previouslyAddedSelectors = previousSelectors.filter(selector => 
         selector.value != ""
@@ -178,8 +166,7 @@ function setGenreSelectors()
     genres.forEach(createGenreSelectors);
 }
 
-function createGenreSelectors(genre)
-{
+function createGenreSelectors(genre) {
     const selector = document.createElement("option");
     selector.classList.add("genre-option");
     selector.value = genre;
@@ -188,15 +175,13 @@ function createGenreSelectors(genre)
     genreSelector.append(selector);
 }
 
-function addShrinkClass()
-{
+function addShrinkClass() {
     // console.log("shrink")
     searchBarLabel.classList.remove("shrink-uncolored");
     searchBarLabel.classList.add("shrink-colored");
 }
 
-function removeShrinkClass()
-{
+function removeShrinkClass() {
     if (!searchBar.value)
     {
         // console.log("unshrink no value")
@@ -211,16 +196,14 @@ function removeShrinkClass()
     }
 }
 
-function setAllShows(shows)
-{
+function setAllShows(shows) {
     allShows = shows.filter(show => show.image);
     filteredShows = allShows;
 
     return allShows;
 }
 
-function displayShows(shows)
-{
+function displayShows(shows) {
     const showCardsContainer = document.querySelector(".show-cards-container");
 
     clearDisplayedSelectedGenresCheck();
@@ -240,8 +223,7 @@ function displayShows(shows)
     }
 }
 
-function clearDisplayedSelectedGenresCheck()
-{
+function clearDisplayedSelectedGenresCheck() {
     if (searchBar.value.length === 0
         && Array.from(selectedGenres).length === 0)
     {
@@ -249,15 +231,12 @@ function clearDisplayedSelectedGenresCheck()
     }
 }
 
-function clearDisplayedSelectedGenres()
-{
+function clearDisplayedSelectedGenres() {
     const selectedGenreLis = Array.from(document.querySelectorAll(".selected-genres > li"));
     selectedGenreLis.forEach(selectedGenreLi => selectedGenreLi.remove());
 }
 
-
-function createShowCard(show, showCardsContainer)
-{
+function createShowCard(show, showCardsContainer) {
     setGenres(show)
     setGenreSelectors();
 
@@ -304,8 +283,8 @@ function createShowCard(show, showCardsContainer)
 
     showCard.addEventListener("click", () => displayShowInfo(showCard, showInfo));
 }
-function sortShowsByRating(shows)
-{
+
+function sortShowsByRating(shows) {
     return shows.sort((a, b) => {
         let ratingA = a.rating.average;
         if (!ratingA){ ratingA = 0; }
@@ -317,31 +296,32 @@ function sortShowsByRating(shows)
         else { return 0; }
     });
 }
-function setGenres(show){
+
+function setGenres(show) {
     show.genres.forEach(genre => genres.add(genre));
 }
 
-function displayShowInfo(showCard, showInfo){   
+function displayShowInfo(showCard, showInfo) {   
     !showCard.querySelector(".show-info") && showCard.append(showInfo);
 }
 
-function makeFetchCalls(showsPage){
+function makeFetchCalls(showsPage) {
     const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
     return fetchCalls.push(fetch(url));
 }
 
-function createRange(number){
+function createRange(number) {
     return [...Array(number).keys()];
 }
 
-function flattenResponses(arrays){
+function flattenResponses(arrays) {
     return arrays.flat();
 }
 
-function parseAllToJSON(responses){
+function parseAllToJSON(responses) {
     return Promise.all(responses.map(parseJSON));
 }
 
-function parseJSON(response){
+function parseJSON(response) {
     return response.json();
 }
