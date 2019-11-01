@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", postLoad);
-
 const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
@@ -257,19 +255,6 @@ function clearDisplayedSelectedGenres()
     selectedGenreLis.forEach(selectedGenreLi => selectedGenreLi.remove());
 }
 
-function sortShowsByRating(shows)
-{
-    return shows.sort((a, b) => {
-        let ratingA = a.rating.average;
-        if (!ratingA){ ratingA = 0; }
-        let ratingB = b.rating.average;
-        if (!ratingB){ ratingB = 0; }
-        
-        if (ratingA > ratingB){ return -1; }
-        else if (ratingA < ratingB){ return 1; }
-        else { return 0; }
-    });
-}
 
 function createShowCard(show, showCardsContainer)
 {
@@ -319,50 +304,44 @@ function createShowCard(show, showCardsContainer)
 
     showCard.addEventListener("click", () => displayShowInfo(showCard, showInfo));
 }
-
-function setGenres(show)
+function sortShowsByRating(shows)
 {
+    return shows.sort((a, b) => {
+        let ratingA = a.rating.average;
+        if (!ratingA){ ratingA = 0; }
+        let ratingB = b.rating.average;
+        if (!ratingB){ ratingB = 0; }
+        
+        if (ratingA > ratingB){ return -1; }
+        else if (ratingA < ratingB){ return 1; }
+        else { return 0; }
+    });
+}
+function setGenres(show){
     show.genres.forEach(genre => genres.add(genre));
 }
 
-function displayShowInfo(showCard, showInfo)
-{   
-    if (!showCard.querySelector(".show-info"))
-    {
-        showCard.append(showInfo);
-    }
-    else
-    {
-        showInfo.remove();
-    }
+function displayShowInfo(showCard, showInfo){   
+    !showCard.querySelector(".show-info") && showCard.append(showInfo);
 }
 
-function makeFetchCalls(showsPage)
-{
-    return fetchCalls.push(fetch(`https://api.tvmaze.com/shows?page=${showsPage}`));
+function makeFetchCalls(showsPage){
+    const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
+    return fetchCalls.push(fetch(url));
 }
 
-function createRange(number)
-{
+function createRange(number){
     return [...Array(number).keys()];
 }
 
-function flattenResponses(arrays)
-{
-    return arrays.reduce((flattenedArray, array) =>
-    {
-        return flattenedArray.concat(array);
-    },
-    []
-    );
+function flattenResponses(arrays){
+    return arrays.flat();
 }
 
-function parseAllToJSON(responses)
-{
+function parseAllToJSON(responses){
     return Promise.all(responses.map(parseJSON));
 }
 
-function parseJSON(response)
-{
+function parseJSON(response){
     return response.json();
 }
