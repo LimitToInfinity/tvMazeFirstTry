@@ -51,8 +51,7 @@ table {
 
 /* END MEYER RESET */
 
-main
-{
+main {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -60,8 +59,7 @@ main
     background-color: black;
 }
 
-h1
-{
+h1 {
     text-align: center;
     font-size: 5rem;
     margin: 4rem 0;
@@ -69,16 +67,14 @@ h1
     font-family: Righteous, serif;
 }
 
-.search-container
-{
+.search-container {
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-#search-bar
-{
+#search-bar {
     height: 2rem;
     width: 50%;
     border: none;
@@ -92,16 +88,14 @@ h1
     border-bottom-width: 1.3px;
 }
 
-#search-bar:hover
-{
+#search-bar:hover {
   background-color: hsl(0, 0%, 55%);
   border-bottom: #333;
   border-bottom-style: solid;
   border-bottom-width: 1.3px;
 }
 
-#search-bar:focus
-{
+#search-bar:focus {
     background-color: hsl(0, 0%, 70%);
     border-bottom: purple;
     border-bottom-style: solid;
@@ -111,8 +105,7 @@ h1
     transition: all 0.3s;
 }
 
-label[for=search-bar]
-{
+label[for=search-bar] {
     position: absolute;
     padding: 1rem 0 0 0.5rem;
     font-size: 0.9rem;
@@ -122,8 +115,7 @@ label[for=search-bar]
     pointer-events: none;
 }
 
-.shrink-colored
-{
+.shrink-colored {
     color: #136b9b;
     font-size: 0.6rem;
     transform: translateY(-8px);
@@ -131,41 +123,56 @@ label[for=search-bar]
     z-index: 2;
 }
 
-.shrink-uncolored
-{
+.shrink-uncolored {
     font-size: 0.6rem;
     transform: translateY(-8px);
 }
 
-.genre-selector-container
-{
+.genre-selector-container {
     margin: 2rem 0;
     width: 100%;
     text-align: center;
 
 }
 
-.genre-selector
-{
+.genre-selector {
     font-size: 1rem;
     height: 1.8rem;
 }
 
-.selected-genre
-{
+.selected-genre {
     color: white;
 }
 
-.show-cards-container
-{
+.pages {
     display: flex;
     flex-flow: wrap;
+    margin: 0 18rem;
+    color: white;
+}
+
+.page-number {
+    margin: 0 0.5rem 0.2rem;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.show-cards-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
     margin: 1rem auto 15rem;
     width: 70%;
 }
 
-.show-card
-{
+.no-shows {
+    font-size: 5rem;
+    text-align: center;
+    color: white;
+}
+
+.show-card {
     display: inline-block;
     margin: 17px auto;
     height: 15%;
@@ -176,21 +183,18 @@ label[for=search-bar]
     cursor: pointer;
 }
 
-.show-card:hover
-{
+.show-card:hover {
     transform: scale3d(1.7, 1.7, 1.7);
     box-shadow: 1px 1px 8px rgb(123, 80, 1), -1px 1px 8px rgb(123, 80, 1), 1px -1px 8px rgb(123, 80, 1), -1px -1px 8px rgb(123, 80, 1);
     z-index: 10;
 }
 
-.show-image
-{
+.show-image {
     height: 100%;
     width: 100%;
 }
 
-.show-info
-{
+.show-info {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -201,23 +205,20 @@ label[for=search-bar]
     background-color: rgba(255, 232, 232, 0.845);
 }
 
-.show-title
-{
+.show-title {
     font-family: Staatliches, Arial, serif;
     font-weight: 500;
     font-size: 1.3rem;
     margin: 0.2rem 0.6rem 0.5rem;
 }
 
-.show-info > p
-{
+.show-info > p {
     font-family: Spectral, Arial, serif;
     margin: 0 0.6rem 0.5rem;
     font-size: 1.2rem;
 }
 
-.show-info > a
-{
+.show-info > a {
     font-family: Spectral, Arial, serif;
     margin: 0 0.6rem 0.5rem;
     font-size: 1.2rem;
@@ -227,8 +228,7 @@ label[for=search-bar]
 
 /* Moving genre selector into pills on the bottom right of the screen for mobile. */
 
-/* .genre-pills
-{
+/* .genre-pills {
     color: white;
     display: flex;
     flex-direction: column;
@@ -239,14 +239,12 @@ label[for=search-bar]
     margin-bottom: 1rem;
 }
 
-.genre-pills > li
-{
+.genre-pills > li {
     padding: 0.3rem 0;
     border-radius: 10px;
     text-align: left;
 }
 
-.genre-pills > li:hover
-{
+.genre-pills > li:hover {
     background-color: blue;
 } */

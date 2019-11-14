@@ -2,6 +2,12 @@ const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
 let genreSelector;
+let showRange;
+let pages;
+let pageNumber = 1;
+let end;
+let start;
+let showCardsContainer;
 let allShows = [];
 let filteredShows = [];
 const genres = new Set();
@@ -12,8 +18,9 @@ function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
+    pages = document.querySelector(".pages");
     selectedGenresUl = document.querySelector(".selected-genres");
-
+    showCardsContainer = document.querySelector(".show-cards-container");
 
     const showsPagesAPI = createRange(100);
     showsPagesAPI.forEach(makeFetchCalls);
@@ -23,7 +30,6 @@ function postLoad() {
         .then(flattenResponses)
         .then(setAllShows)
         .then(displayShows);
-    
 
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
@@ -33,7 +39,7 @@ function postLoad() {
 }
 
 function filterShows(event) {
-    removeShowCards();
+    pageNumber = 1;
 
     const searchTerm = event.target.value;
    
@@ -41,8 +47,7 @@ function filterShows(event) {
         filterByName(allShows, searchTerm)
     );
     
-    if (filteredShows.length === 0)
-    { 
+    if (filteredShows.length === 0) { 
         genres.clear();
         setGenreSelectors();
     }
@@ -51,29 +56,23 @@ function filterShows(event) {
 }
 
 function filterByGenre(event) {
-    removeShowCards();
+    pageNumber = 1;
 
     let selectedGenre = null;
-    if (event)
-    {
+    if (event) {
         selectedGenre = event.target.value; 
     }
 
     showSelectedGenres(selectedGenre);
         
-    if (selectedGenre === "show-all" || selectedGenre === "")
-    { 
+    if (selectedGenre === "show-all" || selectedGenre === "") { 
         filteredShows = allShows;
         searchBar.value = "";
         genreSelector.value = "";
         
         selectedGenres.clear();
-    }
-    else
-    {
-        filteredShows = filterByGenres(
-            filterByName(allShows, searchBar.value)
-        );
+    } else {
+        filteredShows = filterByGenres( filterByName(allShows, searchBar.value) );
     }
 
     displayShows(filteredShows);
@@ -132,13 +131,10 @@ function createDeleteImage() {
 function handleGenre(event) {
     const clickedElement = event.target;
 
-    if (clickedElement.classList.contains("selected-genre"))
-    {
+    if (clickedElement.classList.contains("selected-genre")) {
         const selectedGenre = clickedElement.textContent;
         removeGenre(selectedGenre);
-    }
-    else if (clickedElement.classList.contains("genre-delete"))
-    {
+    } else if (clickedElement.classList.contains("genre-delete")) {
         const selectedGenre = clickedElement.parentNode.textContent;
         removeGenre(selectedGenre);
     }
@@ -182,14 +178,11 @@ function addShrinkClass() {
 }
 
 function removeShrinkClass() {
-    if (!searchBar.value)
-    {
+    if (!searchBar.value) {
         // console.log("unshrink no value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.remove("shrink-uncolored");
-    }
-    else
-    {
+    } else {
         // console.log("unshrink value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.add("shrink-uncolored");
@@ -204,7 +197,7 @@ function setAllShows(shows) {
 }
 
 function displayShows(shows) {
-    const showCardsContainer = document.querySelector(".show-cards-container");
+    removeShowCards();
 
     clearDisplayedSelectedGenresCheck();
 
@@ -212,19 +205,66 @@ function displayShows(shows) {
 
     const sortedShowsByRating = sortShowsByRating(shows);
 
-    console.log(shows.length, Math.ceil(shows.length/150));
+    const totalNumberOfPages = createRange(Math.ceil(shows.length/50));
+    createPageNumbers(totalNumberOfPages, shows);
 
-    let length;
-    if (shows.length < 150){ length = shows.length; }
-    else { length = 150; }
-    for (let i = 0; i < length; i++)
-    {
-        createShowCard(sortedShowsByRating[i], showCardsContainer);
+    end = pageNumber * 50;
+    start = end - 50;
+    if (shows.length < end) { end = shows.length }
+
+    checkForNoShows();
+
+    if (shows.length === 0) {
+        createNoShowsText();
+    } else if (shows.length < 50){
+        displayPage(sortedShowsByRating);
+    } else {
+        displayPage(sortedShowsByRating);
     }
 }
 
+function displayPage(sortedShowsByRating) {
+    for (let i = start; i < end; i++) {
+        createShowCard(sortedShowsByRating[i]);
+    }
+}
+
+function createPageNumbers(totalNumberOfPages, shows) {
+    const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
+    previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
+
+    totalNumberOfPages.slice(0, 10).forEach(pageNumber => {
+        const pageNumberLi = document.createElement("li");
+        pageNumberLi.classList.add("page-number");
+        pageNumberLi.textContent = pageNumber + 1;
+
+        pages.appendChild(pageNumberLi);
+
+        pageNumberLi.addEventListener("click", (event) => showPageNumber(event, shows));
+    });
+}
+
+function showPageNumber(event, shows) {
+    pageNumber = event.target.textContent;
+    displayShows(shows);
+}
+
+function checkForNoShows() {
+    if (showCardsContainer.querySelector(".no-shows")) {
+        showCardsContainer.querySelector(".no-shows").remove();
+    }
+}
+
+function createNoShowsText() {
+    const noShows = document.createElement("h2");
+    noShows.classList.add("no-shows");
+    noShows.textContent = "No shows found!";
+    
+    showCardsContainer.appendChild(noShows);
+}
+
 function clearDisplayedSelectedGenresCheck() {
-    if (searchBar.value.length === 0
+    if (searchBar.value.length === 0 
         && Array.from(selectedGenres).length === 0)
     {
         clearDisplayedSelectedGenres();
@@ -236,7 +276,7 @@ function clearDisplayedSelectedGenres() {
     selectedGenreLis.forEach(selectedGenreLi => selectedGenreLi.remove());
 }
 
-function createShowCard(show, showCardsContainer) {
+function createShowCard(show) {
     setGenres(show)
     setGenreSelectors();
 
@@ -255,18 +295,14 @@ function createShowCard(show, showCardsContainer) {
     name.textContent = show.name;
     
     const rating = document.createElement("p");
-    if (show.rating.average)
-    {
+    if (show.rating.average) {
         rating.textContent = "Rating " + show.rating.average.toFixed(1);
-    }
-    else
-    {
+    } else {
         rating.textContent = "No Rating";
     }
 
     const year = document.createElement("p");
-    if (show.premiered)
-    {
+    if (show.premiered) {
         year.textContent = "Premiered " + show.premiered.slice(0, 4);
     }
 
@@ -287,12 +323,12 @@ function createShowCard(show, showCardsContainer) {
 function sortShowsByRating(shows) {
     return shows.sort((a, b) => {
         let ratingA = a.rating.average;
-        if (!ratingA){ ratingA = 0; }
+        if (!ratingA) { ratingA = 0; }
         let ratingB = b.rating.average;
-        if (!ratingB){ ratingB = 0; }
+        if (!ratingB) { ratingB = 0; }
         
-        if (ratingA > ratingB){ return -1; }
-        else if (ratingA < ratingB){ return 1; }
+        if (ratingA > ratingB) { return -1; }
+        else if (ratingA < ratingB) { return 1; }
         else { return 0; }
     });
 }
@@ -302,7 +338,9 @@ function setGenres(show) {
 }
 
 function displayShowInfo(showCard, showInfo) {   
-    !showCard.querySelector(".show-info") && showCard.append(showInfo);
+    !showCard.querySelector(".show-info")
+        ? showCard.append(showInfo)
+        : showInfo.remove()
 }
 
 function makeFetchCalls(showsPage) {
