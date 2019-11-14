@@ -144,10 +144,21 @@ label[for=search-bar] {
     color: white;
 }
 
+.pages-container {
+    display: flex;
+    margin: 0 18rem;
+}
+
+.pages-container > h2 {
+    color: white;
+    margin: 0 0.5rem 0.2rem;
+    padding: 0 0.5rem;
+    font-size: 2rem;
+}
+
 .pages {
     display: flex;
     flex-flow: wrap;
-    margin: 0 18rem;
     color: white;
 }
 
@@ -156,6 +167,14 @@ label[for=search-bar] {
     padding: 0 0.5rem;
     cursor: pointer;
     font-size: 2rem;
+}
+
+.page-number:hover {
+    color: rgb(123, 80, 1);
+}
+
+.selected {
+    color: rgb(123, 80, 1);
 }
 
 .show-cards-container {

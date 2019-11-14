@@ -214,12 +214,13 @@ function displayShows(shows) {
 
     checkForNoShows();
 
+    const pageText = document.querySelector(".pages-container > h2")
     if (shows.length === 0) {
         createNoShowsText();
-    } else if (shows.length < 50){
-        displayPage(sortedShowsByRating);
+        pageText.style.display = "none";
     } else {
         displayPage(sortedShowsByRating);
+        pageText.style.display = "block";
     }
 }
 
@@ -233,10 +234,13 @@ function createPageNumbers(totalNumberOfPages, shows) {
     const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
     previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
 
-    totalNumberOfPages.slice(0, 10).forEach(pageNumber => {
+    totalNumberOfPages.slice(0, 10).forEach(currentPageNumber => {
         const pageNumberLi = document.createElement("li");
         pageNumberLi.classList.add("page-number");
-        pageNumberLi.textContent = pageNumber + 1;
+        pageNumberLi.textContent = currentPageNumber + 1;
+        if ( (currentPageNumber + 1) === +pageNumber ) { 
+            pageNumberLi.classList.add("selected")
+        }
 
         pages.appendChild(pageNumberLi);
 
