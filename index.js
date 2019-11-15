@@ -96,6 +96,7 @@ function handleRangeChange() {
 }
 
 function determineCorrectionFactor(pageSliderOffsetWidth) {
+    console.log(pageSliderOffsetWidth);
     if (pageSliderOffsetWidth < 50) { return (723/1024); }
     else if (pageSliderOffsetWidth < 75) { return (791/1024); }
     else if (pageSliderOffsetWidth < 100) { return (857/1024); }
@@ -110,7 +111,15 @@ function determineCorrectionFactor(pageSliderOffsetWidth) {
     else if (pageSliderOffsetWidth < 325) { return (978/1024); }
     else if (pageSliderOffsetWidth < 350) { return (980/1024); }
     else if (pageSliderOffsetWidth < 375) { return (982/1024); }
-    else { return (983/1024); }
+    else if (pageSliderOffsetWidth < 400) { return (985/1024); }
+    else if (pageSliderOffsetWidth < 425) { return (988/1024); }
+    else if (pageSliderOffsetWidth < 450) { return (991/1024); }
+    else if (pageSliderOffsetWidth < 475) { return (993/1024); }
+    else if (pageSliderOffsetWidth < 500) { return (995/1024); }
+    else if (pageSliderOffsetWidth < 525) { return (997/1024); }
+    else if (pageSliderOffsetWidth < 550) { return (995/1024); }
+    else if (pageSliderOffsetWidth < 575) { return (997/1024); }
+    else { return (999/1024); }
 }
 
 function filterShows(event) {
