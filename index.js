@@ -27,17 +27,16 @@ function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
+    selectedGenresUl = document.querySelector(".selected-genres");
     pages = document.querySelector(".pages");
     pageSliderForm = document.querySelector(".page-slider-form");
     pageSlider = pageSliderForm.querySelector("#page-slider");
     pageSliderOutput = pageSliderForm.querySelector("output");
     pageSliderRangeMax = pageSliderForm.querySelector(".range-max");
     pagesToggle = document.querySelector(".pages-toggle");
-    selectedGenresUl = document.querySelector(".selected-genres");
     showCardsContainer = document.querySelector(".show-cards-container");
 
     pages.style.display = "none";
-    pageSliderOffsetWidth = pageSlider.offsetWidth;
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
 
@@ -62,18 +61,16 @@ function postLoad() {
 
 function togglePages() {
     if (pages.style.display === "none") {
-        console.log(pages.style.display)
         pages.style.display = "flex";
         pageSliderForm.style.display = "none";
     } else {
-        console.log(pages.style.display)
         pages.style.display = "none";
         pageSliderForm.style.display = "block";
+        handleRangeInput();
     }
 }
 
 function handleRangeInput(event) {
-
     if (!event) { 
         pageSliderValue = pageNumber;
         pageSlider.value = pageSliderValue;
@@ -82,8 +79,12 @@ function handleRangeInput(event) {
         pageNumber = pageSliderValue;
     }
 
-    const newPoint = ((pageSliderValue - pageSliderMin) / (pageSliderMax - pageSliderMin)) * (229/256); // - min from event.target on both valie and max
-    let offset = -11;
+    pageSliderOffsetWidth = pageSlider.offsetWidth;
+    const correctionFactor = determineCorrectionFactor(pageSliderOffsetWidth);
+    const newPoint = ((pageSliderValue - pageSliderMin)
+        / (pageSliderMax - pageSliderMin))
+        * correctionFactor;
+    const offset = -11;
     const newPlace = (pageSliderOffsetWidth * newPoint) + offset;
 
     pageSliderOutput.style.left = newPlace + "px";
@@ -92,6 +93,24 @@ function handleRangeInput(event) {
 
 function handleRangeChange() {
     displayShows(filteredShows);
+}
+
+function determineCorrectionFactor(pageSliderOffsetWidth) {
+    if (pageSliderOffsetWidth < 50) { return (723/1024); }
+    else if (pageSliderOffsetWidth < 75) { return (791/1024); }
+    else if (pageSliderOffsetWidth < 100) { return (857/1024); }
+    else if (pageSliderOffsetWidth < 125) { return (892/1024); }
+    else if (pageSliderOffsetWidth < 150) { return (913/1024); }
+    else if (pageSliderOffsetWidth < 175) { return (930/1024); }
+    else if (pageSliderOffsetWidth < 200) { return (946/1024); }
+    else if (pageSliderOffsetWidth < 225) { return (955/1024); }
+    else if (pageSliderOffsetWidth < 250) { return (962/1024); }
+    else if (pageSliderOffsetWidth < 275) { return (969/1024); }
+    else if (pageSliderOffsetWidth < 300) { return (976/1024); }
+    else if (pageSliderOffsetWidth < 325) { return (978/1024); }
+    else if (pageSliderOffsetWidth < 350) { return (980/1024); }
+    else if (pageSliderOffsetWidth < 375) { return (982/1024); }
+    else { return (983/1024); }
 }
 
 function filterShows(event) {
@@ -268,22 +287,28 @@ function displayShows(shows) {
     end = pageNumber * 50;
     start = end - 50;
     if (shows.length < end) { end = shows.length }
-
+    
     checkForNoShows();
-
-    const pageText = document.querySelector(".pages-container > h2")
+    
+    const pageText = document.querySelector(".pages-container > h2");
     if (shows.length === 0) {
         createNoShowsText();
         pageText.style.display = "none";
         pageSliderForm.style.display = "none";
+        pagesToggle.style.display = "none";
     } else if (shows.length < 51 ) {
         displayPage(sortedShowsByRating);
         pageText.style.display = "block";
-        pageSliderForm.style.display = "none"
+        pages.style.display = "flex";
+        pageSliderForm.style.display = "none";
+        pagesToggle.style.display = "none";
     } else {
         displayPage(sortedShowsByRating);
         pageText.style.display = "block";
-        pageSliderForm.style.display = "block";
+        pagesToggle.style.display = "inline-block";
+        if (pages.style.display === "none") {
+            pageSliderForm.style.display = "block";
+        }
     }
 }
 
@@ -299,7 +324,7 @@ function createPageNumbers(totalNumberOfPages, shows) {
 
     pageSlider.max = totalNumberOfPages.length;
     pageSliderMax = totalNumberOfPages.length;
-    pageSliderRangeMax.textContent = totalNumberOfPages.length
+    pageSliderRangeMax.textContent = totalNumberOfPages.length;
     handleRangeInput();
 
     totalNumberOfPages.slice(0, 10).forEach(currentPageNumber => {
@@ -307,7 +332,7 @@ function createPageNumbers(totalNumberOfPages, shows) {
         pageNumberLi.classList.add("page-number");
         pageNumberLi.textContent = currentPageNumber + 1;
         if ( (currentPageNumber + 1) === +pageNumber ) { 
-            pageNumberLi.classList.add("selected")
+            pageNumberLi.classList.add("selected");
         }
 
         pages.appendChild(pageNumberLi);
@@ -350,7 +375,7 @@ function clearDisplayedSelectedGenres() {
 }
 
 function createShowCard(show) {
-    setGenres(show)
+    setGenres(show);
     setGenreSelectors();
 
     const showCard = document.createElement("div");

@@ -133,7 +133,7 @@ label[for=search-bar] {
 }
 
 .genre-selector-container {
-    margin: 2rem 0;
+    margin: 2rem 0 3rem;
     width: 100%;
     text-align: center;
 
@@ -166,6 +166,7 @@ label[for=search-bar] {
     display: none;
     flex-flow: wrap;
     color: white;
+    height: 3rem;
 }
 
 .page-number {
@@ -215,6 +216,10 @@ label[for=search-bar] {
     left: 50%;
     margin-left: -5px;
     margin-top: -1px;
+}
+
+#page-slider {
+    width: 30vw;
 }
 
 .page-slider-form > span {
