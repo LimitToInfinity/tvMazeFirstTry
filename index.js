@@ -65,7 +65,7 @@ function togglePages() {
         pageSliderForm.style.display = "none";
     } else {
         pages.style.display = "none";
-        pageSliderForm.style.display = "block";
+        pageSliderForm.style.display = "flex";
         handleRangeInput();
     }
 }
@@ -84,7 +84,7 @@ function handleRangeInput(event) {
     const newPoint = ((pageSliderValue - pageSliderMin)
         / (pageSliderMax - pageSliderMin))
         * correctionFactor;
-    const offset = -11;
+    const offset = -10;
     const newPlace = (pageSliderOffsetWidth * newPoint) + offset;
 
     pageSliderOutput.style.left = newPlace + "px";
@@ -96,7 +96,6 @@ function handleRangeChange() {
 }
 
 function determineCorrectionFactor(pageSliderOffsetWidth) {
-    console.log(pageSliderOffsetWidth);
     if (pageSliderOffsetWidth < 50) { return (723/1024); }
     else if (pageSliderOffsetWidth < 75) { return (791/1024); }
     else if (pageSliderOffsetWidth < 100) { return (857/1024); }
@@ -316,7 +315,7 @@ function displayShows(shows) {
         pageText.style.display = "block";
         pagesToggle.style.display = "inline-block";
         if (pages.style.display === "none") {
-            pageSliderForm.style.display = "block";
+            pageSliderForm.style.display = "flex";
         }
     }
 }
@@ -419,6 +418,8 @@ function createShowCard(show) {
     const officialSite = document.createElement("a");
     officialSite.textContent = "Official Site";
     officialSite.href = show.officialSite;
+    officialSite.target = "_blank";
+    officialSite.rel = "noopener noreferrer";
 
     showInfo.append(name, rating, year, runtime, officialSite);
     showCard.append(image);

@@ -150,6 +150,7 @@ label[for=search-bar] {
 
 .pages-container {
     display: flex;
+    align-items: center;
     justify-content: center;
     margin: 0 3rem;
     width: 63%;
@@ -164,6 +165,7 @@ label[for=search-bar] {
 
 .pages {
     display: none;
+    align-items: center;
     flex-flow: wrap;
     color: white;
     height: 3rem;
@@ -185,6 +187,8 @@ label[for=search-bar] {
 }
 
 .page-slider-form {
+    display: flex;
+    align-items: center;
     color: white;
     position: relative;
     height: 3rem;
@@ -200,7 +204,7 @@ label[for=search-bar] {
     color: white;
     display: inline-block;
     bottom: 125%;
-    left: -11px;
+    left: -10px;
     font: bold 15px/30px Roboto;
 }
 
@@ -219,12 +223,92 @@ label[for=search-bar] {
 }
 
 #page-slider {
+    -webkit-appearance: none;
     width: 30vw;
+    z-index: 5;
+}
+
+#page-slider:focus {
+    outline: none;
+}
+
+#page-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: rgb(123, 80, 1);
+}
+
+#page-slider::-webkit-slider-thumb {
+    height: 30px;
+    width: 15px;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -13px;
+}
+
+#page-slider:focus::-webkit-slider-runnable-track {
+    background: rgb(123, 80, 1);
+}
+
+#page-slider::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: rgb(123, 80, 1);
+}
+
+#page-slider::-moz-range-thumb {
+    height: 30px;
+    width: 15px;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+}
+
+#page-slider::-ms-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+#page-slider::-ms-fill-lower {
+    background: rgb(123, 80, 1);
+    border-radius: 5px;
+}
+
+#page-slider::-ms-fill-upper {
+    background: rgb(123, 80, 1);
+    border-radius: 5px;
+}
+
+#page-slider::-ms-thumb {
+    height: 30px;
+    width: 15px;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+    background: rgb(123, 80, 1);
+}
+
+#page-slider:focus::-ms-fill-upper {
+    background: rgb(123, 80, 1);
 }
 
 .page-slider-form > span {
     position: absolute;
-    top: 50%;
+    top: 90%;
     font-size: 2rem;
 }
 
@@ -240,6 +324,8 @@ label[for=search-bar] {
     background-color: black;
     border-color: black;
     color: white;
+    font-size: 1.2rem;
+    height: 100%;
     margin-left: 2rem;
     cursor: pointer;
 }
@@ -248,7 +334,7 @@ label[for=search-bar] {
     display: flex;
     flex-flow: wrap;
     justify-content: center;
-    margin: 1rem auto 15rem;
+    margin: 2rem auto 15rem;
     width: 70%;
 }
 
