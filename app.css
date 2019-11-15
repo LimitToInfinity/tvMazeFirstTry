@@ -51,6 +51,10 @@ table {
 
 /* END MEYER RESET */
 
+* {
+    box-sizing: border-box;
+}
+
 main {
     min-height: 100vh;
     display: flex;
@@ -175,6 +179,52 @@ label[for=search-bar] {
 
 .selected {
     color: rgb(123, 80, 1);
+}
+
+.page-slider-form {
+    color: white;
+    position: relative;
+}
+
+.page-slider-form > output {
+    position: absolute;
+    background-color: rgb(123, 80, 1);
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    bottom: 125%;
+    left: -11px;
+    font: bold 15px/30px Roboto;
+}
+
+.page-slider-form > output:after { 
+    content: "";
+    position: absolute; 
+    width: 0;
+    height: 0;
+    border-top: 10px solid rgb(123, 80, 1);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -1px;
+}
+
+.page-slider-form > span {
+    position: absolute;
+    top: 60%;
+}
+
+.range-min {
+    left: 5px;
+}
+
+.range-max {
+    right: 0;
 }
 
 .show-cards-container {

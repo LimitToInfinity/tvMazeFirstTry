@@ -37,6 +37,23 @@
             <div class="pages-container">
                 <h2>Page</h2>
                 <ul class="pages"></ul>
+                <form class="page-slider-form">
+                    <output 
+                        for="page-slider"
+                        onforminput="value = page-slider.valueAsNumber"
+                    >1</output>
+                    <input
+                        type="range"
+                        name="page-slider"
+                        id="page-slider"
+                        min="1"
+                        max="447"
+                        step="1"
+                        value="1"
+                    />
+                    <span class="range-min">1</span>
+                    <span class="range-max">447</span>
+                </form>
             </div>
 
             <section class="show-cards-container"></section>

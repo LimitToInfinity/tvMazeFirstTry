@@ -4,6 +4,12 @@ let searchBarLabel;
 let genreSelector;
 let showRange;
 let pages;
+let pageSlider;
+let pageSliderOffsetWidth;
+let pageSliderMin;
+let pageSliderMax;
+let pageSliderValue;
+let pageSliderOutput;
 let pageNumber = 1;
 let end;
 let start;
@@ -19,8 +25,14 @@ function postLoad() {
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
     pages = document.querySelector(".pages");
+    pageSlider = document.querySelector("#page-slider");
+    pageSliderOutput = document.querySelector(".page-slider-form > output");
     selectedGenresUl = document.querySelector(".selected-genres");
     showCardsContainer = document.querySelector(".show-cards-container");
+
+    pageSliderOffsetWidth = pageSlider.offsetWidth;
+    pageSliderMin = pageSlider.min;
+    pageSliderMax = pageSlider.max;
 
     const showsPagesAPI = createRange(100);
     showsPagesAPI.forEach(makeFetchCalls);
@@ -36,6 +48,30 @@ function postLoad() {
     searchBar.addEventListener("input", filterShows);
     genreSelector.addEventListener("change", filterByGenre);
     selectedGenresUl.addEventListener("click", handleGenre);
+    pageSlider.addEventListener("input", handleRangeInput)
+    pageSlider.addEventListener("change", handleRangeChange)
+}
+
+function handleRangeInput(event) {
+
+    if (!event) { 
+        pageSliderValue = pageNumber;
+        pageSlider.value = pageSliderValue;
+    } else {
+        pageSliderValue = event.target.value;
+        pageNumber = pageSliderValue;
+    }
+
+    const newPoint = ((pageSliderValue - pageSliderMin) / (pageSliderMax - pageSliderMin)) * (229/256); // - min from event.target on both valie and max
+    let offset = -11;
+    const newPlace = (pageSliderOffsetWidth * newPoint) + offset;
+
+    pageSliderOutput.style.left = newPlace + "px";
+    pageSliderOutput.textContent = pageSliderValue;
+}
+
+function handleRangeChange() {
+    displayShows(filteredShows);
 }
 
 function filterShows(event) {
@@ -86,8 +122,9 @@ function filterByName(shows, searchTerm) {
 }
 
 function filterByGenres(shows) {
+    const allGenres = Array.from(selectedGenres);
     return shows.filter(show => {
-        return Array.from(selectedGenres)
+        return allGenres
             .every(selectedGenre => show.genres.includes(selectedGenre));
     });
 }
@@ -250,6 +287,7 @@ function createPageNumbers(totalNumberOfPages, shows) {
 
 function showPageNumber(event, shows) {
     pageNumber = event.target.textContent;
+    handleRangeInput();
     displayShows(shows);
 }
 
