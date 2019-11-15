@@ -4,13 +4,16 @@ let searchBarLabel;
 let genreSelector;
 let showRange;
 let pages;
+let pageSliderForm;
 let pageSlider;
 let pageSliderOffsetWidth;
 let pageSliderMin;
 let pageSliderMax;
 let pageSliderValue;
 let pageSliderOutput;
+let pageSliderRangeMax;
 let pageNumber = 1;
+let pagesToggle;
 let end;
 let start;
 let showCardsContainer;
@@ -25,11 +28,15 @@ function postLoad() {
     searchBarLabel = document.querySelector("label[for=search-bar]");
     genreSelector = document.querySelector(".genre-selector");
     pages = document.querySelector(".pages");
-    pageSlider = document.querySelector("#page-slider");
-    pageSliderOutput = document.querySelector(".page-slider-form > output");
+    pageSliderForm = document.querySelector(".page-slider-form");
+    pageSlider = pageSliderForm.querySelector("#page-slider");
+    pageSliderOutput = pageSliderForm.querySelector("output");
+    pageSliderRangeMax = pageSliderForm.querySelector(".range-max");
+    pagesToggle = document.querySelector(".pages-toggle");
     selectedGenresUl = document.querySelector(".selected-genres");
     showCardsContainer = document.querySelector(".show-cards-container");
 
+    pages.style.display = "none";
     pageSliderOffsetWidth = pageSlider.offsetWidth;
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
@@ -48,8 +55,21 @@ function postLoad() {
     searchBar.addEventListener("input", filterShows);
     genreSelector.addEventListener("change", filterByGenre);
     selectedGenresUl.addEventListener("click", handleGenre);
-    pageSlider.addEventListener("input", handleRangeInput)
-    pageSlider.addEventListener("change", handleRangeChange)
+    pageSlider.addEventListener("input", handleRangeInput);
+    pageSlider.addEventListener("change", handleRangeChange);
+    pagesToggle.addEventListener("click", togglePages);
+}
+
+function togglePages() {
+    if (pages.style.display === "none") {
+        console.log(pages.style.display)
+        pages.style.display = "flex";
+        pageSliderForm.style.display = "none";
+    } else {
+        console.log(pages.style.display)
+        pages.style.display = "none";
+        pageSliderForm.style.display = "block";
+    }
 }
 
 function handleRangeInput(event) {
@@ -255,9 +275,15 @@ function displayShows(shows) {
     if (shows.length === 0) {
         createNoShowsText();
         pageText.style.display = "none";
+        pageSliderForm.style.display = "none";
+    } else if (shows.length < 51 ) {
+        displayPage(sortedShowsByRating);
+        pageText.style.display = "block";
+        pageSliderForm.style.display = "none"
     } else {
         displayPage(sortedShowsByRating);
         pageText.style.display = "block";
+        pageSliderForm.style.display = "block";
     }
 }
 
@@ -270,6 +296,11 @@ function displayPage(sortedShowsByRating) {
 function createPageNumbers(totalNumberOfPages, shows) {
     const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
     previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
+
+    pageSlider.max = totalNumberOfPages.length;
+    pageSliderMax = totalNumberOfPages.length;
+    pageSliderRangeMax.textContent = totalNumberOfPages.length
+    handleRangeInput();
 
     totalNumberOfPages.slice(0, 10).forEach(currentPageNumber => {
         const pageNumberLi = document.createElement("li");

@@ -79,7 +79,7 @@ h1 {
 }
 
 #search-bar {
-    height: 2rem;
+    height: 3.3rem;
     width: 50%;
     border: none;
     background-color: hsl(0, 0%, 40%);
@@ -150,7 +150,9 @@ label[for=search-bar] {
 
 .pages-container {
     display: flex;
-    margin: 0 18rem;
+    justify-content: center;
+    margin: 0 3rem;
+    width: 63%;
 }
 
 .pages-container > h2 {
@@ -161,7 +163,7 @@ label[for=search-bar] {
 }
 
 .pages {
-    display: flex;
+    display: none;
     flex-flow: wrap;
     color: white;
 }
@@ -184,6 +186,7 @@ label[for=search-bar] {
 .page-slider-form {
     color: white;
     position: relative;
+    height: 3rem;
 }
 
 .page-slider-form > output {
@@ -216,15 +219,24 @@ label[for=search-bar] {
 
 .page-slider-form > span {
     position: absolute;
-    top: 60%;
+    top: 50%;
+    font-size: 2rem;
 }
 
 .range-min {
-    left: 5px;
+    left: 1px;
 }
 
 .range-max {
-    right: 0;
+    right: -22px;
+}
+
+.pages-toggle {
+    background-color: black;
+    border-color: black;
+    color: white;
+    margin-left: 2rem;
+    cursor: pointer;
 }
 
 .show-cards-container {
