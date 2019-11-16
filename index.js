@@ -289,8 +289,8 @@ function displayShows(shows) {
 
     const sortedShowsByRating = sortShowsByRating(shows);
 
-    const totalNumberOfPages = createRange(Math.ceil(shows.length/50));
-    createPageNumbers(totalNumberOfPages, shows);
+    const allPages = createRange(Math.ceil(shows.length/50));
+    setPageNumbers(allPages, shows);
 
     end = pageNumber * 50;
     start = end - 50;
@@ -326,16 +326,17 @@ function displayPage(sortedShowsByRating) {
     }
 }
 
-function createPageNumbers(totalNumberOfPages, shows) {
-    const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
-    previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
+function setPageNumbers(allPages, shows) {
+    clearPreviousPageNumbers();
+    createPageNumbers(allPages, shows);
 
-    pageSlider.max = totalNumberOfPages.length;
-    pageSliderMax = totalNumberOfPages.length;
-    pageSliderRangeMax.textContent = totalNumberOfPages.length;
-    handleRangeInput();
+    pageSlider.max = allPages.length;
+    pageSliderMax = allPages.length;
+    pageSliderRangeMax.textContent = allPages.length;
+}
 
-    totalNumberOfPages.slice(0, 10).forEach(currentPageNumber => {
+function createPageNumbers(allPages, shows) {
+    allPages.slice(0, 10).forEach(currentPageNumber => {
         const pageNumberLi = document.createElement("li");
         pageNumberLi.classList.add("page-number");
         pageNumberLi.textContent = currentPageNumber + 1;
@@ -347,6 +348,11 @@ function createPageNumbers(totalNumberOfPages, shows) {
 
         pageNumberLi.addEventListener("click", (event) => showPageNumber(event, shows));
     });
+}
+
+function clearPreviousPageNumbers() {
+    const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
+    previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
 }
 
 function showPageNumber(event, shows) {
