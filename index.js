@@ -336,7 +336,18 @@ function setPageNumbers(allPages, shows) {
 }
 
 function createPageNumbers(allPages, shows) {
-    allPages.slice(0, 10).forEach(currentPageNumber => {
+    const pageNumberAsNumber = parseInt(pageNumber, 10)
+
+    let currentPages;
+    if (pageNumberAsNumber < 6) {
+        currentPages = allPages.slice(0, 9);
+    } else if (pageNumberAsNumber > (allPages.length - 5)) {
+        currentPages = allPages.slice(-9);
+    } else {
+        currentPages = allPages.slice( (pageNumberAsNumber - 5), ( pageNumberAsNumber + 4) );
+    }
+
+    currentPages.forEach(currentPageNumber => {
         const pageNumberLi = document.createElement("li");
         pageNumberLi.classList.add("page-number");
         pageNumberLi.textContent = currentPageNumber + 1;
@@ -401,6 +412,7 @@ function createShowCard(show) {
 
     const showInfo = document.createElement("div");
     showInfo.classList.add("show-info");
+    showInfo.style.display = "none";
 
     const name = document.createElement("h4");
     name.classList.add("show-title");
@@ -428,10 +440,10 @@ function createShowCard(show) {
     officialSite.rel = "noopener noreferrer";
 
     showInfo.append(name, rating, year, runtime, officialSite);
-    showCard.append(image);
+    showCard.append(image, showInfo);
     showCardsContainer.append(showCard);
 
-    showCard.addEventListener("click", () => displayShowInfo(showCard, showInfo));
+    showCard.addEventListener("click", () => displayShowInfo(showInfo));
 }
 
 function sortShowsByRating(shows) {
@@ -451,10 +463,10 @@ function setGenres(show) {
     show.genres.forEach(genre => genres.add(genre));
 }
 
-function displayShowInfo(showCard, showInfo) {   
-    !showCard.querySelector(".show-info")
-        ? showCard.append(showInfo)
-        : showInfo.remove()
+function displayShowInfo(showInfo) {
+    showInfo.style.display === "none"
+        ? showInfo.style.display = "flex"
+        : showInfo.style.display = "none";
 }
 
 function makeFetchCalls(showsPage) {
