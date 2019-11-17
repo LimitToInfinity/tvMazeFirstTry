@@ -253,12 +253,14 @@ function setGenreSelectors() {
 }
 
 function createGenreSelectors(genre) {
-    const selector = document.createElement("option");
-    selector.classList.add("genre-option");
-    selector.value = genre;
-    selector.textContent = genre;
-
-    genreSelector.append(selector);
+    if (!selectedGenres.has(genre)) {
+        const selector = document.createElement("option");
+        selector.classList.add("genre-option");
+        selector.value = genre;
+        selector.textContent = genre;
+        
+        genreSelector.append(selector);
+    }
 }
 
 function addShrinkClass() {
