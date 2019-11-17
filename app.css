@@ -136,6 +136,7 @@ label[for=search-bar] {
     margin: 2rem 0;
     width: 100%;
     text-align: center;
+    min-height: 4rem;
 
 }
 
