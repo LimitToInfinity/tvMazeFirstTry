@@ -123,6 +123,9 @@ function determineCorrectionFactor(pageSliderOffsetWidth) {
 
 function filterShows(event) {
     pageNumber = 1;
+    if (pageSliderForm.style.display === "flex") {
+        handleRangeInput();
+    }
 
     const searchTerm = event.target.value;
    
@@ -140,6 +143,9 @@ function filterShows(event) {
 
 function filterByGenre(event) {
     pageNumber = 1;
+    if (pageSliderForm.style.display === "flex") {
+        handleRangeInput();
+    }
 
     let selectedGenre = null;
     if (event) {
