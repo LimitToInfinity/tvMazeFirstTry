@@ -1,7 +1,7 @@
 const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
-let genreSelector;
+let genrePillContainer;
 let showRange;
 let pages;
 let pageSliderForm;
@@ -21,13 +21,11 @@ let allShows = [];
 let filteredShows = [];
 const genres = new Set();
 const selectedGenres = new Set();
-let selectedGenresUl;
 
 function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
-    genreSelector = document.querySelector(".genre-selector");
-    selectedGenresUl = document.querySelector(".selected-genres");
+    genrePillContainer = document.querySelector(".genre-pills");
     pages = document.querySelector(".pages");
     pageSliderForm = document.querySelector(".page-slider-form");
     pageSlider = pageSliderForm.querySelector("#page-slider");
@@ -39,6 +37,7 @@ function postLoad() {
     pages.style.display = "none";
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
+    genrePillContainer.style.maxHeight = "3rem";
 
     const showsPagesAPI = createRange(100);
     showsPagesAPI.forEach(makeFetchCalls);
@@ -52,8 +51,7 @@ function postLoad() {
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
     searchBar.addEventListener("input", filterShows);
-    genreSelector.addEventListener("change", filterByGenre);
-    selectedGenresUl.addEventListener("click", handleGenre);
+    genrePillContainer.addEventListener("click", handleGenrePill)
     pageSlider.addEventListener("input", handleRangeInput);
     pageSlider.addEventListener("change", handleRangeChange);
     pagesToggle.addEventListener("click", togglePages);
@@ -149,15 +147,12 @@ function filterByGenre(event) {
 
     let selectedGenre = null;
     if (event) {
-        selectedGenre = event.target.value; 
+        selectedGenre = event.target.textContent; 
     }
 
-    showSelectedGenres(selectedGenre);
-        
-    if (selectedGenre === "show-all" || selectedGenre === "") { 
+    if (selectedGenre === "Show all!") {
         filteredShows = allShows;
         searchBar.value = "";
-        genreSelector.value = "";
         
         selectedGenres.clear();
     } else {
@@ -165,6 +160,49 @@ function filterByGenre(event) {
     }
 
     displayShows(filteredShows);
+}
+
+function handleGenrePill(event) {
+    const { textContent, classList } = event.target;
+
+    if (classList.contains("genre-pill") && classList.contains("highlighted")) {
+        classList.remove("highlighted");
+        selectedGenres.delete(textContent, classList);
+        filterByGenre(event);
+    } else if (classList.contains("genre-pill") && textContent !== "Show all!") {
+        classList.add("highlighted");
+        selectedGenres.add(textContent);
+        filterByGenre(event);
+    } else if (textContent === "Show all!") {
+        filterByGenre(event);
+    } else if (classList.contains("expander") || classList.contains("genre-pill-header")) {
+        expandOrContract();
+    } else if (!classList.contains("genre-pill")) {
+        return;
+    }
+}
+
+function expandOrContract() {
+    const genrePillHeader = genrePillContainer.querySelector(".genre-pill-header");
+    const expander = genrePillContainer.querySelector(".expander");
+
+    if (genrePillContainer.style.maxHeight === "3rem") {
+        genrePillContainer.style.maxHeight = "17rem";
+        genrePillContainer.classList.remove("collapsed");
+
+        genrePillHeader.classList.remove("bottom-sheet");
+
+        expander.classList.remove("fa-bars");
+        expander.classList.add("fa-times");
+    } else if (genrePillContainer.style.maxHeight === "17rem") {
+        genrePillContainer.style.maxHeight = "3rem";
+        genrePillContainer.classList.add("collapsed");
+        
+        genrePillHeader.classList.add("bottom-sheet");
+
+        expander.classList.remove("fa-times");
+        expander.classList.add("fa-bars");
+    }
 }
 
 function filterByName(shows, searchTerm) {
@@ -183,56 +221,11 @@ function filterByGenres(shows) {
 }
 
 function showSelectedGenres(currentSelectedGenre) {
-    if (currentSelectedGenre != "show-all"
-        && currentSelectedGenre != ""
-        && currentSelectedGenre != null)
+    if (currentSelectedGenre !== "Show all!"
+        && currentSelectedGenre !== null)
     { 
         selectedGenres.add(currentSelectedGenre);
     }
-    
-    clearDisplayedSelectedGenres();
-    
-    selectedGenres.forEach(selectedGenre => {
-        const selectedGenreLi = createSelectedGenre(selectedGenre);
-        const deleteImage = createDeleteImage();
-        
-        selectedGenreLi.append(deleteImage);
-        
-        selectedGenresUl.append(selectedGenreLi);
-    });
-}
-
-function createSelectedGenre(selectedGenre) {
-    const selectedGenreLi = document.createElement("li");
-    selectedGenreLi.classList.add("selected-genre");
-    selectedGenreLi.textContent = selectedGenre;
-
-    return selectedGenreLi;
-}
-
-function createDeleteImage() {
-    const deleteImage = document.createElement("i");
-    deleteImage.className = ("fa fa-times");
-    deleteImage.classList.add("genre-delete");
-
-    return deleteImage;
-}
-
-function handleGenre(event) {
-    const clickedElement = event.target;
-
-    if (clickedElement.classList.contains("selected-genre")) {
-        const selectedGenre = clickedElement.textContent;
-        removeGenre(selectedGenre);
-    } else if (clickedElement.classList.contains("genre-delete")) {
-        const selectedGenre = clickedElement.parentNode.textContent;
-        removeGenre(selectedGenre);
-    }
-}
-
-function removeGenre(selectedGenre) {
-    selectedGenres.delete(selectedGenre);
-    filterByGenre(false);
 }
 
 function removeShowCards() {
@@ -241,25 +234,26 @@ function removeShowCards() {
 }
 
 function setGenreSelectors() {
-    const previousSelectors = Array.from(genreSelector.querySelectorAll("option"));
-    const previouslyAddedSelectors = previousSelectors.filter(selector => 
-        selector.value != ""
-        && selector.value != "show-all"
+    const previousPills = Array.from(genrePillContainer.querySelectorAll("li"));
+    const previouslyAddedPills = previousPills.filter(selector => 
+        !selector.textContent.includes("Choose any genre(s)!")
+        && selector.textContent !== "Show all!"
     );
 
-    previouslyAddedSelectors.forEach(selector => selector.remove());
+    previouslyAddedPills.forEach(pill => pill.remove());
 
     genres.forEach(createGenreSelectors);
 }
 
 function createGenreSelectors(genre) {
-    if (!selectedGenres.has(genre)) {
-        const selector = document.createElement("option");
-        selector.classList.add("genre-option");
-        selector.value = genre;
-        selector.textContent = genre;
-        
-        genreSelector.append(selector);
+    const selector = document.createElement("li");
+    selector.classList.add("genre-pill");
+    selector.textContent = genre;
+    
+    genrePillContainer.append(selector);
+    
+    if (selectedGenres.has(genre)) {
+        selector.classList.add("highlighted")
     }
 }
 
@@ -291,9 +285,9 @@ function setAllShows(shows) {
 function displayShows(shows) {
     removeShowCards();
 
-    clearDisplayedSelectedGenresCheck();
-
     genres.clear();
+    setGenres(shows);
+    setGenreSelectors();
 
     const sortedShowsByRating = sortShowsByRating(shows);
 
@@ -394,23 +388,7 @@ function createNoShowsText() {
     showCardsContainer.appendChild(noShows);
 }
 
-function clearDisplayedSelectedGenresCheck() {
-    if (searchBar.value.length === 0 
-        && Array.from(selectedGenres).length === 0)
-    {
-        clearDisplayedSelectedGenres();
-    }
-}
-
-function clearDisplayedSelectedGenres() {
-    const selectedGenreLis = Array.from(document.querySelectorAll(".selected-genres > li"));
-    selectedGenreLis.forEach(selectedGenreLi => selectedGenreLi.remove());
-}
-
 function createShowCard(show) {
-    setGenres(show);
-    setGenreSelectors();
-
     const showCard = document.createElement("div");
     showCard.classList.add("show-card");
 
@@ -467,8 +445,8 @@ function sortShowsByRating(shows) {
     });
 }
 
-function setGenres(show) {
-    show.genres.forEach(genre => genres.add(genre));
+function setGenres(shows) {
+    shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
 }
 
 function displayShowInfo(showInfo) {

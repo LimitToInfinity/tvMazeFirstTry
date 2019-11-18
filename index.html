@@ -30,15 +30,6 @@
                 />
             </div>
 
-            <div class="genre-selector-container">
-                <select class="genre-selector">
-                    <option value="">Choose any genre(s)!</option>
-                    <option value="show-all">Show all!</option>
-                </select>
-
-                <ul class="selected-genres"></ul>
-            </div>
-
             <div class="pages-container">
                 <h2>Page</h2>
                 <ul class="pages"></ul>
@@ -66,12 +57,13 @@
 
             <section class="show-cards-container"></section>
 
-            <!-- Moving genre selector into pills on the bottom right of the screen for mobile. -->
-                
-            <!-- <ul class="genre-pills">
-                <li>Choose a genre!</li>
-                <li>Show all</li>
-            </ul> -->
+            <ul class="genre-pills collapsed">
+                <li class="genre-pill-header bottom-sheet">
+                    Choose any genre(s)!
+                    <i class="expander fas fa-bars"></i>
+                </li>
+                <li class="genre-pill">Show all!</li>
+            </ul>
         </main>
     </body>
 </html>
