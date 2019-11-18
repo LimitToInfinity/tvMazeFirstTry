@@ -394,12 +394,13 @@ input[type=range]:focus::-ms-fill-lower {
     right: 0;
     margin-right: 1rem;
     margin-bottom: 1rem;
-    max-height: 3rem;
+    max-height: 5rem;
     overflow-y: scroll;
     transition: all 0.8s;
 }
 
 .collapsed {
+    align-items: flex-end;
     margin: 0;
     overflow-y: unset;
 }
@@ -417,10 +418,10 @@ input[type=range]:focus::-ms-fill-lower {
     background-color: white;
     color: black;
     border-top-left-radius: 29px;
-    padding: 0.2rem 0.3rem 0 1rem;
+    padding: 0.8rem 0.3rem 0 1rem;
     font-size: 1.3rem;
     width: 9rem;
-    min-height: 3rem;
+    min-height: 5rem;
 }
 
 .expander {

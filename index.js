@@ -37,7 +37,7 @@ function postLoad() {
     pages.style.display = "none";
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
-    genrePillContainer.style.maxHeight = "3rem";
+    genrePillContainer.style.maxHeight = "5rem";
 
     const showsPagesAPI = createRange(100);
     showsPagesAPI.forEach(makeFetchCalls);
@@ -190,7 +190,7 @@ function expandOrContract() {
     const genrePillHeader = genrePillContainer.querySelector(".genre-pill-header");
     const expander = genrePillContainer.querySelector(".expander");
 
-    if (genrePillContainer.style.maxHeight === "3rem") {
+    if (genrePillContainer.style.maxHeight === "5rem") {
         genrePillContainer.style.maxHeight = "26rem";
         genrePillContainer.classList.remove("collapsed");
 
@@ -199,7 +199,7 @@ function expandOrContract() {
         expander.classList.remove("fa-bars");
         expander.classList.add("fa-times");
     } else if (genrePillContainer.style.maxHeight === "26rem") {
-        genrePillContainer.style.maxHeight = "3rem";
+        genrePillContainer.style.maxHeight = "5rem";
         genrePillContainer.classList.add("collapsed");
         
         genrePillHeader.classList.add("bottom-sheet");
