@@ -406,8 +406,11 @@ input[type=range]:focus::-ms-fill-lower {
 
 .genre-pill-header {
     display: flex;
-    width: 7rem;
+    margin-bottom: 0.4rem;
+    padding: 0 0.6rem;
+    width: 9rem;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .bottom-sheet {
@@ -428,15 +431,15 @@ input[type=range]:focus::-ms-fill-lower {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0.2rem;
+    margin-top: 0.3rem;
     padding: 0.3rem 0;
     border-radius: 15px;
     background-color: white;
     color: black;
     cursor: pointer;
-    max-height: 1.1rem;
-    width: 7rem;
-    font-size: 0.8rem;
+    max-height: 1.7rem;
+    width: 9rem;
+    font-size: 1.3rem;
 }
 
 .genre-pill:hover {
@@ -445,4 +448,20 @@ input[type=range]:focus::-ms-fill-lower {
 
 .highlighted {
     background-color: rgb(197, 170, 121);
+}
+
+@media only screen and (max-device-width: 600px) {
+    .show-cards-container {
+        width: 55%;
+    }
+
+    .show-card {
+        width: fit-content;
+    }
+
+    .genre-pill {
+        margin-top: 1.5rem;
+        width: 11rem;
+        font-size: 1.7rem;
+    }
 }

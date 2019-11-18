@@ -187,14 +187,14 @@ function expandOrContract() {
     const expander = genrePillContainer.querySelector(".expander");
 
     if (genrePillContainer.style.maxHeight === "3rem") {
-        genrePillContainer.style.maxHeight = "17rem";
+        genrePillContainer.style.maxHeight = "26rem";
         genrePillContainer.classList.remove("collapsed");
 
         genrePillHeader.classList.remove("bottom-sheet");
 
         expander.classList.remove("fa-bars");
         expander.classList.add("fa-times");
-    } else if (genrePillContainer.style.maxHeight === "17rem") {
+    } else if (genrePillContainer.style.maxHeight === "26rem") {
         genrePillContainer.style.maxHeight = "3rem";
         genrePillContainer.classList.add("collapsed");
         
