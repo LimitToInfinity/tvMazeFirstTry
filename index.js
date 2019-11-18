@@ -257,7 +257,7 @@ function createGenreSelectors(genre) {
     genrePillContainer.append(selector);
     
     if (selectedGenres.has(genre)) {
-        selector.classList.add("highlighted")
+        selector.classList.add("highlighted");
     }
 }
 

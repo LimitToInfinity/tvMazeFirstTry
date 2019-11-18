@@ -79,17 +79,17 @@ h1 {
 }
 
 #search-bar {
-    height: 3.3rem;
+    height: 5rem;
     width: 50%;
+    padding: 1.2rem 0.5rem 0;
     border: none;
     background-color: hsl(0, 0%, 40%);
-    padding-top: 1.2rem;
-    padding-left: 0.5rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom: hsla(197, 3%, 53%, 0.386);
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
+    font-size: 2.5rem;
 }
 
 #search-bar:hover {
