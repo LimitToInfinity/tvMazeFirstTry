@@ -315,10 +315,9 @@ function displayShows(shows) {
     } else {
         displayPage(sortedShowsByRating);
         pageText.style.display = "block";
+        pages.style.display = "none"
         pagesToggle.style.display = "inline-block";
-        if (pages.style.display === "none") {
-            pageSliderForm.style.display = "flex";
-        }
+        pageSliderForm.style.display = "flex";
     }
 }
 
