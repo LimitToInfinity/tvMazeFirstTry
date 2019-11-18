@@ -121,10 +121,8 @@ function determineCorrectionFactor(pageSliderOffsetWidth) {
 
 function filterShows(event) {
     pageNumber = 1;
-    if (pageSliderForm.style.display === "flex") {
-        handleRangeInput();
-    }
-
+    showPageSlider();
+    
     const searchTerm = event.target.value;
    
     filteredShows = filterByGenres(
@@ -141,9 +139,7 @@ function filterShows(event) {
 
 function filterByGenre(event) {
     pageNumber = 1;
-    if (pageSliderForm.style.display === "flex") {
-        handleRangeInput();
-    }
+    showPageSlider();
 
     let selectedGenre = null;
     if (event) {
@@ -160,6 +156,14 @@ function filterByGenre(event) {
     }
 
     displayShows(filteredShows);
+}
+
+function showPageSlider() {
+    if (pages.style.display === "flex") {
+        pages.style.display = "none";
+        pageSliderForm.style.display = "flex";
+    }
+    handleRangeInput();
 }
 
 function handleGenrePill(event) {
@@ -315,9 +319,10 @@ function displayShows(shows) {
     } else {
         displayPage(sortedShowsByRating);
         pageText.style.display = "block";
-        pages.style.display = "none"
         pagesToggle.style.display = "inline-block";
-        pageSliderForm.style.display = "flex";
+        if (pages.style.display === "none") {
+            pageSliderForm.style.display = "flex";
+        }
     }
 }
 
