@@ -30,39 +30,49 @@
                 />
             </div>
 
-            <div class="pages-container">
-                <h2>Page</h2>
-                <ul class="pages"></ul>
-                <form class="page-slider-form">
-                    <output 
-                        for="page-slider"
-                        onforminput="value = page-slider.valueAsNumber"
-                    >1</output>
-                    <input
-                        type="range"
-                        name="page-slider"
-                        id="page-slider"
-                        min="1"
-                        max="447"
-                        step="1"
-                        value="1"
-                    />
-                    <span class="range-min">1</span>
-                    <span class="range-max">447</span>
-                </form>
-                <button class="pages-toggle">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
+            <div class="sort-container">
+                <h3>Sort by</h3>
+                <select class="sort-by">
+                    <option value="rating">Rating</option>
+                    <option value="premiered">Premiered</option>
+                    <option value="name">Name</option>
+                </select>
             </div>
 
-            <section class="show-cards-container"></section>
+            
+            <section class="show-cards-container">
+                <div class="pages-container">
+                    <h2>Page</h2>
+                    <ul class="pages"></ul>
+                    <form class="page-slider-form">
+                        <output 
+                            for="page-slider"
+                            onforminput="value = page-slider.valueAsNumber"
+                        >1</output>
+                        <input
+                            type="range"
+                            name="page-slider"
+                            id="page-slider"
+                            min="1"
+                            max="447"
+                            step="1"
+                            value="1"
+                        />
+                        <span class="range-min">1</span>
+                        <span class="range-max">447</span>
+                    </form>
+                    <button class="pages-toggle">
+                        <i class="fas fa-toggle-on"></i>
+                    </button>
+                </div>
+            </section>
 
             <ul class="genre-pills collapsed">
                 <li class="genre-pill-header bottom-sheet">
-                    Choose any genre(s)!
+                    Filter by genre(s)!
                     <i class="expander fas fa-bars"></i>
                 </li>
-                <li class="genre-pill">Show all!</li>
+                <li class="genre-pill">Remove filters!</li>
             </ul>
         </main>
     </body>

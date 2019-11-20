@@ -1,8 +1,10 @@
 const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
+let sortBy;
 let genrePillContainer;
 let showRange;
+let pagesContainer;
 let pages;
 let pageSliderForm;
 let pageSlider;
@@ -14,6 +16,7 @@ let pageSliderOutput;
 let pageSliderRangeMax;
 let pageNumber = 1;
 let pagesToggle;
+let pagesToggleImage;
 let end;
 let start;
 let showCardsContainer;
@@ -25,13 +28,16 @@ const selectedGenres = new Set();
 function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
+    sortBy = document.querySelector(".sort-by");
     genrePillContainer = document.querySelector(".genre-pills");
+    pagesContainer = document.querySelector(".pages-container");
     pages = document.querySelector(".pages");
     pageSliderForm = document.querySelector(".page-slider-form");
     pageSlider = pageSliderForm.querySelector("#page-slider");
     pageSliderOutput = pageSliderForm.querySelector("output");
     pageSliderRangeMax = pageSliderForm.querySelector(".range-max");
     pagesToggle = document.querySelector(".pages-toggle");
+    pagesToggleImage = pagesToggle.querySelector("i");
     showCardsContainer = document.querySelector(".show-cards-container");
 
     pages.style.display = "none";
@@ -51,20 +57,46 @@ function postLoad() {
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
     searchBar.addEventListener("input", filterShows);
-    genrePillContainer.addEventListener("click", handleGenrePill)
+    sortBy.addEventListener("change", sortShows);
+    genrePillContainer.addEventListener("click", handleGenrePill);
     pageSlider.addEventListener("input", handleRangeInput);
     pageSlider.addEventListener("change", handleRangeChange);
     pagesToggle.addEventListener("click", togglePages);
+    window.addEventListener("scroll", handleScroll);
+}
+
+function sortShows() {
+    displayShows(filteredShows);
+}
+
+const sorter = {
+    "rating"(shows){ return sortShowsByRating(sortShowsByPremiered(sortShowsByName(shows))); },
+    "premiered"(shows){ return sortShowsByPremiered(sortShowsByRating(sortShowsByName(shows))); },
+    "name"(shows){ return sortShowsByName(sortShowsByRating(sortShowsByPremiered(shows))); },
+}
+
+function handleScroll() {
+    if (window.scrollY < 700) {
+        showCardsContainer.prepend(pagesContainer);
+    } else if (window.scrollY > 700 && window.scrollY < 1600) {
+        pagesContainer.remove();
+    } else if (window.scrollY > 1600) {
+        showCardsContainer.append(pagesContainer);
+    }
 }
 
 function togglePages() {
     if (pages.style.display === "none") {
         pages.style.display = "flex";
         pageSliderForm.style.display = "none";
+        pagesToggleImage.classList.remove("fa-toggle-on");
+        pagesToggleImage.classList.add("fa-toggle-off");
     } else {
         pages.style.display = "none";
         pageSliderForm.style.display = "flex";
         handleRangeInput();
+        pagesToggleImage.classList.remove("fa-toggle-off");
+        pagesToggleImage.classList.add("fa-toggle-on");
     }
 }
 
@@ -146,7 +178,7 @@ function filterByGenre(event) {
         selectedGenre = event.target.textContent; 
     }
 
-    if (selectedGenre === "Show all!") {
+    if (selectedGenre === "Remove filters!") {
         filteredShows = allShows;
         searchBar.value = "";
         
@@ -173,11 +205,11 @@ function handleGenrePill(event) {
         classList.remove("highlighted");
         selectedGenres.delete(textContent, classList);
         filterByGenre(event);
-    } else if (classList.contains("genre-pill") && textContent !== "Show all!") {
+    } else if (classList.contains("genre-pill") && textContent !== "Remove filters!") {
         classList.add("highlighted");
         selectedGenres.add(textContent);
         filterByGenre(event);
-    } else if (textContent === "Show all!") {
+    } else if (textContent === "Remove filters!") {
         filterByGenre(event);
     } else if (classList.contains("expander") || classList.contains("genre-pill-header")) {
         expandOrContract();
@@ -225,7 +257,7 @@ function filterByGenres(shows) {
 }
 
 function showSelectedGenres(currentSelectedGenre) {
-    if (currentSelectedGenre !== "Show all!"
+    if (currentSelectedGenre !== "Remove filters!"
         && currentSelectedGenre !== null)
     { 
         selectedGenres.add(currentSelectedGenre);
@@ -240,16 +272,17 @@ function removeShowCards() {
 function setGenreSelectors() {
     const previousPills = Array.from(genrePillContainer.querySelectorAll("li"));
     const previouslyAddedPills = previousPills.filter(selector => 
-        !selector.textContent.includes("Choose any genre(s)!")
-        && selector.textContent !== "Show all!"
+        !selector.textContent.includes("Filter by genre(s)!")
+        && selector.textContent !== "Remove filters!"
     );
 
     previouslyAddedPills.forEach(pill => pill.remove());
 
-    genres.forEach(createGenreSelectors);
+    Array.from(genres).filter(genre => selectedGenres.has(genre)).sort().forEach(createGenreSelector);
+    Array.from(genres).filter(genre => !selectedGenres.has(genre)).sort().forEach(createGenreSelector);
 }
 
-function createGenreSelectors(genre) {
+function createGenreSelector(genre) {
     const selector = document.createElement("li");
     selector.classList.add("genre-pill");
     selector.textContent = genre;
@@ -293,7 +326,7 @@ function displayShows(shows) {
     setGenres(shows);
     setGenreSelectors();
 
-    const sortedShowsByRating = sortShowsByRating(shows);
+    const sortedShows = sorter[sortBy.value](shows);
 
     const allPages = createRange(Math.ceil(shows.length/50));
     setPageNumbers(allPages, shows);
@@ -311,13 +344,13 @@ function displayShows(shows) {
         pageSliderForm.style.display = "none";
         pagesToggle.style.display = "none";
     } else if (shows.length < 51 ) {
-        displayPage(sortedShowsByRating);
+        displayPage(sortedShows);
         pageText.style.display = "block";
         pages.style.display = "flex";
         pageSliderForm.style.display = "none";
         pagesToggle.style.display = "none";
     } else {
-        displayPage(sortedShowsByRating);
+        displayPage(sortedShows);
         pageText.style.display = "block";
         pagesToggle.style.display = "inline-block";
         if (pages.style.display === "none") {
@@ -421,13 +454,17 @@ function createShowCard(show) {
     }
 
     const runtime = document.createElement("p");
-    runtime.textContent = "Runtime " + show.runtime + " mins";
+    if (show.runtime) {
+        runtime.textContent = "Runtime " + show.runtime + " mins";
+    }
 
     const officialSite = document.createElement("a");
-    officialSite.textContent = "Official Site";
-    officialSite.href = show.officialSite;
-    officialSite.target = "_blank";
-    officialSite.rel = "noopener noreferrer";
+    if (show.officialSite) {
+        officialSite.textContent = "Official Site";
+        officialSite.href = show.officialSite;
+        officialSite.target = "_blank";
+        officialSite.rel = "noopener noreferrer";
+    }
 
     showInfo.append(name, rating, year, runtime, officialSite);
     showCard.append(image, showInfo);
@@ -445,6 +482,30 @@ function sortShowsByRating(shows) {
         
         if (ratingA > ratingB) { return -1; }
         else if (ratingA < ratingB) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsByPremiered(shows) {
+    return shows.sort((a, b) => {
+        let premieredA;
+        if (!a.premiered) { premieredA = 0; }
+        else { premieredA = parseInt(a.premiered.slice(0, 4), 10); }
+        
+        let premieredB;
+        if (!b.premiered) { premieredB = 0; }
+        else { premieredB = parseInt(b.premiered.slice(0, 4), 10); }
+        
+        if (premieredA > premieredB) { return -1; }
+        else if (premieredA < premieredB) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsByName(shows) {
+    return shows.sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        else if (a.name > b.name) { return 1; }
         else { return 0; }
     });
 }
