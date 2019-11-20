@@ -450,7 +450,7 @@ function createShowCard(show) {
 
     const year = document.createElement("p");
     if (show.premiered) {
-        year.textContent = "Premiered " + show.premiered.slice(0, 4);
+        year.textContent = "Premiered " + show.premiered;
     }
 
     const runtime = document.createElement("p");
@@ -490,11 +490,11 @@ function sortShowsByPremiered(shows) {
     return shows.sort((a, b) => {
         let premieredA;
         if (!a.premiered) { premieredA = 0; }
-        else { premieredA = parseInt(a.premiered.slice(0, 4), 10); }
+        else { premieredA = new Date(a.premiered); }
         
         let premieredB;
         if (!b.premiered) { premieredB = 0; }
-        else { premieredB = parseInt(b.premiered.slice(0, 4), 10); }
+        else { premieredB = new Date(b.premiered); }
         
         if (premieredA > premieredB) { return -1; }
         else if (premieredA < premieredB) { return 1; }
