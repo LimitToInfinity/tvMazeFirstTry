@@ -111,10 +111,10 @@ h1 {
     transition: all 0.3s;
 }
 
-label[for=search-bar] {
+.search-bar-label {
     position: absolute;
     padding: 1rem 0 0 0.5rem;
-    font-size: 0.9rem;
+    font-size: 2rem;
     color: rgb(72, 72, 72);
     font-family: Roboto, sans-serif;
     transition: all 0.3s;
@@ -122,15 +122,15 @@ label[for=search-bar] {
 }
 
 .shrink-colored {
-    color: #136b9b;
-    font-size: 0.6rem;
+    color: purple;
+    font-size: 1rem;
     transform: translateY(-8px);
     transition: all 0.3s;
     z-index: 2;
 }
 
 .shrink-uncolored {
-    font-size: 0.6rem;
+    font-size: 1rem;
     transform: translateY(-8px);
 }
 
@@ -341,7 +341,7 @@ label[for=search-bar] {
     cursor: pointer;
 }
 
-input[type=range]:focus::-ms-fill-lower {
+#page-slider:focus::-ms-fill-lower {
     background: rgb(123, 80, 1);
 }
 
@@ -457,7 +457,6 @@ input[type=range]:focus::-ms-fill-lower {
     right: 0;
     margin-right: 1rem;
     margin-bottom: 1rem;
-    max-height: 5rem;
     overflow-y: scroll;
     transition: all 0.8s;
 }
@@ -466,12 +465,16 @@ input[type=range]:focus::-ms-fill-lower {
     align-items: flex-end;
     margin: 0;
     overflow-y: unset;
+    max-height: 5rem;
+}
+
+.expanded {
+    max-height: 26rem;
 }
 
 .genre-pill-header {
     display: flex;
-    margin-bottom: 0.4rem;
-    padding: 0 0.6rem;
+    padding: 0 0.4rem;
     width: 9rem;
     cursor: pointer;
     font-size: 1.2rem;
@@ -480,7 +483,7 @@ input[type=range]:focus::-ms-fill-lower {
 .bottom-sheet {
     background-color: white;
     color: black;
-    border-top-left-radius: 29px;
+    border-top-left-radius: 40px;
     padding: 0.8rem 0.3rem 0 1rem;
     font-size: 1.3rem;
     width: 9rem;
@@ -495,13 +498,14 @@ input[type=range]:focus::-ms-fill-lower {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     margin-top: 0.3rem;
     padding: 0.3rem 0;
     border-radius: 15px;
     background-color: white;
     color: black;
     cursor: pointer;
-    max-height: 1.7rem;
+    /* max-height: 1.7rem; */
     min-width: 9rem;
     font-size: 1.3rem;
 }
@@ -515,17 +519,229 @@ input[type=range]:focus::-ms-fill-lower {
 }
 
 @media only screen and (max-device-width: 600px) {
+    h1 {
+        font-size: 7rem;
+    }
+
+    .search-bar-label {
+        font-size: 3.5rem;
+    }
+
+    .shrink-colored {
+        font-size: 2rem;
+    }
+
+    .shrink-uncolored {
+        font-size: 2rem;
+    }
+
+    #search-bar {
+        height: 8rem;
+        width: 63%;
+        padding: 2.2rem 0.5rem 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        font-size: 4.7rem;
+    }
+
+    .sort-container {
+        margin: 2rem 0;
+    }
+
+    .sort-container > h3 {
+        margin-right: 2rem;
+        font-size: 5rem;
+    }
+
+    .sort-by {
+        font-size: 3rem;
+    }
+
+    .pages-container {
+        margin: 6rem 0;
+    }
+    
+    .pages-container > h2 {
+        margin: 0;
+        font-size: 4.5rem;
+    }
+
+    .pages {
+        justify-content: space-between;
+        min-width: 27rem;
+        margin: 0 3rem;
+    }
+
+    .page-number {
+        margin: 0 1.5rem 1rem;
+        font-size: 6rem;
+    }
+
+    .page-slider-form {
+        margin: 0 4rem;
+    }
+
+    .page-slider-form > output {
+        width: 100px;
+        height: 75px;
+        border-radius: 15px;
+        bottom: 135%;
+        left: -34px;
+        font: bold 56px/78px Roboto;
+    }
+
+    .page-slider-form > output:after { 
+        width: 3px;
+        border-top: 25px solid rgb(123, 80, 1);
+    }
+
+    #page-slider {
+        background-color: black;
+        width: 40vw;
+    }
+
+    #page-slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 25px;
+        border-radius: 15px;
+        cursor: pointer;
+        animation: 0.2s;
+        background: rgb(123, 80, 1);
+    }
+    
+    #page-slider::-webkit-slider-thumb {
+        height: 60px;
+        width: 30px;
+        border-radius: 15px;
+        background: white;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -17px;
+    }
+    
+    #page-slider:focus::-webkit-slider-runnable-track {
+        background: rgb(123, 80, 1);
+    }
+    
+    #page-slider::-moz-range-track {
+        width: 100%;
+        height: 25px;
+        cursor: pointer;
+        animation: 0.2s;
+        background: rgb(123, 80, 1);
+    }
+    
+    #page-slider::-moz-range-thumb {
+        height: 60px;
+        width: 30px;
+        border-radius: 15px;
+        background: white;
+        cursor: pointer;
+    }
+    
+    #page-slider::-ms-track {
+        width: 100%;
+        height: 25px;
+        cursor: pointer;
+        animation: 0.2s;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+    
+    #page-slider::-ms-fill-lower {
+        background: rgb(123, 80, 1);
+        border-radius: 15px;
+    }
+    
+    #page-slider::-ms-fill-upper {
+        background: rgb(123, 80, 1);
+        border-radius: 15px;
+    }
+    
+    #page-slider::-ms-thumb {
+        height: 60px;
+        width: 30px;
+        border-radius: 15px;
+        background: white;
+        cursor: pointer;
+    }
+    
+    #page-slider:focus::-ms-fill-lower {
+        background: rgb(123, 80, 1);
+    }
+    
+    #page-slider:focus::-ms-fill-upper {
+        background: rgb(123, 80, 1);
+    }
+
+    .page-slider-form > span {
+        top: 100%;
+        font-size: 5rem;
+    }
+
+    .range-min {
+        left: -15px;
+    }
+
+    .range-max {
+        right: -25px;
+    }
+
+    .pages-toggle {
+        margin: 0;
+        font-size: 6rem;
+    }
+    
     .show-cards-container {
-        width: 55%;
+        width: 75%;
     }
 
     .show-card {
-        width: fit-content;
+        flex-basis: 40%;
+        margin: 30px 36px
+    }
+
+    .show-info > h4 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .show-info > p {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .show-info > a {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .genre-pills {
+        bottom: 31px;
+        margin-bottom: 0;
+    }
+
+    .bottom-sheet {
+        min-height: 7rem;
+    }
+
+    .expanded {
+        max-height: 60rem;
+        bottom: 0;
+    }
+
+    .genre-pill-header {
+        width: 14rem;
+        font-size: 2.7rem;
+        padding-left: 2.7rem;
     }
 
     .genre-pill {
         margin-top: 1.5rem;
-        width: 11rem;
-        font-size: 1.6rem;
+        height: 6rem;
+        width: 17rem;
+        border-radius: 50px;
+        font-size: 3rem;
     }
 }
