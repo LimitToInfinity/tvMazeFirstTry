@@ -31,7 +31,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
+    background-color: black;
 }
 ol, ul {
 	list-style: none;
@@ -61,7 +62,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: black;
 }
 
 h1 {
@@ -286,7 +286,7 @@ h1 {
 #page-slider::-webkit-slider-thumb {
     height: 30px;
     width: 15px;
-    border-radius: 5px;
+    border-radius: 15px;
     background: white;
     cursor: pointer;
     -webkit-appearance: none;
@@ -308,7 +308,7 @@ h1 {
 #page-slider::-moz-range-thumb {
     height: 30px;
     width: 15px;
-    border-radius: 5px;
+    border-radius: 15px;
     background: white;
     cursor: pointer;
 }
@@ -325,18 +325,18 @@ h1 {
 
 #page-slider::-ms-fill-lower {
     background: rgb(123, 80, 1);
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 #page-slider::-ms-fill-upper {
     background: rgb(123, 80, 1);
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 #page-slider::-ms-thumb {
     height: 30px;
     width: 15px;
-    border-radius: 5px;
+    border-radius: 15px;
     background: white;
     cursor: pointer;
 }
@@ -380,7 +380,7 @@ h1 {
 .show-cards-container {
     display: flex;
     flex-flow: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 0 auto 1rem;
     width: 70%;
 }
@@ -392,10 +392,10 @@ h1 {
 }
 
 .show-card {
-    display: inline-block;
-    margin: 17px auto;
-    height: 15%;
-    width: 17%;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 15rem;
+    margin: 17px 17px;
     box-shadow: 4px 4px 10px white;
     /* box-shadow: 13px 13px 13px hsl(0, 0%, 15%); */
     /* box-shadow: 15px 15px 10px rgb(148, 148, 148); */
@@ -418,8 +418,6 @@ h1 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 100%;
-    width: 100%;
     font-size: 1rem;
     background-color: rgba(255, 232, 232, 0.845);
 }
@@ -568,7 +566,7 @@ h1 {
 
     .pages {
         justify-content: space-between;
-        min-width: 27rem;
+        min-width: 29rem;
         margin: 0 3rem;
     }
 
@@ -698,8 +696,9 @@ h1 {
     }
 
     .show-card {
-        flex-basis: 40%;
-        margin: 30px 36px
+        flex-basis: 70%;
+        margin: 30px 17px;
+        height: 100%;
     }
 
     .show-info > h4 {

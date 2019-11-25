@@ -77,10 +77,11 @@ const sorter = {
 function handleScroll() {
     if (window.scrollY < 700) {
         showCardsContainer.prepend(pagesContainer);
-    } else if (window.scrollY > 700 && window.scrollY < 1600) {
+    } else if (window.scrollY > 850 && window.scrollY < 1450) {
         pagesContainer.remove();
     } else if (window.scrollY > 1600) {
         showCardsContainer.append(pagesContainer);
+        console.log(window.scrollY)
     }
 }
 
@@ -329,7 +330,12 @@ function setAllShows(shows) {
 }
 
 function displayShows(shows) {
-    window.scroll({ top: 0, behavior: 'smooth' });
+    if (!window.matchMedia('(max-device-width: 600px)').matches) {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    } else if (window.matchMedia('(max-device-width: 600px)').matches) {
+        window.scroll({top: 0});
+    }
+
     removeShowCards();
 
     genres.clear();
