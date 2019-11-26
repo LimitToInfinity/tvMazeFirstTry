@@ -479,6 +479,24 @@ function createShowCard(show) {
         runtime.textContent = "Runtime " + show.runtime + " mins";
     }
 
+    const genresDisplayer = document.createElement("ul");
+    if (show.genres.length === 0) {
+        genresDisplayer.textContent = "No genres";
+    } else if (show.genres.length === 1) {
+        genresDisplayer.textContent = "Genre"
+        
+        const genreDisplay = document.createElement("li");
+        genreDisplay.textContent = show.genres[0];
+        genresDisplayer.appendChild(genreDisplay);
+    } else {
+        genresDisplayer.textContent = "Genres"
+        show.genres.sort().map(genre => {
+            const genreDisplay = document.createElement("li");
+            genreDisplay.textContent = genre;
+            genresDisplayer.appendChild(genreDisplay);
+        })
+    }
+
     const officialSite = document.createElement("a");
     if (show.officialSite) {
         officialSite.textContent = "Official Site";
@@ -487,7 +505,7 @@ function createShowCard(show) {
         officialSite.rel = "noopener noreferrer";
     }
 
-    showInfo.append(name, rating, year, runtime, officialSite);
+    showInfo.append(name, rating, year, runtime, genresDisplayer, officialSite);
     showCard.append(image, showInfo);
     showCardsContainer.append(showCard);
 
