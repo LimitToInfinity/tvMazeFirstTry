@@ -713,12 +713,21 @@ h1 {
 
     .show-info > h4 {
         font-size: 2.8rem;
-        margin-bottom: 1rem;
+        margin: 1rem 0.6rem;
     }
 
     .show-info > p {
         font-size: 2.8rem;
         margin-bottom: 1rem;
+    }
+
+    .show-info > ul {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .show-info > ul > li {
+        margin-left: 1.2rem;
     }
 
     .show-info > a {
