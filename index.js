@@ -81,7 +81,6 @@ function handleScroll() {
         pagesContainer.remove();
     } else if (window.scrollY > 1600) {
         showCardsContainer.append(pagesContainer);
-        console.log(window.scrollY)
     }
 }
 
