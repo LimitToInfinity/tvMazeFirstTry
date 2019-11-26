@@ -235,7 +235,9 @@ function expandOrContract() {
 
         genrePillHeader.classList.remove("bottom-sheet");
         genrePillHeader.style.textShadow = "3px 3px 7px black, -3px 3px 7px black, 3px -3px 7px black, -3px -3px 7px black";
-        genrePillHeader.style.fontSize = "6rem";
+        if (window.matchMedia('(max-device-width: 600px)').matches) {
+            genrePillHeader.style.fontSize = "6rem";
+        }
 
         expander.classList.remove("fa-bars");
         expander.classList.add("fa-times");
@@ -245,7 +247,9 @@ function expandOrContract() {
         
         genrePillHeader.classList.add("bottom-sheet");
         genrePillHeader.style.textShadow = "none";
-        genrePillHeader.style.fontSize = "3rem";
+        if (window.matchMedia('(max-device-width: 600px)').matches) {
+            genrePillHeader.style.fontSize = "3rem";
+        }
 
         expander.classList.remove("fa-times");
         expander.classList.add("fa-bars");
