@@ -711,6 +711,10 @@ h1 {
         height: 100%;
     }
 
+    .show-card:hover {
+        transform: scale3d(1.15, 1.15, 1.15);
+    }
+
     .show-info > h4 {
         font-size: 2.8rem;
         margin: 1rem 0.6rem;
