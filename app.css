@@ -403,7 +403,7 @@ h1 {
 }
 
 .show-card:hover {
-    transform: scale3d(1.7, 1.7, 1.7);
+    transform: scale3d(1.25, 1.25, 1.25);
     box-shadow: 1px 1px 8px rgb(123, 80, 1), -1px 1px 8px rgb(123, 80, 1), 1px -1px 8px rgb(123, 80, 1), -1px -1px 8px rgb(123, 80, 1);
     z-index: 10;
 }
