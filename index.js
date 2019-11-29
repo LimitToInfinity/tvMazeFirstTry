@@ -1,9 +1,10 @@
-const fetchCalls = [];
 let searchBar;
 let searchBarLabel;
+
 let sortBy;
+
 let genrePillContainer;
-let showRange;
+
 let pagesContainer;
 let pages;
 let pageSliderForm;
@@ -17,11 +18,15 @@ let pageSliderRangeMax;
 let pageNumber = 1;
 let pagesToggle;
 let pagesToggleImage;
+
 let end;
 let start;
+
 let showCardsContainer;
+
 let allShows = [];
 let filteredShows = [];
+
 const genres = new Set();
 const selectedGenres = new Set();
 
@@ -44,8 +49,8 @@ function postLoad() {
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
 
-    const showsPagesAPI = createRange(100);
-    showsPagesAPI.forEach(makeFetchCalls);
+    const apiShowsPages = createRange(181);
+    const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
         .then(parseAllToJSON)
@@ -69,18 +74,41 @@ function sortShows() {
 }
 
 const sorter = {
-    "rating"(shows){ return sortShowsByRating(sortShowsByPremiered(sortShowsByName(shows))); },
-    "premiered"(shows){ return sortShowsByPremiered(sortShowsByRating(sortShowsByName(shows))); },
-    "name"(shows){ return sortShowsByName(sortShowsByRating(sortShowsByPremiered(shows))); },
+    "Most popular"(shows){ return sortShowsByMostPopular(
+        sortShowsByHighestRating( sortShowsByMostRecent(shows))); },
+    "Least popular"(shows){ return sortShowsByLeastPopular(
+        sortShowsByLowestRating( sortShowsByLeastRecent(shows))); },
+    "Highest rating"(shows){ return sortShowsByHighestRating(
+        sortShowsByMostPopular( sortShowsByMostRecent(shows))); },
+    "Lowest rating"(shows){ return sortShowsByLowestRating(
+        sortShowsByLeastPopular( sortShowsByLeastRecent(shows))); },
+    "Most recent"(shows){ return sortShowsByMostRecent(
+        sortShowsByMostPopular( sortShowsByHighestRating(shows))); },
+    "Least recent"(shows){ return sortShowsByLeastRecent(
+        sortShowsByLeastPopular( sortShowsByHighestRating(shows))); },
+    "A to Z"(shows){ return sortShowsAToZ(
+        sortShowsByMostPopular( sortShowsByHighestRating( sortShowsByMostRecent(shows)))); },
+    "Z to A"(shows){ return sortShowsZToA(
+        sortShowsByMostPopular( sortShowsByHighestRating( sortShowsByMostRecent(shows)))); },
 }
 
 function handleScroll() {
-    if (window.scrollY < 700) {
-        showCardsContainer.prepend(pagesContainer);
-    } else if (window.scrollY > 850 && window.scrollY < 1450) {
-        pagesContainer.remove();
-    } else if (window.scrollY > 1600) {
-        showCardsContainer.append(pagesContainer);
+    if (window.matchMedia('(max-device-width: 600px)').matches) {
+        if (window.scrollY < 1800) {
+            showCardsContainer.prepend(pagesContainer);
+        } else if (window.scrollY > 2200 && window.scrollY < 3000) {
+            pagesContainer.remove();
+        } else if (window.scrollY > 3400) {
+            showCardsContainer.append(pagesContainer);
+        }
+    } else {
+        if (window.scrollY < 700) {
+            showCardsContainer.prepend(pagesContainer);
+        } else if (window.scrollY > 850 && window.scrollY < 1450) {
+            pagesContainer.remove();
+        } else if (window.scrollY > 1600) {
+            showCardsContainer.append(pagesContainer);
+        }
     }
 }
 
@@ -328,7 +356,8 @@ function removeShrinkClass() {
 }
 
 function setAllShows(shows) {
-    allShows = shows.filter(show => show.image);
+    allShows = shows;
+    // .filter(show => show.image);
     filteredShows = allShows;
 
     return allShows;
@@ -452,7 +481,11 @@ function createShowCard(show) {
 
     const image = document.createElement("img");
     image.classList.add("show-image");
-    image.src = show.image.medium;
+    if (show.image) {
+        image.src = show.image.medium;
+    } else {
+        image.src = "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png";
+    }
 
     const showInfo = document.createElement("div");
     showInfo.classList.add("show-info");
@@ -512,7 +545,43 @@ function createShowCard(show) {
     showCard.addEventListener("click", () => displayShowInfo(showInfo));
 }
 
-function sortShowsByRating(shows) {
+function sortShowsByMostPopular(shows) {
+    return shows.sort((a, b) => {
+        let aPopular;
+        a.rating
+            ? aPopular = a.weight + a.rating.average
+            : aPopular = a.weight;
+
+        let bPopular;
+        b.rating
+            ? bPopular = b.weight + b.rating.average
+            : bPopular = b.weight;
+        
+        if (aPopular > bPopular) { return -1; }
+        else if (aPopular < bPopular) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsByLeastPopular(shows) {
+    return shows.sort((a, b) => {
+        let aPopular;
+        a.rating
+            ? aPopular = a.weight + a.rating.average
+            : aPopular = a.weight;
+
+        let bPopular;
+        b.rating
+            ? bPopular = b.weight + b.rating.average
+            : bPopular = b.weight;
+        
+        if (bPopular > aPopular) { return -1; }
+        else if (bPopular < aPopular) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsByHighestRating(shows) {
     return shows.sort((a, b) => {
         let ratingA = a.rating.average;
         if (!ratingA) { ratingA = 0; }
@@ -525,7 +594,20 @@ function sortShowsByRating(shows) {
     });
 }
 
-function sortShowsByPremiered(shows) {
+function sortShowsByLowestRating(shows) {
+    return shows.sort((a, b) => {
+        let ratingA = a.rating.average;
+        if (!ratingA) { ratingA = 0; }
+        let ratingB = b.rating.average;
+        if (!ratingB) { ratingB = 0; }
+        
+        if (ratingB > ratingA) { return -1; }
+        else if (ratingB < ratingA) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsByMostRecent(shows) {
     return shows.sort((a, b) => {
         let premieredA;
         if (!a.premiered) { premieredA = 0; }
@@ -541,10 +623,34 @@ function sortShowsByPremiered(shows) {
     });
 }
 
-function sortShowsByName(shows) {
+function sortShowsByLeastRecent(shows) {
+    return shows.sort((a, b) => {
+        let premieredA;
+        if (!a.premiered) { premieredA = 0; }
+        else { premieredA = new Date(a.premiered); }
+        
+        let premieredB;
+        if (!b.premiered) { premieredB = 0; }
+        else { premieredB = new Date(b.premiered); }
+        
+        if (premieredB > premieredA) { return -1; }
+        else if (premieredB < premieredA) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsAToZ(shows) {
     return shows.sort((a, b) => {
         if (a.name < b.name) { return -1; }
         else if (a.name > b.name) { return 1; }
+        else { return 0; }
+    });
+}
+
+function sortShowsZToA(shows) {
+    return shows.sort((a, b) => {
+        if (b.name < a.name) { return -1; }
+        else if (b.name > a.name) { return 1; }
         else { return 0; }
     });
 }
@@ -561,7 +667,7 @@ function displayShowInfo(showInfo) {
 
 function makeFetchCalls(showsPage) {
     const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
-    return fetchCalls.push(fetch(url));
+    return fetch(url);
 }
 
 function createRange(number) {
