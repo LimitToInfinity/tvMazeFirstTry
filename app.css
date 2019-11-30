@@ -32,7 +32,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
-    background-color: black;
 }
 ol, ul {
 	list-style: none;
@@ -56,6 +55,10 @@ table {
     box-sizing: border-box;
 }
 
+body {
+    background-color: hsl(0, 0%, 98%);
+}
+
 main {
     min-height: 100vh;
     padding-bottom: 15rem;
@@ -68,7 +71,6 @@ h1 {
     text-align: center;
     font-size: 5rem;
     margin: 4rem 0 1.5rem;
-    color: white;
     font-family: Righteous, serif;
 }
 
@@ -81,28 +83,28 @@ h1 {
 }
 
 #search-bar {
-    height: 5rem;
+    height: 4.3rem;
     width: 50%;
-    padding: 1.2rem 0.5rem 0;
+    padding: 1.8rem 0.5rem 0;
     border: none;
-    background-color: hsl(0, 0%, 40%);
+    background-color: hsl(0, 0%, 95%);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom: hsla(197, 3%, 53%, 0.386);
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 #search-bar:hover {
-  background-color: hsl(0, 0%, 55%);
+  background-color: hsl(0, 0%, 92%);
   border-bottom: #333;
   border-bottom-style: solid;
   border-bottom-width: 1.3px;
 }
 
 #search-bar:focus {
-    background-color: hsl(0, 0%, 70%);
+    background-color: hsl(0, 0%, 88%);
     border-bottom: purple;
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
@@ -114,8 +116,8 @@ h1 {
 .search-bar-label {
     position: absolute;
     padding: 1rem 0 0 0.5rem;
-    font-size: 2rem;
-    color: rgb(72, 72, 72);
+    font-size: 1.3rem;
+    color: rgb(104, 104, 104);
     font-family: Roboto, sans-serif;
     transition: all 0.3s;
     pointer-events: none;
@@ -138,7 +140,6 @@ h1 {
     display: flex;
     align-items: center;
     margin: 0.8rem 0;
-    color: white;
     font-size: 2rem;
 }
 
@@ -154,11 +155,8 @@ h1 {
 	color: #444;
 	line-height: 1.3;
 	padding: 0.3em 2em 0.3em 0.6em;
-	/* width: 100%;
-	max-width: 100%;
-	margin: 0; */
 	border: 1px solid #aaa;
-	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+	box-shadow: 0 1px 0 1px rgba(0,0,0,.06);
 	border-radius: 10px;
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -176,11 +174,11 @@ h1 {
 }
 
 .sort-by:hover {
-	border-color: #888;
+	border-color: rgb(113, 113, 113);
 }
 
 .sort-by:focus {
-	border-color: #aaa;
+	border-color: rgb(113, 113, 113);
 	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
 	box-shadow: 0 0 0 3px -moz-mac-focusring;
 	color: #222;
@@ -200,7 +198,6 @@ h1 {
 }
 
 .pages-container > h2 {
-    color: white;
     margin: 0 0.5rem 0.2rem;
     padding: 0 0.5rem;
     font-size: 2rem;
@@ -210,7 +207,6 @@ h1 {
     display: none;
     align-items: center;
     flex-flow: wrap;
-    color: white;
     min-height: 5rem;
 }
 
@@ -232,7 +228,6 @@ h1 {
 .page-slider-form {
     display: flex;
     align-items: center;
-    color: white;
     position: relative;
     min-height: 5rem;
 }
@@ -287,7 +282,7 @@ h1 {
     height: 30px;
     width: 15px;
     border-radius: 15px;
-    background: white;
+    background: black;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -11px;
@@ -309,7 +304,7 @@ h1 {
     height: 30px;
     width: 15px;
     border-radius: 15px;
-    background: white;
+    background: black;
     cursor: pointer;
 }
 
@@ -337,7 +332,7 @@ h1 {
     height: 30px;
     width: 15px;
     border-radius: 15px;
-    background: white;
+    background: black;
     cursor: pointer;
 }
 
@@ -364,11 +359,9 @@ h1 {
 }
 
 .pages-toggle {
-    background-color: black;
-    border-color: black;
-    color: white;
+    background-color: hsl(0, 0%, 98%);
+    border-color: hsl(0, 0%, 98%);
     font-size: 2rem;
-    height: 100%;
     margin-left: 2rem;
     cursor: pointer;
 }
@@ -388,7 +381,6 @@ h1 {
 .no-shows {
     font-size: 5rem;
     text-align: center;
-    color: white;
 }
 
 .show-card {
@@ -396,9 +388,8 @@ h1 {
     flex-direction: column;
     flex-basis: 15rem;
     margin: 17px 17px;
-    box-shadow: 4px 4px 10px white;
-    /* box-shadow: 13px 13px 13px hsl(0, 0%, 15%); */
-    /* box-shadow: 15px 15px 10px rgb(148, 148, 148); */
+    box-shadow: 13px 13px 13px hsl(0, 0%, 15%);
+    box-shadow: 15px 15px 10px rgb(148, 148, 148);
     cursor: pointer;
 }
 
@@ -455,7 +446,7 @@ h1 {
 }
 
 .genre-pills {
-    color: white;
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -488,8 +479,8 @@ h1 {
 }
 
 .bottom-sheet {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     border-top-left-radius: 40px;
     padding: 0.8rem 0.3rem 0 1rem;
     font-size: 1.3rem;
@@ -510,20 +501,19 @@ h1 {
     margin-top: 0.3rem;
     padding: 0.3rem 0;
     border-radius: 15px;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     cursor: pointer;
-    /* max-height: 1.7rem; */
     min-width: 9rem;
     font-size: 1.3rem;
 }
 
 .genre-pill:hover {
-    background-color: rgb(197, 170, 121);
+    background-color: rgb(123, 80, 1);
 }
 
 .highlighted {
-    background-color: rgb(197, 170, 121);
+    background-color: rgb(123, 80, 1);
 }
 
 @media only screen and (max-device-width: 600px) {
@@ -531,25 +521,28 @@ h1 {
         font-size: 7rem;
     }
 
-    .search-bar-label {
+    #search-bar {
+        height: 8rem;
+        width: 63%;
+        padding: 3.5rem 0.5rem 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         font-size: 3.5rem;
     }
 
+    .search-bar-label {
+        margin-top: 1.3rem;
+        font-size: 2.5rem;
+    }
+
     .shrink-colored {
+        margin: 0.5rem;
         font-size: 2rem;
     }
 
     .shrink-uncolored {
+        margin: 0.5rem;
         font-size: 2rem;
-    }
-
-    #search-bar {
-        height: 8rem;
-        width: 63%;
-        padding: 2.2rem 0.5rem 0;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        font-size: 4.7rem;
     }
 
     .sort-container {
@@ -558,11 +551,11 @@ h1 {
 
     .sort-container > h3 {
         margin-right: 2rem;
-        font-size: 5rem;
+        font-size: 3rem;
     }
 
     .sort-by {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .pages-container {
@@ -604,7 +597,7 @@ h1 {
     }
 
     #page-slider {
-        background-color: black;
+        background-color: white;
         width: 40vw;
     }
 
@@ -621,7 +614,7 @@ h1 {
         height: 60px;
         width: 30px;
         border-radius: 15px;
-        background: white;
+        background: black;
         cursor: pointer;
         -webkit-appearance: none;
         margin-top: -17px;
@@ -643,7 +636,7 @@ h1 {
         height: 60px;
         width: 30px;
         border-radius: 15px;
-        background: white;
+        background: black;
         cursor: pointer;
     }
     
@@ -671,7 +664,7 @@ h1 {
         height: 60px;
         width: 30px;
         border-radius: 15px;
-        background: white;
+        background: black;
         cursor: pointer;
     }
     
@@ -740,14 +733,16 @@ h1 {
     }
 
     .genre-pills {
+        background-color: white;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
         bottom: 31px;
-        margin-bottom: 0;
+        right: unset;
+        margin: 0;
         min-width: 100vw;
         z-index: 10;
-        transition: max-height 0.8s;
+        transition: max-height 0.8s, bottom 0.8s;
     }
 
     .bottom-sheet {
@@ -759,6 +754,9 @@ h1 {
     .expanded {
         max-height: 25rem;
         bottom: 0;
+        border: black solid;
+        border-top-right-radius: 110px;
+        border-top-left-radius: 110px;
     }
 
     .genre-pill-header {

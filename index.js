@@ -262,24 +262,22 @@ function expandOrContract() {
         genrePillContainer.classList.add("expanded");
 
         genrePillHeader.classList.remove("bottom-sheet");
-        genrePillHeader.style.textShadow = "3px 3px 7px black, -3px 3px 7px black, 3px -3px 7px black, -3px -3px 7px black";
         if (window.matchMedia('(max-device-width: 600px)').matches) {
             genrePillHeader.style.fontSize = "6rem";
         }
 
         expander.classList.remove("fa-bars");
-        expander.classList.add("fa-times");
+        expander.classList.add("fa-chevron-down");
     } else if (genrePillContainer.classList.contains("expanded")) {
         genrePillContainer.classList.remove("expanded");
         genrePillContainer.classList.add("collapsed");
         
         genrePillHeader.classList.add("bottom-sheet");
-        genrePillHeader.style.textShadow = "none";
         if (window.matchMedia('(max-device-width: 600px)').matches) {
             genrePillHeader.style.fontSize = "3rem";
         }
 
-        expander.classList.remove("fa-times");
+        expander.classList.remove("fa-chevron-down");
         expander.classList.add("fa-bars");
     }
 }
@@ -338,18 +336,15 @@ function createGenreSelector(genre) {
 }
 
 function addShrinkClass() {
-    // console.log("shrink")
     searchBarLabel.classList.remove("shrink-uncolored");
     searchBarLabel.classList.add("shrink-colored");
 }
 
 function removeShrinkClass() {
     if (!searchBar.value) {
-        // console.log("unshrink no value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.remove("shrink-uncolored");
     } else {
-        // console.log("unshrink value")
         searchBarLabel.classList.remove("shrink-colored");
         searchBarLabel.classList.add("shrink-uncolored");
     }
@@ -357,7 +352,6 @@ function removeShrinkClass() {
 
 function setAllShows(shows) {
     allShows = shows;
-    // .filter(show => show.image);
     filteredShows = allShows;
 
     return allShows;
@@ -583,10 +577,15 @@ function sortShowsByLeastPopular(shows) {
 
 function sortShowsByHighestRating(shows) {
     return shows.sort((a, b) => {
-        let ratingA = a.rating.average;
-        if (!ratingA) { ratingA = 0; }
-        let ratingB = b.rating.average;
-        if (!ratingB) { ratingB = 0; }
+        let ratingA
+        a.rating
+            ? ratingA = a.rating.average
+            : ratingA = 0
+
+        let ratingB
+        b.rating
+            ? ratingB = b.rating.average
+            : ratingB = 0
         
         if (ratingA > ratingB) { return -1; }
         else if (ratingA < ratingB) { return 1; }
@@ -596,10 +595,15 @@ function sortShowsByHighestRating(shows) {
 
 function sortShowsByLowestRating(shows) {
     return shows.sort((a, b) => {
-        let ratingA = a.rating.average;
-        if (!ratingA) { ratingA = 0; }
-        let ratingB = b.rating.average;
-        if (!ratingB) { ratingB = 0; }
+        let ratingA
+        a.rating
+            ? ratingA = a.rating.average
+            : ratingA = 0
+
+        let ratingB
+        b.rating
+            ? ratingB = b.rating.average
+            : ratingB = 0
         
         if (ratingB > ratingA) { return -1; }
         else if (ratingB < ratingA) { return 1; }
@@ -610,13 +614,15 @@ function sortShowsByLowestRating(shows) {
 function sortShowsByMostRecent(shows) {
     return shows.sort((a, b) => {
         let premieredA;
-        if (!a.premiered) { premieredA = 0; }
-        else { premieredA = new Date(a.premiered); }
+        a.premiered
+            ? premieredA = new Date(a.premiered)
+            : premieredA = 0;
         
         let premieredB;
-        if (!b.premiered) { premieredB = 0; }
-        else { premieredB = new Date(b.premiered); }
-        
+        b.premiered
+            ? premieredB = new Date(b.premiered)
+            : premieredB = 0;
+            
         if (premieredA > premieredB) { return -1; }
         else if (premieredA < premieredB) { return 1; }
         else { return 0; }
@@ -626,12 +632,14 @@ function sortShowsByMostRecent(shows) {
 function sortShowsByLeastRecent(shows) {
     return shows.sort((a, b) => {
         let premieredA;
-        if (!a.premiered) { premieredA = 0; }
-        else { premieredA = new Date(a.premiered); }
+        a.premiered
+            ? premieredA = new Date(a.premiered)
+            : premieredA = 0;
         
         let premieredB;
-        if (!b.premiered) { premieredB = 0; }
-        else { premieredB = new Date(b.premiered); }
+        b.premiered
+            ? premieredB = new Date(b.premiered)
+            : premieredB = 0;
         
         if (premieredB > premieredA) { return -1; }
         else if (premieredB < premieredA) { return 1; }
