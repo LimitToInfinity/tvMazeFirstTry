@@ -1,3 +1,13 @@
+import createShowCard from "./showCard.js";
+
+import { makeFetchCalls, createRange, 
+    flattenResponses, parseAllToJSON }
+from "./misc.js";
+
+import { sorter } from "./sort.js";
+
+document.addEventListener("DOMContentLoaded", postLoad)
+
 let searchBar;
 let searchBarLabel;
 
@@ -49,7 +59,7 @@ function postLoad() {
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
 
-    const apiShowsPages = createRange(181);
+    const apiShowsPages = createRange(187);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
@@ -66,30 +76,22 @@ function postLoad() {
     pageSlider.addEventListener("input", handleRangeInput);
     pageSlider.addEventListener("change", handleRangeChange);
     pagesToggle.addEventListener("click", togglePages);
+    showCardsContainer.addEventListener("click", displayShowInfo);
     window.addEventListener("scroll", handleScroll);
+}
+
+function displayShowInfo(event) {
+    const { classList, nextElementSibling } = event.target;
+    
+    if (classList.contains("show-image")) {
+        nextElementSibling.classList.contains("hidden")
+            ? nextElementSibling.classList.remove("hidden")
+            : nextElementSibling.classList.add("hidden");
+    }
 }
 
 function sortShows() {
     displayShows(filteredShows);
-}
-
-const sorter = {
-    "Most popular"(shows){ return sortShowsByMostPopular(
-        sortShowsByHighestRating( sortShowsByMostRecent(shows))); },
-    "Least popular"(shows){ return sortShowsByLeastPopular(
-        sortShowsByLowestRating( sortShowsByLeastRecent(shows))); },
-    "Highest rating"(shows){ return sortShowsByHighestRating(
-        sortShowsByMostPopular( sortShowsByMostRecent(shows))); },
-    "Lowest rating"(shows){ return sortShowsByLowestRating(
-        sortShowsByLeastPopular( sortShowsByLeastRecent(shows))); },
-    "Most recent"(shows){ return sortShowsByMostRecent(
-        sortShowsByMostPopular( sortShowsByHighestRating(shows))); },
-    "Least recent"(shows){ return sortShowsByLeastRecent(
-        sortShowsByLeastPopular( sortShowsByHighestRating(shows))); },
-    "A to Z"(shows){ return sortShowsAToZ(
-        sortShowsByMostPopular( sortShowsByHighestRating( sortShowsByMostRecent(shows)))); },
-    "Z to A"(shows){ return sortShowsZToA(
-        sortShowsByMostPopular( sortShowsByHighestRating( sortShowsByMostRecent(shows)))); },
 }
 
 function handleScroll() {
@@ -469,227 +471,6 @@ function createNoShowsText() {
     showCardsContainer.appendChild(noShows);
 }
 
-function createShowCard(show) {
-    const showCard = document.createElement("div");
-    showCard.classList.add("show-card");
-
-    const image = document.createElement("img");
-    image.classList.add("show-image");
-    if (show.image) {
-        image.src = show.image.medium;
-    } else {
-        image.src = "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png";
-    }
-
-    const showInfo = document.createElement("div");
-    showInfo.classList.add("show-info");
-    showInfo.style.display = "none";
-
-    const name = document.createElement("h4");
-    name.classList.add("show-title");
-    name.textContent = show.name;
-    
-    const rating = document.createElement("p");
-    if (show.rating.average) {
-        rating.textContent = "Rating " + show.rating.average.toFixed(1);
-    } else {
-        rating.textContent = "No Rating";
-    }
-
-    const year = document.createElement("p");
-    if (show.premiered) {
-        year.textContent = "Premiered " + show.premiered;
-    }
-
-    const runtime = document.createElement("p");
-    if (show.runtime) {
-        runtime.textContent = "Runtime " + show.runtime + " mins";
-    }
-
-    const genresDisplayer = document.createElement("ul");
-    if (show.genres.length === 0) {
-        genresDisplayer.textContent = "No genres";
-    } else if (show.genres.length === 1) {
-        genresDisplayer.textContent = "Genre"
-        
-        const genreDisplay = document.createElement("li");
-        genreDisplay.textContent = show.genres[0];
-        genresDisplayer.appendChild(genreDisplay);
-    } else {
-        genresDisplayer.textContent = "Genres"
-        show.genres.sort().map(genre => {
-            const genreDisplay = document.createElement("li");
-            genreDisplay.textContent = genre;
-            genresDisplayer.appendChild(genreDisplay);
-        })
-    }
-
-    const officialSite = document.createElement("a");
-    if (show.officialSite) {
-        officialSite.textContent = "Official Site";
-        officialSite.href = show.officialSite;
-        officialSite.target = "_blank";
-        officialSite.rel = "noopener noreferrer";
-    }
-
-    showInfo.append(name, rating, year, runtime, genresDisplayer, officialSite);
-    showCard.append(image, showInfo);
-    showCardsContainer.append(showCard);
-
-    showCard.addEventListener("click", () => displayShowInfo(showInfo));
-}
-
-function sortShowsByMostPopular(shows) {
-    return shows.sort((a, b) => {
-        let aPopular;
-        a.rating
-            ? aPopular = a.weight + a.rating.average
-            : aPopular = a.weight;
-
-        let bPopular;
-        b.rating
-            ? bPopular = b.weight + b.rating.average
-            : bPopular = b.weight;
-        
-        if (aPopular > bPopular) { return -1; }
-        else if (aPopular < bPopular) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsByLeastPopular(shows) {
-    return shows.sort((a, b) => {
-        let aPopular;
-        a.rating
-            ? aPopular = a.weight + a.rating.average
-            : aPopular = a.weight;
-
-        let bPopular;
-        b.rating
-            ? bPopular = b.weight + b.rating.average
-            : bPopular = b.weight;
-        
-        if (bPopular > aPopular) { return -1; }
-        else if (bPopular < aPopular) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsByHighestRating(shows) {
-    return shows.sort((a, b) => {
-        let ratingA
-        a.rating
-            ? ratingA = a.rating.average
-            : ratingA = 0
-
-        let ratingB
-        b.rating
-            ? ratingB = b.rating.average
-            : ratingB = 0
-        
-        if (ratingA > ratingB) { return -1; }
-        else if (ratingA < ratingB) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsByLowestRating(shows) {
-    return shows.sort((a, b) => {
-        let ratingA
-        a.rating
-            ? ratingA = a.rating.average
-            : ratingA = 0
-
-        let ratingB
-        b.rating
-            ? ratingB = b.rating.average
-            : ratingB = 0
-        
-        if (ratingB > ratingA) { return -1; }
-        else if (ratingB < ratingA) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsByMostRecent(shows) {
-    return shows.sort((a, b) => {
-        let premieredA;
-        a.premiered
-            ? premieredA = new Date(a.premiered)
-            : premieredA = 0;
-        
-        let premieredB;
-        b.premiered
-            ? premieredB = new Date(b.premiered)
-            : premieredB = 0;
-            
-        if (premieredA > premieredB) { return -1; }
-        else if (premieredA < premieredB) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsByLeastRecent(shows) {
-    return shows.sort((a, b) => {
-        let premieredA;
-        a.premiered
-            ? premieredA = new Date(a.premiered)
-            : premieredA = 0;
-        
-        let premieredB;
-        b.premiered
-            ? premieredB = new Date(b.premiered)
-            : premieredB = 0;
-        
-        if (premieredB > premieredA) { return -1; }
-        else if (premieredB < premieredA) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsAToZ(shows) {
-    return shows.sort((a, b) => {
-        if (a.name < b.name) { return -1; }
-        else if (a.name > b.name) { return 1; }
-        else { return 0; }
-    });
-}
-
-function sortShowsZToA(shows) {
-    return shows.sort((a, b) => {
-        if (b.name < a.name) { return -1; }
-        else if (b.name > a.name) { return 1; }
-        else { return 0; }
-    });
-}
-
 function setGenres(shows) {
     shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
-}
-
-function displayShowInfo(showInfo) {
-    showInfo.style.display === "none"
-        ? showInfo.style.display = "flex"
-        : showInfo.style.display = "none";
-}
-
-function makeFetchCalls(showsPage) {
-    const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
-    return fetch(url);
-}
-
-function createRange(number) {
-    return [...Array(number).keys()];
-}
-
-function flattenResponses(arrays) {
-    return arrays.flat();
-}
-
-function parseAllToJSON(responses) {
-    return Promise.all(responses.map(parseJSON));
-}
-
-function parseJSON(response) {
-    return response.json();
 }
