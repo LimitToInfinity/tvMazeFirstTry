@@ -1,12 +1,15 @@
-import createShowCard from "./showCard.js";
-
-import { makeFetchCalls, createRange, 
-    flattenResponses, parseAllToJSON }
-from "./misc.js";
-
 import { sorter } from "./sort.js";
 
-document.addEventListener("DOMContentLoaded", postLoad)
+import { createShowCard } from "./showCard.js";
+
+import {
+    makeFetchCalls,
+    createRange,
+    flattenResponses,
+    parseAllToJSON
+} from "./utilities.js";
+
+document.addEventListener("DOMContentLoaded", postLoad);
 
 let searchBar;
 let searchBarLabel;
@@ -297,14 +300,6 @@ function filterByGenres(shows) {
         return allGenres
             .every(selectedGenre => show.genres.includes(selectedGenre));
     });
-}
-
-function showSelectedGenres(currentSelectedGenre) {
-    if (currentSelectedGenre !== "Remove filters!"
-        && currentSelectedGenre !== null)
-    { 
-        selectedGenres.add(currentSelectedGenre);
-    }
 }
 
 function removeShowCards() {

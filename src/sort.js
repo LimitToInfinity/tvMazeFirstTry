@@ -19,11 +19,11 @@ export const sorter = {
     },
     "A to Z": (shows) => { return sortShowsAToZ(
         sortShowsByMostPopular( sortShowsByHighestRating( 
-            sortShowsByMostRecent(shows) ) ) );
-        },
-        "Z to A": (shows) => { return sortShowsZToA(
-            sortShowsByMostPopular( sortShowsByHighestRating( 
-                sortShowsByMostRecent(shows) ) ) );
+        sortShowsByMostRecent(shows) ) ) );
+    },
+    "Z to A": (shows) => { return sortShowsZToA(
+        sortShowsByMostPopular( sortShowsByHighestRating( 
+        sortShowsByMostRecent(shows) ) ) );
     },
 }
 
@@ -94,7 +94,7 @@ function byRating(a, b, isByHighest) {
         : 0;
     
     return isByHighest ? byHighestRating(ratingA, ratingB)
-        : byLowestRating(ratingA, ratingB)
+        : byLowestRating(ratingA, ratingB);
 }
 
 function byHighestRating(ratingA, ratingB) {
@@ -119,16 +119,16 @@ function byRecent(a, b, isByMost) {
         : 0;
         
     return isByMost ? byMostRecent(premieredA, premieredB)
-        : byLeastRecent(premieredA, premieredB)
+        : byLeastRecent(premieredA, premieredB);
 }
 
-function byMostRecent() {
+function byMostRecent(premieredA, premieredB) {
     if (premieredA > premieredB) { return -1; }
     else if (premieredA < premieredB) { return 1; }
     else { return 0; }
 }
 
-function byLeastRecent() {
+function byLeastRecent(premieredA, premieredB) {
     if (premieredB > premieredA) { return -1; }
     else if (premieredB < premieredA) { return 1; }
     else { return 0; }
