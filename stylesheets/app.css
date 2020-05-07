@@ -369,6 +369,11 @@ main {
     margin-left: 2rem;
     cursor: pointer;
     outline: none;
+    -webkit-appearance: media-slider;
+}
+
+.pages-toggle:active {
+    border-style: none;
 }
 
 .loading {
