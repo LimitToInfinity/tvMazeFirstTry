@@ -17,6 +17,7 @@ let searchBarLabel;
 let sortBy;
 
 let genrePillContainer;
+let sidebarExpander;
 
 let pagesContainer;
 let pages;
@@ -46,8 +47,12 @@ const selectedGenres = new Set();
 function postLoad() {
     searchBar = document.querySelector("#search-bar");
     searchBarLabel = document.querySelector("label[for=search-bar]");
+    
     sortBy = document.querySelector(".sort-by");
+    
     genrePillContainer = document.querySelector(".genre-pills");
+    sidebarExpander = document.querySelector(".expander");
+    
     pagesContainer = document.querySelector(".pages-container");
     pages = document.querySelector(".pages");
     pageSliderForm = document.querySelector(".page-slider-form");
@@ -56,6 +61,7 @@ function postLoad() {
     pageSliderRangeMax = pageSliderForm.querySelector(".range-max");
     pagesToggle = document.querySelector(".pages-toggle");
     pagesToggleImage = pagesToggle.querySelector("i");
+    
     showCardsContainer = document.querySelector(".show-cards-container");
 
     pages.style.display = "none";
@@ -74,13 +80,19 @@ function postLoad() {
     searchBar.addEventListener("focus", addShrinkClass);
     searchBar.addEventListener("blur", removeShrinkClass);
     searchBar.addEventListener("input", filterShows);
+    
     sortBy.addEventListener("change", sortShows);
+    
     genrePillContainer.addEventListener("click", handleGenrePill);
+    sidebarExpander.addEventListener("click", expandOrContract);
+    
     pageSlider.addEventListener("input", handleRangeInput);
     pageSlider.addEventListener("change", handleRangeChange);
     pagesToggle.addEventListener("click", togglePages);
-    showCardsContainer.addEventListener("click", displayShowInfo);
+    
     window.addEventListener("scroll", handleScroll);
+    
+    showCardsContainer.addEventListener("click", displayShowInfo);
 }
 
 function displayShowInfo(event) {
