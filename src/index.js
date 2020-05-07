@@ -68,7 +68,7 @@ function postLoad() {
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
 
-    const apiShowsPages = createRange(1);
+    const apiShowsPages = createRange(190);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
