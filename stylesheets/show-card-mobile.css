@@ -1,0 +1,39 @@
+@media only screen and (max-device-width: 600px) {
+    .show-cards-container {
+        width: 75%;
+    }
+
+    .show-card {
+        flex-basis: 70%;
+        margin: 30px 17px;
+        height: 100%;
+    }
+
+    .show-card:hover {
+        transform: scale3d(1.15, 1.15, 1.15);
+    }
+
+    .show-info > h4 {
+        font-size: 2.8rem;
+        margin: 1rem 0.6rem;
+    }
+
+    .show-info > p {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .show-info > ul {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .show-info > ul > li {
+        margin-left: 1.2rem;
+    }
+
+    .show-info > a {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+    }
+}

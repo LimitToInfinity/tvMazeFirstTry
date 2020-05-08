@@ -1,0 +1,11 @@
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.loading > h2 {
+    font-family: Spectral, arial, serif;
+    font-size: 3rem;
+}

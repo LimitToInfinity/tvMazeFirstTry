@@ -1,0 +1,25 @@
+@media only screen and (max-device-width: 600px) {
+    #search-bar {
+        height: 8rem;
+        width: 63%;
+        padding: 3.5rem 0.5rem 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        font-size: 3.5rem;
+    }
+
+    .search-bar-label {
+        margin-top: 1.3rem;
+        font-size: 2.5rem;
+    }
+
+    .shrink-colored {
+        margin: 0.5rem;
+        font-size: 2rem;
+    }
+
+    .shrink-uncolored {
+        margin: 0.5rem;
+        font-size: 2rem;
+    }
+}

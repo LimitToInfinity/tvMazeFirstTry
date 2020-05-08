@@ -1,0 +1,26 @@
+@media only screen and (max-device-width: 600px) {
+    .pages-container {
+        margin: 6rem 0;
+    }
+    
+    .pages-container > h2 {
+        margin: 0;
+        font-size: 4.5rem;
+    }
+
+    .pages {
+        justify-content: space-between;
+        min-width: 29rem;
+        margin: 0 3rem;
+    }
+
+    .page-number {
+        margin: 0 1.5rem 1rem;
+        font-size: 6rem;
+    }
+
+    .pages-toggle {
+        margin: 0;
+        font-size: 6rem;
+    }
+}

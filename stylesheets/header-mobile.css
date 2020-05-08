@@ -1,0 +1,10 @@
+@media only screen and (max-device-width: 600px) {
+    header {
+        justify-content: center;
+        margin: 5rem 0;
+    }
+
+    h1 {
+        font-size: 7rem;
+    }
+}

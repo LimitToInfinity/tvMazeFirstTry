@@ -1,0 +1,49 @@
+.pages-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.pages-container > h2 {
+    margin: 0 0.5rem 0.2rem;
+    padding: 0 0.5rem;
+    font-size: 2rem;
+}
+
+.pages {
+    display: none;
+    align-items: center;
+    flex-flow: wrap;
+    min-height: 5rem;
+}
+
+.page-number {
+    margin: 0 0.5rem 0.2rem;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.page-number:hover {
+    color: rgb(123, 80, 1);
+}
+
+.selected {
+    color: rgb(123, 80, 1);
+}
+
+.pages-toggle {
+    background-color: hsl(0, 0%, 98%);
+    border-color: hsl(0, 0%, 98%);
+    font-size: 2rem;
+    margin-left: 2rem;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: media-slider;
+}
+
+.pages-toggle:active {
+    border-style: none;
+}

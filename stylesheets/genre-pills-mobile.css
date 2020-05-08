@@ -1,0 +1,77 @@
+@media only screen and (max-device-width: 600px) {
+    .genre-pills {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        bottom: 31px;
+        top: unset;
+        left: unset;
+        padding: 0;
+        margin: 0;
+        min-width: 100vw;
+        z-index: 10;
+        transition: max-height 0.8s, bottom 0.8s;
+    }
+
+    .bottom-sheet {
+        min-height: 7rem;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .genre-pill-header > .expander > span {
+        height: 6px;
+        width: 45px;
+    }
+
+    .genre-pill-header > .expander > span:nth-child(1).fold {
+        -webkit-transform: rotate(-45deg) translate(-10px, 9px);
+        transform: rotate(-45deg) translate(-10px, 8px);
+    }
+    
+    .genre-pill-header > .expander > span:nth-child(3).fold {
+        -webkit-transform: rotate(45deg) translate(-4px, -3px);
+        transform: rotate(45deg) translate(-7px, -6px);
+    }
+
+    .genre-pill-header-text {
+        width: unset;
+    }
+
+    .collapsed {
+        background-color: white;
+        max-height: 5rem;
+    }
+
+    .expanded {
+        max-height: 25rem;
+        bottom: 0;
+        border: black solid;
+        border-top-right-radius: 130px;
+        border-top-left-radius: 130px;
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    .genre-pill-header {
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 1.8rem 0;
+        width: unset;
+        min-width: 100vw;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        font-size: 3rem;
+        transition: border-radius 0.8s, background-color 0.8s, color 0.2s;
+    }
+
+    .genre-pill {
+        margin-top: 1.5rem;
+        margin-left: 1rem;
+        min-height: 5rem;
+        min-width: 25rem;
+        border-radius: 50px;
+        font-size: 3rem;
+    }
+}
