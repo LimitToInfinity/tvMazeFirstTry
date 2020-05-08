@@ -27,11 +27,13 @@
 }
 
 .page-number:hover {
-    color: rgb(123, 80, 1);
+    color: white;
+    text-shadow: 1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black;
 }
 
 .selected {
-    color: rgb(123, 80, 1);
+    color: white;
+    text-shadow: 1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black;
 }
 
 .pages-toggle {

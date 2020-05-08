@@ -23,17 +23,13 @@
 
 .show-card:hover {
     transform: scale3d(1.25, 1.25, 1.25);
-    box-shadow: 1px 1px 10px black, -1px 1px 10px black, 1px -1px 10px black, -1px -1px 10px black;
+    box-shadow: 1px 1px 8px rgb(180, 180, 180), -1px 1px 8px rgb(180, 180, 180), 1px -1px 8px rgb(180, 180, 180), -1px -1px 8px rgb(180, 180, 180);
     z-index: 10;
 }
 
 .show-image {
     height: 100%;
     width: 100%;
-}
-
-.show-image:hover {
-    box-shadow: 1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white, -1px -1px 10px white;
 }
 
 .show-card > h3 {

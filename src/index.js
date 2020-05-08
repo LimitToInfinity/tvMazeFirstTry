@@ -225,10 +225,7 @@ function filterByGenre(event) {
     pageNumber = 1;
     showPageSlider();
 
-    let selectedGenre = null;
-    if (event) {
-        selectedGenre = event.target.textContent; 
-    }
+    const selectedGenre = event ? event.target.textContent : undefined;
 
     if (selectedGenre === "Remove filters!") {
         filteredShows = allShows;
@@ -379,6 +376,7 @@ function removeShrinkClass() {
 function setAllShows(shows) {
     allShows = shows;
     filteredShows = allShows;
+    
     document.querySelector(".loading").remove();
 
     return allShows;
