@@ -61,7 +61,33 @@ body {
 
 header {
     display: flex;
+    align-items: center;
     margin: 2rem;
+}
+
+.expander > span {
+    width: 25px;
+    height: 4px;
+    background-color: black;
+    display: block;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.expander > span:nth-child(1).fold {
+    -webkit-transform: rotate(-45deg) translate(-10px, 9px);
+    transform: rotate(-45deg) translate(-10px, 9px);
+}
+
+.expander > span:nth-child(2).fold {
+    opacity: 0;
+    width: 0px;
+}
+
+.expander > span:nth-child(3).fold {
+    -webkit-transform: rotate(45deg) translate(-4px, -3px);
+    transform: rotate(45deg) translate(-4px, -3px);
 }
 
 h1 {
@@ -413,13 +439,17 @@ main {
 
 .show-card:hover {
     transform: scale3d(1.25, 1.25, 1.25);
-    box-shadow: 1px 1px 8px rgb(123, 80, 1), -1px 1px 8px rgb(123, 80, 1), 1px -1px 8px rgb(123, 80, 1), -1px -1px 8px rgb(123, 80, 1);
+    box-shadow: 1px 1px 10px black, -1px 1px 10px black, 1px -1px 10px black, -1px -1px 10px black;
     z-index: 10;
 }
 
 .show-image {
     height: 100%;
     width: 100%;
+}
+
+.show-image:hover {
+    box-shadow: 1px 1px 10px white, -1px 1px 10px white, 1px -1px 10px white, -1px -1px 10px white;
 }
 
 .show-card > h3 {
@@ -504,6 +534,8 @@ main {
 
 .genre-pill-header {
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 0.4rem;
     width: 9rem;
     cursor: pointer;
@@ -516,6 +548,14 @@ main {
     color: white;
 }
 
+.genre-pill-header > .expander > span {
+    background-color: white;
+}
+
+.genre-pill-header-text {
+    width: min-content;
+}
+
 .expander {
     padding-right: 1rem;
     cursor: pointer;
@@ -526,7 +566,7 @@ main {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 0.3rem;
+    margin: 0.3rem 0;
     padding: 0.3rem 0;
     border-radius: 15px;
     color: white;

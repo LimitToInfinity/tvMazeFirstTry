@@ -68,7 +68,7 @@ function postLoad() {
     pageSliderMin = pageSlider.min;
     pageSliderMax = pageSlider.max;
 
-    const apiShowsPages = createRange(190);
+    const apiShowsPages = createRange(1);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
@@ -253,26 +253,47 @@ function showPageSlider() {
 function handleGenrePill(event) {
     const { textContent, classList } = event.target;
 
-    if (classList.contains("genre-pill") && classList.contains("highlighted")) {
+    if (
+        classList.contains("genre-pill")
+        && classList.contains("highlighted")
+    ) {
         classList.remove("highlighted");
         selectedGenres.delete(textContent, classList);
         filterByGenre(event);
-    } else if (classList.contains("genre-pill") && textContent !== "Remove filters!") {
+
+    } else if (
+        classList.contains("genre-pill")
+        && textContent !== "Remove filters!"
+    ) {
         classList.add("highlighted");
         selectedGenres.add(textContent);
         filterByGenre(event);
+
     } else if (textContent === "Remove filters!") {
         filterByGenre(event);
-    } else if (classList.contains("expander") || classList.contains("genre-pill-header")) {
+
+    } else if (
+        classList.contains("expander")
+        || classList.contains("genre-pill-header")
+        || classList.contains("genre-pill-header-text")
+        || classList.contains("fold")
+    ) {
         expandOrContract();
+
     } else if (!classList.contains("genre-pill")) {
         return;
+
     }
 }
 
 function expandOrContract() {
     const genrePillHeader = genrePillContainer.querySelector(".genre-pill-header");
-    const expander = genrePillContainer.querySelector(".expander");
+    const sidebarExpander = genrePillContainer.querySelector(".expander");
+    const headerExpander = document.querySelector("header > .expander");
+    
+    const bars = Array.from( sidebarExpander.querySelectorAll("span") )
+        .concat( Array.from( headerExpander.querySelectorAll("span") ) );
+    bars.forEach(bar => bar.classList.toggle("fold"));
 
     if (genrePillContainer.classList.contains("collapsed")) {
         genrePillContainer.classList.remove("collapsed");
@@ -283,8 +304,8 @@ function expandOrContract() {
             genrePillHeader.style.fontSize = "6rem";
         }
 
-        expander.classList.remove("fa-bars");
-        expander.classList.add("fa-chevron-down");
+        // expander.classList.remove("fa-bars");
+        // expander.classList.add("fa-times");
     } else if (genrePillContainer.classList.contains("expanded")) {
         genrePillContainer.classList.remove("expanded");
         genrePillContainer.classList.add("collapsed");
@@ -294,8 +315,8 @@ function expandOrContract() {
             genrePillHeader.style.fontSize = "3rem";
         }
 
-        expander.classList.remove("fa-chevron-down");
-        expander.classList.add("fa-bars");
+        // expander.classList.remove("fa-times");
+        // expander.classList.add("fa-bars");
     }
 }
 
