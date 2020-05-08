@@ -304,8 +304,6 @@ function expandOrContract() {
             genrePillHeader.style.fontSize = "6rem";
         }
 
-        // expander.classList.remove("fa-bars");
-        // expander.classList.add("fa-times");
     } else if (genrePillContainer.classList.contains("expanded")) {
         genrePillContainer.classList.remove("expanded");
         genrePillContainer.classList.add("collapsed");
@@ -315,8 +313,6 @@ function expandOrContract() {
             genrePillHeader.style.fontSize = "3rem";
         }
 
-        // expander.classList.remove("fa-times");
-        // expander.classList.add("fa-bars");
     }
 }
 
