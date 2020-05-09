@@ -1,3 +1,5 @@
+import { SearchBar } from "./searchBar.js"
+
 import { sorter } from "./sort.js";
 
 import { createShowCard } from "./showCard.js";
@@ -10,9 +12,6 @@ import {
 } from "./utilities.js";
 
 document.addEventListener("DOMContentLoaded", postLoad);
-
-let searchBar;
-let searchBarLabel;
 
 let sortBy;
 
@@ -45,9 +44,6 @@ const genres = new Set();
 const selectedGenres = new Set();
 
 function postLoad() {
-    searchBar = document.querySelector("#search-bar");
-    searchBarLabel = document.querySelector("label[for=search-bar]");
-    
     sortBy = document.querySelector(".sort-by");
     
     genrePillContainer = document.querySelector(".genre-pills");
@@ -77,8 +73,7 @@ function postLoad() {
         .then(setAllShows)
         .then(displayShows);
 
-    searchBar.addEventListener("focus", addShrinkClass);
-    searchBar.addEventListener("blur", removeShrinkClass);
+    const searchBar = SearchBar("#search-bar");
     searchBar.addEventListener("input", filterShows);
     
     sortBy.addEventListener("change", sortShows);
