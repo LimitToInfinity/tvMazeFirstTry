@@ -1,4 +1,6 @@
-import { SearchBar } from "./searchBar.js"
+import { SearchBar } from "./searchBar.js";
+
+import { SortBy } from "./sortBy.js";
 
 import { sorter } from "./sort.js";
 
@@ -13,7 +15,9 @@ import {
 
 document.addEventListener("DOMContentLoaded", postLoad);
 
-let sortBy;
+const searchBar = SearchBar("#search-bar");
+
+const sortBy = SortBy(".sort-by");
 
 let genrePillContainer;
 let sidebarExpander;
@@ -38,14 +42,12 @@ let start;
 let showCardsContainer;
 
 let allShows = [];
-let filteredShows = [];
+export let filteredShows = [];
 
 const genres = new Set();
 const selectedGenres = new Set();
 
 function postLoad() {
-    sortBy = document.querySelector(".sort-by");
-    
     genrePillContainer = document.querySelector(".genre-pills");
     sidebarExpander = document.querySelector(".expander");
     
@@ -73,10 +75,7 @@ function postLoad() {
         .then(setAllShows)
         .then(displayShows);
 
-    const searchBar = SearchBar("#search-bar");
     searchBar.addEventListener("input", filterShows);
-    
-    sortBy.addEventListener("change", sortShows);
     
     genrePillContainer.addEventListener("click", handleGenrePill);
     sidebarExpander.addEventListener("click", expandOrContract);
@@ -98,10 +97,6 @@ function displayShowInfo(event) {
             ? nextElementSibling.classList.remove("hidden")
             : nextElementSibling.classList.add("hidden");
     }
-}
-
-function sortShows() {
-    displayShows(filteredShows);
 }
 
 function handleScroll() {
@@ -362,7 +357,7 @@ function setAllShows(shows) {
     return allShows;
 }
 
-function displayShows(shows) {
+export function displayShows(shows) {
     if (!window.matchMedia('(max-device-width: 600px)').matches) {
         window.scroll({ top: 0, behavior: 'smooth' });
     } else if (window.matchMedia('(max-device-width: 600px)').matches) {
