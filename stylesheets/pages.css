@@ -13,7 +13,7 @@
 }
 
 .pages {
-    display: none;
+    display: flex;
     align-items: center;
     flex-flow: wrap;
     min-height: 5rem;

@@ -1,8 +1,9 @@
 import { SearchBar } from "./searchBar.js";
 
 import { SortBy } from "./sortBy.js";
-
 import { sorter } from "./sort.js";
+
+import { Pages, showPageSlider } from "./pages.js";
 
 import { createShowCard } from "./showCard.js";
 
@@ -15,58 +16,42 @@ import {
 
 document.addEventListener("DOMContentLoaded", postLoad);
 
+let genrePillContainer;
+let sidebarExpander;
+
 const searchBar = SearchBar("#search-bar");
 
 const sortBy = SortBy(".sort-by");
 
-let genrePillContainer;
-let sidebarExpander;
+const {
+    pagesContainer,
+    pages,
+    pageSliderForm,
+    pagesToggle,
+    displayPageNumbers
+} = Pages();
 
-let pagesContainer;
-let pages;
-let pageSliderForm;
-let pageSlider;
-let pageSliderOffsetWidth;
-let pageSliderMin;
-let pageSliderMax;
-let pageSliderValue;
-let pageSliderOutput;
-let pageSliderRangeMax;
-let pageNumber = 1;
-let pagesToggle;
-let pagesToggleImage;
-
+export let pageNumber = 1;
+export const setPageNumber = (newNumber) => pageNumber = newNumber;
 let end;
 let start;
 
 let showCardsContainer;
 
-let allShows = [];
+export let allShows = [];
 export let filteredShows = [];
+export const setFilteredShows = (shows) => filteredShows = shows;
 
-const genres = new Set();
+export const genres = new Set();
 const selectedGenres = new Set();
 
 function postLoad() {
     genrePillContainer = document.querySelector(".genre-pills");
     sidebarExpander = document.querySelector(".expander");
     
-    pagesContainer = document.querySelector(".pages-container");
-    pages = document.querySelector(".pages");
-    pageSliderForm = document.querySelector(".page-slider-form");
-    pageSlider = pageSliderForm.querySelector("#page-slider");
-    pageSliderOutput = pageSliderForm.querySelector("output");
-    pageSliderRangeMax = pageSliderForm.querySelector(".range-max");
-    pagesToggle = document.querySelector(".pages-toggle");
-    pagesToggleImage = pagesToggle.querySelector("i");
-    
     showCardsContainer = document.querySelector(".show-cards-container");
 
-    pages.style.display = "none";
-    pageSliderMin = pageSlider.min;
-    pageSliderMax = pageSlider.max;
-
-    const apiShowsPages = createRange(1);
+    const apiShowsPages = createRange(190);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
@@ -79,10 +64,6 @@ function postLoad() {
     
     genrePillContainer.addEventListener("click", handleGenrePill);
     sidebarExpander.addEventListener("click", expandOrContract);
-    
-    pageSlider.addEventListener("input", handleRangeInput);
-    pageSlider.addEventListener("change", handleRangeChange);
-    pagesToggle.addEventListener("click", togglePages);
     
     window.addEventListener("scroll", handleScroll);
     
@@ -119,80 +100,6 @@ function handleScroll() {
     }
 }
 
-function togglePages() {
-    if (pages.style.display === "none") {
-        pages.style.display = "flex";
-        pageSliderForm.style.display = "none";
-        pagesToggleImage.classList.remove("fa-toggle-on");
-        pagesToggleImage.classList.add("fa-toggle-off");
-    } else {
-        pages.style.display = "none";
-        pageSliderForm.style.display = "flex";
-        handleRangeInput();
-        pagesToggleImage.classList.remove("fa-toggle-off");
-        pagesToggleImage.classList.add("fa-toggle-on");
-    }
-}
-
-function handleRangeInput(event) {
-    if (!event) { 
-        pageSliderValue = pageNumber;
-        pageSlider.value = pageSliderValue;
-    } else {
-        pageSliderValue = event.target.value;
-        pageNumber = pageSliderValue;
-    }
-
-    pageSliderOffsetWidth = pageSlider.offsetWidth;
-
-    let correctionFactor;
-    let offset;
-    if (window.matchMedia('(max-device-width: 600px)').matches) {
-        correctionFactor = (946/1024);
-        offset = -34;
-    } else {
-        correctionFactor = determineCorrectionFactorDesktop(pageSliderOffsetWidth);
-        offset = -10;
-    }
-    const newPoint = ((pageSliderValue - pageSliderMin)
-        / (pageSliderMax - pageSliderMin))
-        * correctionFactor;
-    const newPlace = (pageSliderOffsetWidth * newPoint) + offset;
-
-    pageSliderOutput.style.left = newPlace + "px";
-    pageSliderOutput.textContent = pageSliderValue;
-}
-
-function handleRangeChange() {
-    displayShows(filteredShows);
-}
-
-function determineCorrectionFactorDesktop(pageSliderOffsetWidth) {
-    if (pageSliderOffsetWidth < 50) { return (723/1024); }
-    else if (pageSliderOffsetWidth < 75) { return (791/1024); }
-    else if (pageSliderOffsetWidth < 100) { return (857/1024); }
-    else if (pageSliderOffsetWidth < 125) { return (892/1024); }
-    else if (pageSliderOffsetWidth < 150) { return (913/1024); }
-    else if (pageSliderOffsetWidth < 175) { return (930/1024); }
-    else if (pageSliderOffsetWidth < 200) { return (946/1024); }
-    else if (pageSliderOffsetWidth < 225) { return (955/1024); }
-    else if (pageSliderOffsetWidth < 250) { return (962/1024); }
-    else if (pageSliderOffsetWidth < 275) { return (969/1024); }
-    else if (pageSliderOffsetWidth < 300) { return (976/1024); }
-    else if (pageSliderOffsetWidth < 325) { return (978/1024); }
-    else if (pageSliderOffsetWidth < 350) { return (980/1024); }
-    else if (pageSliderOffsetWidth < 375) { return (982/1024); }
-    else if (pageSliderOffsetWidth < 400) { return (985/1024); }
-    else if (pageSliderOffsetWidth < 425) { return (988/1024); }
-    else if (pageSliderOffsetWidth < 450) { return (991/1024); }
-    else if (pageSliderOffsetWidth < 475) { return (993/1024); }
-    else if (pageSliderOffsetWidth < 500) { return (995/1024); }
-    else if (pageSliderOffsetWidth < 525) { return (997/1024); }
-    else if (pageSliderOffsetWidth < 550) { return (995/1024); }
-    else if (pageSliderOffsetWidth < 575) { return (997/1024); }
-    else { return (999/1024); }
-}
-
 function filterShows(event) {
     pageNumber = 1;
     showPageSlider();
@@ -227,14 +134,6 @@ function filterByGenre(event) {
     }
 
     displayShows(filteredShows);
-}
-
-function showPageSlider() {
-    if (pages.style.display === "flex") {
-        pages.style.display = "none";
-        pageSliderForm.style.display = "flex";
-    }
-    handleRangeInput();
 }
 
 function handleGenrePill(event) {
@@ -303,14 +202,14 @@ function expandOrContract() {
     }
 }
 
-function filterByName(shows, searchTerm) {
+export function filterByName(shows, searchTerm) {
     return shows.filter(show => (
         show.name.toLowerCase()
         .includes(searchTerm.toLowerCase())
     ));
 }
 
-function filterByGenres(shows) {
+export function filterByGenres(shows) {
     const allGenres = Array.from(selectedGenres);
     return shows.filter(show => {
         return allGenres
@@ -323,7 +222,7 @@ function removeShowCards() {
     showCards.forEach(showCard => showCard.remove());
 }
 
-function setGenreSelectors() {
+export function setGenreSelectors() {
     const previousPills = Array.from(genrePillContainer.querySelectorAll("li"));
     const previouslyAddedPills = previousPills.filter(selector => 
         !selector.textContent.includes("Filter by genre(s)!")
@@ -373,7 +272,7 @@ export function displayShows(shows) {
     const sortedShows = sorter[sortBy.value](shows);
 
     const allPages = createRange(Math.ceil(shows.length/50));
-    setPageNumbers(allPages, shows);
+    displayPageNumbers(allPages, shows);
 
     end = pageNumber * 50;
     start = end - 50;
@@ -384,21 +283,21 @@ export function displayShows(shows) {
     const pageText = document.querySelector(".pages-container > h2");
     if (shows.length === 0) {
         createNoShowsText();
-        pageText.style.display = "none";
-        pageSliderForm.style.display = "none";
-        pagesToggle.style.display = "none";
+        pageText.classList.add("hidden");
+        pageSliderForm.classList.add("hidden");
+        pagesToggle.classList.add("hidden");
     } else if (shows.length < 51 ) {
         displayPage(sortedShows);
-        pageText.style.display = "block";
-        pages.style.display = "flex";
-        pageSliderForm.style.display = "none";
-        pagesToggle.style.display = "none";
+        pageText.classList.remove("hidden");
+        pages.classList.remove("hidden");
+        pageSliderForm.classList.add("hidden");
+        pagesToggle.classList.add("hidden");
     } else {
         displayPage(sortedShows);
-        pageText.style.display = "block";
-        pagesToggle.style.display = "inline-block";
-        if (pages.style.display === "none") {
-            pageSliderForm.style.display = "flex";
+        pageText.classList.remove("hidden");
+        pagesToggle.classList.remove("hidden");
+        if ( pages.classList.contains("hidden") ) {
+            pageSliderForm.classList.remove("hidden");
         }
     }
 }
@@ -407,52 +306,6 @@ function displayPage(sortedShowsByRating) {
     for (let i = start; i < end; i++) {
         createShowCard(sortedShowsByRating[i]);
     }
-}
-
-function setPageNumbers(allPages, shows) {
-    clearPreviousPageNumbers();
-    createPageNumbers(allPages, shows);
-
-    pageSlider.max = allPages.length;
-    pageSliderMax = allPages.length;
-    pageSliderRangeMax.textContent = allPages.length;
-}
-
-function createPageNumbers(allPages, shows) {
-    const pageNumberAsNumber = parseInt(pageNumber, 10)
-
-    let currentPages;
-    if (pageNumberAsNumber < 6) {
-        currentPages = allPages.slice(0, 9);
-    } else if (pageNumberAsNumber > (allPages.length - 5)) {
-        currentPages = allPages.slice(-9);
-    } else {
-        currentPages = allPages.slice( (pageNumberAsNumber - 5), ( pageNumberAsNumber + 4) );
-    }
-
-    currentPages.forEach(currentPageNumber => {
-        const pageNumberLi = document.createElement("li");
-        pageNumberLi.classList.add("page-number");
-        pageNumberLi.textContent = currentPageNumber + 1;
-        if ( (currentPageNumber + 1) === +pageNumber ) { 
-            pageNumberLi.classList.add("selected");
-        }
-
-        pages.appendChild(pageNumberLi);
-
-        pageNumberLi.addEventListener("click", (event) => showPageNumber(event, shows));
-    });
-}
-
-function clearPreviousPageNumbers() {
-    const previousPageNumbers = Array.from( document.querySelectorAll(".pages > li") );
-    previousPageNumbers.forEach( previousPageNumber => previousPageNumber.remove() );
-}
-
-function showPageNumber(event, shows) {
-    pageNumber = event.target.textContent;
-    handleRangeInput();
-    displayShows(shows);
 }
 
 function checkForNoShows() {
