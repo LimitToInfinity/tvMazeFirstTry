@@ -353,21 +353,6 @@ function createGenreSelector(genre) {
     }
 }
 
-function addShrinkClass() {
-    searchBarLabel.classList.remove("shrink-uncolored");
-    searchBarLabel.classList.add("shrink-colored");
-}
-
-function removeShrinkClass() {
-    if (!searchBar.value) {
-        searchBarLabel.classList.remove("shrink-colored");
-        searchBarLabel.classList.remove("shrink-uncolored");
-    } else {
-        searchBarLabel.classList.remove("shrink-colored");
-        searchBarLabel.classList.add("shrink-uncolored");
-    }
-}
-
 function setAllShows(shows) {
     allShows = shows;
     filteredShows = allShows;
