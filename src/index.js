@@ -28,7 +28,7 @@ import {
 document.addEventListener("DOMContentLoaded", postLoad);
 
 function postLoad() {
-    const apiShowsPages = createRangeFromTo(0, 191);
+    const apiShowsPages = createRangeFromTo(0, 0);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
