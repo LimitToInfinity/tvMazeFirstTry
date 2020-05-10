@@ -27,6 +27,17 @@ import {
 
 document.addEventListener("DOMContentLoaded", postLoad);
 
+function postLoad() {
+    const apiShowsPages = createRangeFromTo(0, 191);
+    const fetchCalls = apiShowsPages.map(makeFetchCalls);
+
+    Promise.all(fetchCalls)
+        .then(parseAllToJSON)
+        .then(flattenResponses)
+        .then(setAllShows)
+        .then(displayShows);
+}
+
 handleWindowScroll();
 GenreSelector();
 SearchBar();
@@ -42,17 +53,6 @@ export let filteredShows = [];
 export const setFilteredShows = (shows) => filteredShows = shows;
 
 export const genres = new Set();
-
-function postLoad() {
-    const apiShowsPages = createRangeFromTo(0, 191);
-    const fetchCalls = apiShowsPages.map(makeFetchCalls);
-
-    Promise.all(fetchCalls)
-        .then(parseAllToJSON)
-        .then(flattenResponses)
-        .then(setAllShows)
-        .then(displayShows);
-}
 
 function setAllShows(shows) {
     allShows = shows;
