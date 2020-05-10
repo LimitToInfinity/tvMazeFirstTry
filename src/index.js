@@ -27,18 +27,14 @@ import {
     parseAllToJSON
 } from "./utilities.js";
 
-document.addEventListener("DOMContentLoaded", postLoad);
+const apiShowsPages = createRangeFromTo(0, 3);
+const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
-function postLoad() {
-    const apiShowsPages = createRangeFromTo(0, 3);
-    const fetchCalls = apiShowsPages.map(makeFetchCalls);
-
-    Promise.all(fetchCalls)
-        .then(parseAllToJSON)
-        .then(flattenResponses)
-        .then(setAllShows)
-        .then(displayShows);
-}
+Promise.all(fetchCalls)
+    .then(parseAllToJSON)
+    .then(flattenResponses)
+    .then(setAllShows)
+    .then(displayShows);
 
 handleWindowScroll();
 GenreSelector();
