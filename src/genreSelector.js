@@ -13,7 +13,11 @@ import {
 
 import { showPageSlider } from "./pages.js";
 
-export const selectedGenres = new Set();
+export const genres = new Set();
+export const setGenres = (shows) => {
+    shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
+}
+const selectedGenres = new Set();
 
 export function GenreSelector() {
 
@@ -60,8 +64,10 @@ export function GenreSelector() {
     }
     
     function expandOrContract() {
-        const genrePillHeader = genrePillContainer.querySelector(".genre-pill-header");
-        const sidebarExpander = genrePillContainer.querySelector(".expander");
+        const genrePillHeader = genrePillContainer
+            .querySelector(".genre-pill-header");
+        const sidebarExpander = genrePillContainer
+            .querySelector(".expander");
         const headerExpander = document.querySelector("header > .expander");
         
         const bars = Array.from( sidebarExpander.querySelectorAll("span") )
@@ -118,4 +124,34 @@ export function filterByGenres(shows) {
         return allGenres
             .every(selectedGenre => show.genres.includes(selectedGenre));
     });
+}
+
+export function setGenreSelectors() {
+    const previousPills = Array.from(
+        document.querySelectorAll(".genre-pills > li")
+    );
+    const previouslyAddedPills = previousPills.filter(selector =>
+        !selector.textContent.includes("Filter by genre(s)!")
+        && selector.textContent !== "Remove filters!"
+    );
+
+    previouslyAddedPills.forEach(pill => pill.remove());
+
+    Array.from(selectedGenres)
+        .forEach(createGenreSelector);
+    Array.from(genres)
+        .filter(genre => !selectedGenres.has(genre))
+        .sort()
+        .forEach(createGenreSelector);
+}
+
+function createGenreSelector(genre) {
+    const selector = document.createElement("li");
+    selector.classList.add("genre-pill");
+    selector.textContent = genre;
+    if (selectedGenres.has(genre)) {
+        selector.classList.add("highlighted");
+    }
+    
+    document.querySelector(".genre-pills").append(selector);
 }

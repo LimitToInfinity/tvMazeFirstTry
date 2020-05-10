@@ -1,8 +1,10 @@
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
 import {
+    genres,
+    setGenres,
     GenreSelector,
-    selectedGenres
+    setGenreSelectors
 } from "./genreSelector.js";
 
 import { SearchBar } from "./searchBar.js";
@@ -28,7 +30,7 @@ import {
 document.addEventListener("DOMContentLoaded", postLoad);
 
 function postLoad() {
-    const apiShowsPages = createRangeFromTo(0, 191);
+    const apiShowsPages = createRangeFromTo(0, 3);
     const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
     Promise.all(fetchCalls)
@@ -51,8 +53,6 @@ export const setPageNumber = (newNumber) => pageNumber = newNumber;
 export let allShows = [];
 export let filteredShows = [];
 export const setFilteredShows = (shows) => filteredShows = shows;
-
-export const genres = new Set();
 
 function setAllShows(shows) {
     allShows = shows;
@@ -80,27 +80,6 @@ export function displayShows(shows) {
     handleShowsDisplay(sortedShows);
 }
 
-export function setGenreSelectors() {
-    const previousPills = Array.from(
-        document.querySelectorAll(".genre-pills > li")
-    );
-    const previouslyAddedPills = previousPills.filter(selector => 
-        !selector.textContent.includes("Filter by genre(s)!")
-        && selector.textContent !== "Remove filters!"
-    );
-
-    previouslyAddedPills.forEach(pill => pill.remove());
-
-    Array.from(genres)
-        .filter(genre => selectedGenres.has(genre))
-        .sort()
-        .forEach(createGenreSelector);
-    Array.from(genres)
-        .filter(genre => !selectedGenres.has(genre))
-        .sort()
-        .forEach(createGenreSelector);
-}
-
 function scrollViewToTopOfPage() {
     if (!window.matchMedia('(max-device-width: 600px)').matches) {
         window.scroll({ top: 0, behavior: 'smooth' });
@@ -112,19 +91,4 @@ function scrollViewToTopOfPage() {
 function removeShowCards() {
     const showCards = Array.from(document.querySelectorAll(".show-card"));
     showCards.forEach(showCard => showCard.remove());
-}
-
-function setGenres(shows) {
-    shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
-}
-
-function createGenreSelector(genre) {
-    const selector = document.createElement("li");
-    selector.classList.add("genre-pill");
-    selector.textContent = genre;
-    if (selectedGenres.has(genre)) {
-        selector.classList.add("highlighted");
-    }
-    
-    document.querySelector(".genre-pills").append(selector);
 }

@@ -3,12 +3,13 @@ import {
     allShows,
     filteredShows,
     setFilteredShows,
-    displayShows,
-    genres,
-    setGenreSelectors
+    displayShows
 } from "./index.js"
 
-import { filterByGenres } from "./genreSelector.js";
+import {
+    genres,
+    filterByGenres
+} from "./genreSelector.js";
 
 import { showPageSlider } from "./pages.js";
 
@@ -50,7 +51,6 @@ export function SearchBar() {
         
         if (filteredShows.length === 0) { 
             genres.clear();
-            setGenreSelectors();
         }
         
         displayShows(filteredShows);
