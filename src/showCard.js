@@ -16,6 +16,20 @@ export function createShowCard(show) {
     fillAndDisplayShowCard(showCard, display, showInfo);
 }
 
+export function handleShowCardClick() {
+    showCardsContainer.addEventListener("click", displayShowInfo);
+}
+
+function displayShowInfo(event) {
+    const { classList, nextElementSibling } = event.target;
+    
+    if (classList.contains("show-image")) {
+        nextElementSibling.classList.contains("hidden")
+            ? nextElementSibling.classList.remove("hidden")
+            : nextElementSibling.classList.add("hidden");
+    }
+}
+
 function createShowCardElements(show) {
     return {
         showCard: makeShowCard(),

@@ -21,8 +21,9 @@ export function makeFetchCalls(showsPage) {
     return fetch(url);
 }
 
-export function createRange(number) {
-    return [...Array(number).keys()];
+export function createRangeFromTo(start, end) {
+    const length = (end - start) + 1;
+    return Array.from( { length }, (_, index) => start + index );
 }
 
 export function flattenResponses(arrays) {

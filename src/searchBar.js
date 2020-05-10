@@ -4,16 +4,17 @@ import {
     filteredShows,
     setFilteredShows,
     displayShows,
-    filterByGenres,
-    filterByName,
     genres,
     setGenreSelectors
 } from "./index.js"
 
+import { filterByGenres } from "./genreSelector.js";
+
 import { showPageSlider } from "./pages.js";
 
-export function SearchBar(cssSelector) {
-    const searchBar = document.querySelector(`${cssSelector}`);
+export const searchBar = document.querySelector("#search-bar");
+
+export function SearchBar() {
     const searchBarLabel = searchBar.labels[0];
     
     searchBar.addEventListener("focus", addShrinkClass);
@@ -54,6 +55,11 @@ export function SearchBar(cssSelector) {
         
         displayShows(filteredShows);
     }
+}
 
-    return searchBar;
+export function filterByName(shows, searchTerm) {
+    return shows.filter(show => (
+        show.name.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    ));
 }
