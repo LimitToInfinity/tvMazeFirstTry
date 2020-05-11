@@ -8,7 +8,7 @@
 
 #search-bar {
     height: 4.3rem;
-    width: 50%;
+    width: 100%;
     padding: 1.8rem 0.5rem 0;
     border: none;
     background-color: hsl(0, 0%, 95%);
@@ -29,10 +29,10 @@
 
 #search-bar:focus {
     background-color: hsl(0, 0%, 88%);
-    border-bottom: purple;
+    border-bottom: midnightblue;
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    caret-color: purple;
+    caret-color: midnightblue;
     outline: none;  
     transition: all 0.3s;
 }
@@ -48,7 +48,7 @@
 }
 
 .shrink-colored {
-    color: purple;
+    color: midnightblue;
     font-size: 1rem;
     transform: translateY(-8px);
     transition: all 0.3s;

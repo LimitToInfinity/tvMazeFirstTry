@@ -6,9 +6,10 @@
     width: 90%;
 }
 
-.no-shows {
+.no-shows-found {
     font-size: 5rem;
     text-align: center;
+    margin-top: 2rem;
 }
 
 .show-card {

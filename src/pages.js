@@ -9,132 +9,100 @@ import { createRangeFromTo } from "./utilities.js";
 
 export class Pages {
     constructor() {
-        this.pageText = document.querySelector(".pages-container > h2");
+        this.isSlider = true;
+
+        this.noShowsFoundText = document
+            .querySelector(".no-shows-found");
+
+        this.container = document.querySelector(".pages-container");
+
+        this.pageText = this.container
+            .querySelector(".pages-container > h2");
         
-        this.pageNumbers = document.querySelector(".page-numbers");
+        this.pageNumbers = this.container.querySelector(".page-numbers");
         
-        this.pageSliderForm = document.querySelector(".page-slider-form");
+        this.pageSliderForm = this.container
+            .querySelector(".page-slider-form");
         this.pageSliderOutput = this.pageSliderForm
             .querySelector("output");
-        this.pageSlider = this.pageSliderForm.querySelector("#page-slider");
+        this.pageSlider = this.pageSliderForm
+            .querySelector("#page-slider");
         this.pageSliderRangeMax = this.pageSliderForm
             .querySelector(".range-max");
         
-        this.pagesToggle = document.querySelector(".pages-toggle");
+        this.pagesToggle = this.container.querySelector(".pages-toggle");
         this.pagesToggleImage = this.pagesToggle.querySelector("i");
 
         this.pageSlider.addEventListener("input", this.handleRangeInput);
         this.pageSlider.addEventListener("change", () => {
             displayShows(APP_STATE.filteredShows)
         });
-        this.pagesToggle.addEventListener("click", this.togglePages);
+        this.pagesToggle.addEventListener("click", this.togglePagesView);
     }
 
     handleRangeInput = (event) => {
         const { pageSlider, pageSliderOutput } = this;
 
-        if (!event) { 
-            pageSlider.value = APP_STATE.pageNumber;
-        } else {
-            pageSlider.value = event.target.value;
-            APP_STATE.setPageNumber( parseInt(pageSlider.value, 10) );
-        }
+        pageSlider.value = event
+            ? event.target.value
+            : APP_STATE.pageNumber;
+        
+        APP_STATE.setPageNumber( parseInt(pageSlider.value, 10) );
+       
+        const newPosition = this.calculateNewPosition();
     
-        let correctionFactor;
-        let offset;
-        if (window.matchMedia('(max-device-width: 600px)').matches) {
-            correctionFactor = (946/1024);
-            offset = -34;
-        } else {
-            correctionFactor = determineCorrectionFactorForDesktop(
-                pageSlider.offsetWidth
-            );
-            offset = -10;
-        }
-        const newPoint = ((pageSlider.value - pageSlider.min)
-            / (pageSlider.max - pageSlider.min))
-            * correctionFactor;
-        const newPlace = (pageSlider.offsetWidth * newPoint) + offset;
-    
-        pageSliderOutput.style.left = `${newPlace}px`;
+        pageSliderOutput.style.left = `${newPosition}px`;
         pageSliderOutput.textContent = pageSlider.value;
     }
 
-    togglePages = () => {
-        const { pageNumbers, pageSliderForm } = this;
+    togglePagesView = () => {
+        this.hideAllPagesContainerChildren();
 
-        if ( pageNumbers.classList.contains("hidden") ) {
-            pageNumbers.classList.remove("hidden");
-            pageSliderForm.classList.add("hidden");
-            this.togglePagesToggleImage();
-        } else {
-            pageNumbers.classList.add("hidden");
-            pageSliderForm.classList.remove("hidden");
-            this.handleRangeInput();
-            this.togglePagesToggleImage();
-        }
+        this.isSlider
+            ? this.displayPageNumbers()
+            : this.displayPageSlider();
+
+        this.isSlider = !this.isSlider;
     }
 
-    togglePagesToggleImage = () => {    
-        this.pagesToggleImage.classList.toggle("fa-toggle-on");
-        this.pagesToggleImage.classList.toggle("fa-toggle-off");
-    }
-
-    showPageSlider = () => {
-        const { pageNumbers, pageSliderForm } = this;
-    
-        if ( !pageNumbers.classList.contains("hidden") ) {
-            pageNumbers.classList.add("hidden");
-            pageSliderForm.classList.remove("hidden");
-        }
-        this.handleRangeInput();
-    }
-    
     handleShowsDisplay = (sortedShows) => {
-        const {
-            pageText,
-            pageNumbers,
-            pageSliderForm,
-            pagesToggle,
-            pagesToggleImage
-        } = this;
-    
-        this.checkForNoShows();
+        this.noShowsFoundText.classList.add("hidden");
+        this.hideAllPagesContainerChildren();
         
         if (sortedShows.length === 0) {
-            this.createNoShowsText();
-            
-            pageText.classList.add("hidden");
-            pageSliderForm.classList.add("hidden");
-            pagesToggle.classList.add("hidden");
+            this.noShowsFoundText.classList.remove("hidden");
         } else if (sortedShows.length < 51) {
             this.displayPage(sortedShows);
-            
-            pageText.classList.remove("hidden");
-            pageNumbers.classList.remove("hidden");
-            pageSliderForm.classList.add("hidden");
-            pagesToggle.classList.add("hidden");
+            this.displaySinglePage();
         } else {
             this.displayPage(sortedShows);
-            
-            pageText.classList.remove("hidden");
-            pagesToggle.classList.remove("hidden");
-            
-            if ( pageNumbers.classList.contains("hidden") ) {
-                pageSliderForm.classList.remove("hidden");
-            }
-    
-            if (
-                pagesToggleImage.classList.contains("fa-toggle-off")
-                && !pageSliderForm.classList.contains("hidden")
-            ) {
-                pagesToggleImage.classList.remove("fa-toggle-off");
-                pagesToggleImage.classList.add("fa-toggle-on");
-            }
+            this.displayPagesView();
         }
     }
-    
-    displayPageNumbers = (allPages, shows) => {
+
+    displayPage = (sortedShows) => {
+        const end = sortedShows.length < (APP_STATE.pageNumber * 50)
+            ? sortedShows.length
+            : APP_STATE.pageNumber * 50;
+        const start = ((end - 50) < 0) ? 0 : (end - 50);
+        
+        createRangeFromTo( start, (end - 1) ).forEach(number => {
+            createShowCard(sortedShows[number]);
+        });
+    }
+
+    displaySinglePage = () => {
+        this.pageText.classList.remove("hidden");
+        this.pageNumbers.classList.remove("hidden");
+    }
+
+    displayPagesView = () => {
+        this.isSlider
+            ? this.displayPageSlider()
+            : this.displayPageNumbers();
+    }
+
+    setPageNumbers = (allPages, shows) => {
         this.clearPreviousPageNumbers();
         this.createPageNumbers(allPages, shows);
         
@@ -177,41 +145,59 @@ export class Pages {
         }
         pageNumberLi.addEventListener(
             "click", 
-            (event) => this.showPageNumbers(event, shows)
+            (event) => this.setPage(event, shows)
         );
         
         this.pageNumbers.append(pageNumberLi);
     }
     
-    showPageNumbers = (event, shows) => {
+    setPage = (event, shows) => {
         APP_STATE.setPageNumber( parseInt(event.target.textContent, 10) );
         this.handleRangeInput();
         displayShows(shows);
     }
-    
-    checkForNoShows = () => {
-        if (document.querySelector(".no-shows")) {
-            document.querySelector(".no-shows").remove();
-        }
+
+    hideAllPagesContainerChildren = () => {
+        const pagesContainerElements = Array.from( this.container.children );
+
+        pagesContainerElements.forEach(
+            element => element.classList.add("hidden")
+        );
+    }
+
+    displayPageNumbers = () => {
+        this.pageText.classList.remove("hidden");
+        this.pageNumbers.classList.remove("hidden");
+        this.pagesToggle.classList.remove("hidden");
+
+        this.pagesToggleImage.classList.remove("fa-toggle-on");
+        this.pagesToggleImage.classList.add("fa-toggle-off");
     }
     
-    createNoShowsText = () => {
-        const noShows = document.createElement("h2");
-        noShows.classList.add("no-shows");
-        noShows.textContent = "No shows found!";
-        
-        document.querySelector(".show-cards-container").append(noShows);
+    displayPageSlider = () => {
+        this.pageText.classList.remove("hidden");
+        this.pageSliderForm.classList.remove("hidden");
+        this.pagesToggle.classList.remove("hidden");
+
+        this.pagesToggleImage.classList.remove("fa-toggle-off");
+        this.pagesToggleImage.classList.add("fa-toggle-on");
+
+        this.handleRangeInput();
     }
-    
-    displayPage = (sortedShows) => {
-        const end = sortedShows.length < (APP_STATE.pageNumber * 50)
-            ? sortedShows.length
-            : APP_STATE.pageNumber * 50;
-        const start = ((end - 50) < 0) ? 0 : (end - 50);
+
+    calculateNewPosition = () => {
+        const { pageSlider } = this;
         
-        createRangeFromTo( start, (end - 1) ).forEach(number => {
-            createShowCard(sortedShows[number]);
-        });
+        const isMobile =
+            window.matchMedia('(max-device-width: 600px)').matches;
+
+        const correctionFactor = isMobile
+            ? (946/1024)
+            : determineCorrectionFactorForDesktop(pageSlider.offsetWidth);
+        const offset = isMobile ? -34 : -10;
+        const newPoint = ( (pageSlider.value - pageSlider.min)
+            / (pageSlider.max - pageSlider.min) ) * correctionFactor;
+        return (pageSlider.offsetWidth * newPoint) + offset;
     }
 }
 

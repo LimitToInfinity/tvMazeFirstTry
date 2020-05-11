@@ -1,4 +1,4 @@
-import { AppState } from "./APPSTATE.js";
+import { AppState } from "./AppState.js";
 
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
@@ -39,7 +39,7 @@ function setAllShows(shows) {
 export function displayShows(shows) {
     scrollViewToTopOfPage();
 
-    removeShowCards();
+    removePreviousShowCards();
     
     APP_STATE.genres.clear();
     APP_STATE.setGenres(shows);
@@ -48,7 +48,7 @@ export function displayShows(shows) {
     const sortedShows = sorter[APP_STATE.sortBy.element.value](shows);
 
     const allPages = createRangeFromTo(1, Math.ceil(shows.length/50));
-    APP_STATE.pages.displayPageNumbers(allPages, shows);
+    APP_STATE.pages.setPageNumbers(allPages, shows);
 
     APP_STATE.pages.handleShowsDisplay(sortedShows);
 }
@@ -61,7 +61,7 @@ function scrollViewToTopOfPage() {
     }
 }
 
-function removeShowCards() {
+function removePreviousShowCards() {
     const showCards = Array.from(document.querySelectorAll(".show-card"));
     showCards.forEach(showCard => showCard.remove());
 }

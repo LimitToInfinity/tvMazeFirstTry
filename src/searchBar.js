@@ -30,7 +30,7 @@ export class SearchBar {
 
     filterShows = (event) => {
         APP_STATE.setPageNumber(1);
-        APP_STATE.pages.showPageSlider();
+        APP_STATE.pages.displayPagesView();
         
         const searchTerm = event.target.value;
     

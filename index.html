@@ -66,12 +66,14 @@
 
         <main>
             <div class="search-container">
-                <label class="search-bar-label" for="search-bar">Filter by name</label>
-                <input 
-                    type="text"
-                    name="search-bar"
-                    id="search-bar"
-                />
+                <form>
+                    <label class="search-bar-label" for="search-bar">Filter by name</label>
+                    <input 
+                        type="text"
+                        name="search-bar"
+                        id="search-bar"
+                    />
+                </form>
             </div>
 
             <div class="sort-container">
@@ -90,6 +92,14 @@
 
             
             <section class="show-cards-container">
+                <div class="loading">
+                    <img
+                        src="https://thumbs.gfycat.com/ConventionalOblongFairybluebird-max-1mb.gif"
+                    />
+                </div>
+
+                <h2 class="no-shows-found hidden">No shows found!</h2>
+
                 <div class="pages-container">
                     <h2>Page</h2>
                     <ul class="page-numbers hidden"></ul>
@@ -114,16 +124,10 @@
                         <i class="fas fa-toggle-on"></i>
                     </button>
                 </div>
-
-                <div class="loading">
-                    <img
-                        src="https://thumbs.gfycat.com/ConventionalOblongFairybluebird-max-1mb.gif"
-                    />
-                </div>
             </section>
 
             <ul class="genre-pills collapsed">
-                <li class="genre-pill-header bottom-sheet">
+                <li class="genre-pill-header bottom-sheet static-pill">
                     <div class="expander">
                         <span></span>
                         <span></span>
@@ -131,7 +135,7 @@
                     </div>
                     <span class="genre-pill-header-text">Filter by genre(s)!</span>
                 </li>
-                <li class="genre-pill">Remove filters!</li>
+                <li class="genre-pill static-pill">Remove filters!</li>
             </ul>
         </main>
     </body>
