@@ -52,7 +52,7 @@
     font-size: 1rem;
     transform: translateY(-8px);
     transition: all 0.3s;
-    z-index: 2;
+    z-index: 10;
 }
 
 .shrink-uncolored {

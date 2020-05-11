@@ -1,72 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Spectral|Staatliches|Righteous&display=swap');
+@import url("./meyer-reset.css");
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+@import url("./index.css");
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-    line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+@import url("./genre-pills.css");
+@import url("./genre-pills-mobile.css");
 
-/* END MEYER RESET */
+@import url("./header.css");
+@import url("./header-mobile.css");
 
-* {
-    box-sizing: border-box;
-}
+@import url("./loading.css");
 
-body {
-    background-color: hsl(0, 0%, 98%);
-}
+@import url("./page-slider.css");
+@import url("./page-slider-mobile.css");
 
-main {
-    min-height: 100vh;
-    padding-bottom: 15rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+@import url("./pages.css");
+@import url("./pages-mobile.css");
 
-.hidden {
-	display: none;
-}
+@import url("./search-bar.css");
+@import url("./search-bar-mobile.css");
+
+@import url("./show-card.css");
+@import url("./show-card-mobile.css");
+
+@import url("./sort.css");
+@import url("./sort-mobile.css");

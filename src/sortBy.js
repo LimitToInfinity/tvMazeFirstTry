@@ -3,12 +3,12 @@ import {
     displayShows
 } from "./index.js";
 
-export function SortBy(cssSelector) {
-    const sortBy = document.querySelector(cssSelector);
-
-    sortBy.addEventListener("change", () => {
-        displayShows(APP_STATE.filteredShows)
-    });
-
-    return sortBy;
+export class SortBy {
+    constructor(cssSelector = ".sort-by") {
+        this.element = document.querySelector(cssSelector);
+        
+        this.element.addEventListener("change", () => {
+            displayShows(APP_STATE.filteredShows)
+        });
+    }
 }

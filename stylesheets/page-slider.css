@@ -36,7 +36,7 @@
 #page-slider {
     -webkit-appearance: none;
     width: 30vw;
-    z-index: 5;
+    z-index: 20;
 }
 
 #page-slider:focus {

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Spectral|Staatliches|Righteous&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: hsl(0, 0%, 98%);
+}
+
+main {
+    min-height: 100vh;
+    padding-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+	display: none;
+}

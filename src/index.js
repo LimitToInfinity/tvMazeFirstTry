@@ -2,16 +2,15 @@ import { AppState } from "./appState.js";
 
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
-import { SortBy } from "./sortBy.js";
-import { sorter } from "./sort.js";
-
 import { handleShowCardClick } from "./showCard.js";
 
+import { sorter } from "./sort.js";
+
 import {
-    makeFetchCalls,
     createRangeFromTo,
-    flattenResponses,
-    parseAllToJSON
+    makeFetchCalls,
+    parseAllToJSON,
+    flattenResponses
 } from "./utilities.js";
 
 const apiShowsPages = createRangeFromTo(0, 0);
@@ -26,7 +25,6 @@ Promise.all(fetchCalls)
 export const APP_STATE = new AppState();
 
 handleWindowScroll();
-const sortBy = SortBy(".sort-by");
 handleShowCardClick();
 
 function setAllShows(shows) {
@@ -40,14 +38,14 @@ function setAllShows(shows) {
 
 export function displayShows(shows) {
     scrollViewToTopOfPage();
-    
+
     removeShowCards();
     
     APP_STATE.genres.clear();
     APP_STATE.setGenres(shows);
     APP_STATE.genreSelector.setGenreSelectors();
     
-    const sortedShows = sorter[sortBy.value](shows);
+    const sortedShows = sorter[APP_STATE.sortBy.element.value](shows);
 
     const allPages = createRangeFromTo(1, Math.ceil(shows.length/50));
     APP_STATE.pages.displayPageNumbers(allPages, shows);

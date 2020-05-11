@@ -3,8 +3,7 @@
     flex-flow: wrap;
     justify-content: space-evenly;
     align-items: flex-start;
-    margin: 0 auto 1rem;
-    width: 70%;
+    width: 90%;
 }
 
 .no-shows {
@@ -15,8 +14,8 @@
 .show-card {
     display: flex;
     flex-direction: column;
-    flex-basis: 15rem;
-    margin: 17px 17px;
+    flex-basis: 13rem;
+    margin: 10px 5px;
     box-shadow: 15px 15px 10px rgb(148, 148, 148);
     cursor: pointer;
 }
@@ -24,7 +23,7 @@
 .show-card:hover {
     transform: scale3d(1.25, 1.25, 1.25);
     box-shadow: 1px 1px 8px rgb(180, 180, 180), -1px 1px 8px rgb(180, 180, 180), 1px -1px 8px rgb(180, 180, 180), -1px -1px 8px rgb(180, 180, 180);
-    z-index: 10;
+    z-index: 30;
 }
 
 .show-image {
