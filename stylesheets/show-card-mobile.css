@@ -1,6 +1,6 @@
 @media only screen and (max-device-width: 600px) {
     .show-cards-container {
-        width: 75%;
+        height: 50vh;
     }
 
     .show-card {

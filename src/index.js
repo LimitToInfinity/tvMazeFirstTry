@@ -32,6 +32,8 @@ function setAllShows(shows) {
     APP_STATE.setFilteredShows(shows);
     
     document.querySelector(".loading").remove();
+    document.querySelector(".pages-container")
+        .classList.remove("hidden");
 
     return APP_STATE.allShows;
 }
