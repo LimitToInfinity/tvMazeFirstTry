@@ -11,7 +11,7 @@ export class Pages {
     constructor() {
         this.pageText = document.querySelector(".pages-container > h2");
         
-        this.pages = document.querySelector(".pages");
+        this.pageNumbers = document.querySelector(".page-numbers");
         
         this.pageSliderForm = document.querySelector(".page-slider-form");
         this.pageSliderOutput = this.pageSliderForm
@@ -61,14 +61,14 @@ export class Pages {
     }
 
     togglePages = () => {
-        const { pages, pageSliderForm } = this;
+        const { pageNumbers, pageSliderForm } = this;
 
-        if ( pages.classList.contains("hidden") ) {
-            pages.classList.remove("hidden");
+        if ( pageNumbers.classList.contains("hidden") ) {
+            pageNumbers.classList.remove("hidden");
             pageSliderForm.classList.add("hidden");
             this.togglePagesToggleImage();
         } else {
-            pages.classList.add("hidden");
+            pageNumbers.classList.add("hidden");
             pageSliderForm.classList.remove("hidden");
             this.handleRangeInput();
             this.togglePagesToggleImage();
@@ -81,11 +81,10 @@ export class Pages {
     }
 
     showPageSlider = () => {
-        const pages = document.querySelector(".pages");
-        const pageSliderForm = document.querySelector(".page-slider-form");
+        const { pageNumbers, pageSliderForm } = this;
     
-        if ( !pages.classList.contains("hidden") ) {
-            pages.classList.add("hidden");
+        if ( !pageNumbers.classList.contains("hidden") ) {
+            pageNumbers.classList.add("hidden");
             pageSliderForm.classList.remove("hidden");
         }
         this.handleRangeInput();
@@ -94,7 +93,7 @@ export class Pages {
     handleShowsDisplay = (sortedShows) => {
         const {
             pageText,
-            pages,
+            pageNumbers,
             pageSliderForm,
             pagesToggle,
             pagesToggleImage
@@ -112,7 +111,7 @@ export class Pages {
             this.displayPage(sortedShows);
             
             pageText.classList.remove("hidden");
-            pages.classList.remove("hidden");
+            pageNumbers.classList.remove("hidden");
             pageSliderForm.classList.add("hidden");
             pagesToggle.classList.add("hidden");
         } else {
@@ -121,11 +120,14 @@ export class Pages {
             pageText.classList.remove("hidden");
             pagesToggle.classList.remove("hidden");
             
-            if ( pages.classList.contains("hidden") ) {
+            if ( pageNumbers.classList.contains("hidden") ) {
                 pageSliderForm.classList.remove("hidden");
             }
     
-            if ( pagesToggleImage.classList.contains("fa-toggle-off") ) {
+            if (
+                pagesToggleImage.classList.contains("fa-toggle-off")
+                && !pageSliderForm.classList.contains("hidden")
+            ) {
                 pagesToggleImage.classList.remove("fa-toggle-off");
                 pagesToggleImage.classList.add("fa-toggle-on");
             }
@@ -142,7 +144,7 @@ export class Pages {
     
     clearPreviousPageNumbers = () => {
         const previousPageNumbers = Array.from(
-            this.pages.querySelectorAll("li")
+            this.pageNumbers.querySelectorAll("li")
         );
         previousPageNumbers.forEach(
             previousPageNumber => previousPageNumber.remove()
@@ -178,7 +180,7 @@ export class Pages {
             (event) => this.showPageNumbers(event, shows)
         );
         
-        this.pages.append(pageNumberLi);
+        this.pageNumbers.append(pageNumberLi);
     }
     
     showPageNumbers = (event, shows) => {

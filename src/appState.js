@@ -1,7 +1,7 @@
-import { SearchBar } from "./searchBar.js";
-import { GenreSelector } from "./genreSelector.js";
-import { Pages } from "./pages.js";
-import { SortBy } from "./sortBy.js";
+import { SearchBar } from "./SearchBar.js";
+import { GenreSelector } from "./GenreSelector.js";
+import { Pages } from "./Pages.js";
+import { SortBy } from "./SortBy.js";
 
 export class AppState {
     constructor() {
