@@ -2,11 +2,6 @@ import { AppState } from "./appState.js";
 
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
-import {
-    GenreSelector,
-    setGenreSelectors
-} from "./genreSelector.js";
-
 import { SortBy } from "./sortBy.js";
 import { sorter } from "./sort.js";
 
@@ -37,7 +32,6 @@ Promise.all(fetchCalls)
 export const APP_STATE = new AppState();
 
 handleWindowScroll();
-GenreSelector();
 const sortBy = SortBy(".sort-by");
 Pages();
 handleShowCardClick();
@@ -58,7 +52,7 @@ export function displayShows(shows) {
     
     APP_STATE.genres.clear();
     APP_STATE.setGenres(shows);
-    setGenreSelectors();
+    APP_STATE.genreSelector.setGenreSelectors();
     
     const sortedShows = sorter[sortBy.value](shows);
 

@@ -5,17 +5,30 @@ import {
 
 import { showPageSlider } from "./pages.js";
 
-const selectedGenres = new Set();
+export class GenreSelector {
+    constructor() {
+        this.selectedGenres = new Set();
+        
+        this.genrePillContainer = document.querySelector(".genre-pills");
+        this.genrePillHeader = this.genrePillContainer
+            .querySelector(".genre-pill-header");
+        this.sidebarExpander = this.genrePillContainer
+            .querySelector(".expander");
+        this.headerExpander = document.querySelector("header > .expander");
+        this.hamburgerBars =
+            Array.from(
+                this.sidebarExpander.querySelectorAll("span")
+            ).concat( Array.from(
+                this.headerExpander.querySelectorAll("span")
+            ) );
+        
+        this.genrePillContainer
+            .addEventListener("click", this.handleGenrePill);
+        this.headerExpander
+            .addEventListener("click", this.expandOrContract);
+    }
 
-export function GenreSelector() {
-
-    const genrePillContainer = document.querySelector(".genre-pills");
-    const sidebarExpander = document.querySelector(".expander");
-    
-    genrePillContainer.addEventListener("click", handleGenrePill);
-    sidebarExpander.addEventListener("click", expandOrContract);
-
-    function handleGenrePill(event) {
+    handleGenrePill = (event) => {
         const { textContent, classList } = event.target;
     
         if (
@@ -23,19 +36,19 @@ export function GenreSelector() {
             && classList.contains("highlighted")
         ) {
             classList.remove("highlighted");
-            selectedGenres.delete(textContent, classList);
-            filterByGenre(event);
+            this.selectedGenres.delete(textContent, classList);
+            this.filterByGenre(event);
     
         } else if (
             classList.contains("genre-pill")
             && textContent !== "Remove filters!"
         ) {
             classList.add("highlighted");
-            selectedGenres.add(textContent);
-            filterByGenre(event);
+            this.selectedGenres.add(textContent);
+            this.filterByGenre(event);
     
         } else if (textContent === "Remove filters!") {
-            filterByGenre(event);
+            this.filterByGenre(event);
     
         } else if (
             classList.contains("expander")
@@ -43,7 +56,7 @@ export function GenreSelector() {
             || classList.contains("genre-pill-header-text")
             || classList.contains("fold")
         ) {
-            expandOrContract();
+            this.expandOrContract();
     
         } else if (!classList.contains("genre-pill")) {
             return;
@@ -51,39 +64,29 @@ export function GenreSelector() {
         }
     }
     
-    function expandOrContract() {
-        const genrePillHeader = genrePillContainer
-            .querySelector(".genre-pill-header");
-        const sidebarExpander = genrePillContainer
-            .querySelector(".expander");
-        const headerExpander = document.querySelector("header > .expander");
-        
-        const bars = Array.from( sidebarExpander.querySelectorAll("span") )
-            .concat( Array.from( headerExpander.querySelectorAll("span") ) );
-        bars.forEach(bar => bar.classList.toggle("fold"));
+    expandOrContract = (event) => {
+        this.hamburgerBars.forEach(bar => bar.classList.toggle("fold"));
     
-        if (genrePillContainer.classList.contains("collapsed")) {
-            genrePillContainer.classList.remove("collapsed");
-            genrePillContainer.classList.add("expanded");
+        if (this.genrePillContainer.classList.contains("collapsed")) {
+            this.genrePillContainer.classList.remove("collapsed");
+            this.genrePillContainer.classList.add("expanded");
     
-            genrePillHeader.classList.remove("bottom-sheet");
+            this.genrePillHeader.classList.remove("bottom-sheet");
             if (window.matchMedia('(max-device-width: 600px)').matches) {
-                genrePillHeader.style.fontSize = "6rem";
+                this.genrePillHeader.style.fontSize = "6rem";
             }
-    
-        } else if (genrePillContainer.classList.contains("expanded")) {
-            genrePillContainer.classList.remove("expanded");
-            genrePillContainer.classList.add("collapsed");
+        } else if (this.genrePillContainer.classList.contains("expanded")) {
+            this.genrePillContainer.classList.remove("expanded");
+            this.genrePillContainer.classList.add("collapsed");
             
-            genrePillHeader.classList.add("bottom-sheet");
+            this.genrePillHeader.classList.add("bottom-sheet");
             if (window.matchMedia('(max-device-width: 600px)').matches) {
-                genrePillHeader.style.fontSize = "3rem";
+                this.genrePillHeader.style.fontSize = "3rem";
             }
-    
         }
     }
 
-    function filterByGenre(event) {
+    filterByGenre = (event) => {
         APP_STATE.setPageNumber(1);
         showPageSlider();
     
@@ -93,10 +96,10 @@ export function GenreSelector() {
             APP_STATE.setFilteredShows(APP_STATE.allShows);
             APP_STATE.searchBar.element.value = "";
             
-            selectedGenres.clear();
+            this.selectedGenres.clear();
         } else {
             APP_STATE.setFilteredShows(
-                filterByGenres(
+                this.filterByGenres(
                     APP_STATE.searchBar.filterByName(
                         APP_STATE.allShows,
                         APP_STATE.searchBar.element.value
@@ -107,42 +110,46 @@ export function GenreSelector() {
 
         displayShows(APP_STATE.filteredShows);
     }
-}
 
-export function filterByGenres(shows) {
-    const allGenres = Array.from(selectedGenres);
-    return shows.filter(show => {
-        return allGenres
-            .every(selectedGenre => show.genres.includes(selectedGenre));
-    });
-}
-
-export function setGenreSelectors() {
-    const previousPills = Array.from(
-        document.querySelectorAll(".genre-pills > li")
-    );
-    const previouslyAddedPills = previousPills.filter(selector =>
-        !selector.textContent.includes("Filter by genre(s)!")
-        && selector.textContent !== "Remove filters!"
-    );
-
-    previouslyAddedPills.forEach(pill => pill.remove());
-
-    Array.from(selectedGenres)
-        .forEach(createGenreSelector);
-    Array.from(APP_STATE.genres)
-        .filter(genre => !selectedGenres.has(genre))
-        .sort()
-        .forEach(createGenreSelector);
-}
-
-function createGenreSelector(genre) {
-    const selector = document.createElement("li");
-    selector.classList.add("genre-pill");
-    selector.textContent = genre;
-    if (selectedGenres.has(genre)) {
-        selector.classList.add("highlighted");
+    filterByGenres = (shows) => {
+        const allGenres = Array.from(this.selectedGenres);
+        return shows.filter(show => {
+            return allGenres
+                .every(selectedGenre => show.genres.includes(selectedGenre));
+        });
     }
     
-    document.querySelector(".genre-pills").append(selector);
+    setGenreSelectors = () => {
+        this.removePreviousGenrePills();
+    
+        Array.from(this.selectedGenres)
+            .forEach(this.createGenreSelector);
+        Array.from(APP_STATE.genres)
+            .filter(genre => !this.selectedGenres.has(genre))
+            .sort()
+            .forEach(this.createGenreSelector);
+    }
+
+    removePreviousGenrePills = () => {
+        const previousPills = Array.from(
+            document.querySelectorAll(".genre-pills > li")
+        );
+        const previouslyAddedPills = previousPills.filter(selector =>
+            !selector.textContent.includes("Filter by genre(s)!")
+            && selector.textContent !== "Remove filters!"
+        );
+    
+        previouslyAddedPills.forEach(pill => pill.remove());
+    } 
+    
+    createGenreSelector = (genre) => {
+        const selector = document.createElement("li");
+        selector.classList.add("genre-pill");
+        selector.textContent = genre;
+        if (this.selectedGenres.has(genre)) {
+            selector.classList.add("highlighted");
+        }
+        
+        this.genrePillContainer.append(selector);
+    }
 }

@@ -3,8 +3,6 @@ import {
     displayShows
 } from "./index.js";
 
-import { filterByGenres } from "./genreSelector.js";
-
 import { showPageSlider } from "./pages.js";
 
 export class SearchBar {
@@ -39,7 +37,7 @@ export class SearchBar {
         const searchTerm = event.target.value;
     
         APP_STATE.setFilteredShows( 
-            filterByGenres(
+            APP_STATE.genreSelector.filterByGenres(
                 this.filterByName(APP_STATE.allShows, searchTerm)
             )
         );
