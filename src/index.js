@@ -5,12 +5,6 @@ import { handleWindowScroll } from "./handleWindowScroll.js";
 import { SortBy } from "./sortBy.js";
 import { sorter } from "./sort.js";
 
-import {
-    Pages,
-    handleShowsDisplay,
-    displayPageNumbers
-} from "./pages.js";
-
 import { handleShowCardClick } from "./showCard.js";
 
 import {
@@ -33,7 +27,6 @@ export const APP_STATE = new AppState();
 
 handleWindowScroll();
 const sortBy = SortBy(".sort-by");
-Pages();
 handleShowCardClick();
 
 function setAllShows(shows) {
@@ -57,9 +50,9 @@ export function displayShows(shows) {
     const sortedShows = sorter[sortBy.value](shows);
 
     const allPages = createRangeFromTo(1, Math.ceil(shows.length/50));
-    displayPageNumbers(allPages, shows);
+    APP_STATE.pages.displayPageNumbers(allPages, shows);
 
-    handleShowsDisplay(sortedShows);
+    APP_STATE.pages.handleShowsDisplay(sortedShows);
 }
 
 function scrollViewToTopOfPage() {

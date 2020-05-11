@@ -1,5 +1,6 @@
 import { SearchBar } from "./searchBar.js";
 import { GenreSelector } from "./genreSelector.js";
+import { Pages } from "./pages.js";
 
 export class AppState {
     constructor() {
@@ -10,6 +11,7 @@ export class AppState {
 
         this.searchBar = new SearchBar();
         this.genreSelector = new GenreSelector();
+        this.pages = new Pages();
 
         this.genres = new Set();
     }

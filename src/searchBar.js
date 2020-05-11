@@ -3,8 +3,6 @@ import {
     displayShows
 } from "./index.js";
 
-import { showPageSlider } from "./pages.js";
-
 export class SearchBar {
     constructor(cssSelector = "#search-bar") {
         this.element = document.querySelector(cssSelector);
@@ -32,7 +30,7 @@ export class SearchBar {
 
     filterShows = (event) => {
         APP_STATE.setPageNumber(1);
-        showPageSlider();
+        APP_STATE.pages.showPageSlider();
         
         const searchTerm = event.target.value;
     

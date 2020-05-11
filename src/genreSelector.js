@@ -3,8 +3,6 @@ import {
     displayShows
 } from "./index.js";
 
-import { showPageSlider } from "./pages.js";
-
 export class GenreSelector {
     constructor() {
         this.selectedGenres = new Set();
@@ -88,7 +86,7 @@ export class GenreSelector {
 
     filterByGenre = (event) => {
         APP_STATE.setPageNumber(1);
-        showPageSlider();
+        APP_STATE.pages.showPageSlider();
     
         const selectedGenre = event ? event.target.textContent : undefined;
     
