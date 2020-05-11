@@ -1,7 +1,5 @@
 import {
-    pageNumber,
-    setPageNumber,
-    filteredShows,
+    APP_STATE,
     displayShows
 } from "./index.js";
 
@@ -16,7 +14,9 @@ export function Pages() {
     const pagesToggle = document.querySelector(".pages-toggle");
 
     pageSlider.addEventListener("input", handleRangeInput);
-    pageSlider.addEventListener("change", () => displayShows(filteredShows));
+    pageSlider.addEventListener("change", () => {
+        displayShows(APP_STATE.filteredShows)
+    });
     pagesToggle.addEventListener("click", togglePages);
 
     function togglePages() {
@@ -54,21 +54,31 @@ export function handleShowsDisplay(sortedShows) {
     const pageText = document.querySelector(".pages-container > h2");
     if (sortedShows.length === 0) {
         createNoShowsText();
+        
         pageText.classList.add("hidden");
         pageSliderForm.classList.add("hidden");
         pagesToggle.classList.add("hidden");
-    } else if (sortedShows.length < 51 ) {
+    } else if (sortedShows.length < 51) {
         displayPage(sortedShows);
+        
         pageText.classList.remove("hidden");
         pages.classList.remove("hidden");
         pageSliderForm.classList.add("hidden");
         pagesToggle.classList.add("hidden");
     } else {
         displayPage(sortedShows);
+        
         pageText.classList.remove("hidden");
         pagesToggle.classList.remove("hidden");
+        
         if ( pages.classList.contains("hidden") ) {
             pageSliderForm.classList.remove("hidden");
+        }
+
+        const pagesToggleImage = pagesToggle.querySelector("i");
+        if ( pagesToggleImage.classList.contains("fa-toggle-off") ) {
+            pagesToggleImage.classList.remove("fa-toggle-off");
+            pagesToggleImage.classList.add("fa-toggle-on");
         }
     }
 }
@@ -91,12 +101,14 @@ function clearPreviousPageNumbers() {
 
 function createPageNumbers(allPages, shows) {
     let currentPages;
-    if (pageNumber < 6) {
+    if (APP_STATE.pageNumber < 6) {
         currentPages = allPages.slice(0, 9);
-    } else if (pageNumber > (allPages.length - 5)) {
+    } else if (APP_STATE.pageNumber > (allPages.length - 5)) {
         currentPages = allPages.slice(-9);
     } else {
-        currentPages = allPages.slice( (pageNumber - 5), ( pageNumber + 4) );
+        currentPages = allPages.slice(
+            (APP_STATE.pageNumber - 5), ( APP_STATE.pageNumber + 4)
+        );
     }
 
     currentPages.forEach(currentPageNumber => {
@@ -108,7 +120,7 @@ function createPageNumber(currentPageNumber, shows) {
     const pageNumberLi = document.createElement("li");
     pageNumberLi.classList.add("page-number");
     pageNumberLi.textContent = currentPageNumber;
-    if ( currentPageNumber === pageNumber ) { 
+    if ( currentPageNumber === APP_STATE.pageNumber ) { 
         pageNumberLi.classList.add("selected");
     }
     pageNumberLi.addEventListener(
@@ -121,7 +133,7 @@ function createPageNumber(currentPageNumber, shows) {
 }
 
 function showPageNumbers(event, shows) {
-    setPageNumber( parseInt(event.target.textContent, 10) );
+    APP_STATE.setPageNumber( parseInt(event.target.textContent, 10) );
     handleRangeInput();
     displayShows(shows);
 }
@@ -143,9 +155,9 @@ function createNoShowsText() {
 }
 
 function displayPage(sortedShows) {
-    const end = sortedShows.length < (pageNumber * 50) 
+    const end = sortedShows.length < (APP_STATE.pageNumber * 50)
         ? sortedShows.length
-        : pageNumber * 50;
+        : APP_STATE.pageNumber * 50;
     const start = ((end - 50) < 0) ? 0 : (end - 50);
     
     createRangeFromTo( start, (end - 1) ).forEach(number => {
@@ -158,10 +170,10 @@ function handleRangeInput(event) {
     const pageSliderOutput = document.querySelector("output");
 
     if (!event) { 
-        pageSlider.value = pageNumber;
+        pageSlider.value = APP_STATE.pageNumber;
     } else {
         pageSlider.value = event.target.value;
-        setPageNumber( parseInt(pageSlider.value, 10) );
+        APP_STATE.setPageNumber( parseInt(pageSlider.value, 10) );
     }
 
     let correctionFactor;

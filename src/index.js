@@ -1,3 +1,5 @@
+import { AppState } from "./appState.js";
+
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
 import {
@@ -6,8 +8,6 @@ import {
     GenreSelector,
     setGenreSelectors
 } from "./genreSelector.js";
-
-import { SearchBar } from "./searchBar.js";
 
 import { SortBy } from "./sortBy.js";
 import { sorter } from "./sort.js";
@@ -27,7 +27,7 @@ import {
     parseAllToJSON
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 3);
+const apiShowsPages = createRangeFromTo(0, 0);
 const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
 Promise.all(fetchCalls)
@@ -36,31 +36,25 @@ Promise.all(fetchCalls)
     .then(setAllShows)
     .then(displayShows);
 
+export const APP_STATE = new AppState();
+
 handleWindowScroll();
 GenreSelector();
-SearchBar();
 const sortBy = SortBy(".sort-by");
 Pages();
 handleShowCardClick();
 
-export let pageNumber = 1;
-export const setPageNumber = (newNumber) => pageNumber = newNumber;
-
-export let allShows = [];
-export let filteredShows = [];
-export const setFilteredShows = (shows) => filteredShows = shows;
-
 function setAllShows(shows) {
-    allShows = shows;
-    filteredShows = allShows;
+    APP_STATE.setAllShows(shows);
+    APP_STATE.setFilteredShows(shows);
     
     document.querySelector(".loading").remove();
 
-    return allShows;
+    return APP_STATE.allShows;
 }
 
 export function displayShows(shows) {
-    scrollViewToTopOfPage()
+    scrollViewToTopOfPage();
     
     removeShowCards();
     

@@ -1,20 +1,12 @@
 import {
-    setPageNumber,
-    filteredShows,
-    setFilteredShows,
-    allShows,
+    APP_STATE,
     displayShows
 } from "./index.js";
-
-import {
-    searchBar,
-    filterByName
-} from "./searchBar.js";
 
 import { showPageSlider } from "./pages.js";
 
 export const genres = new Set();
-export const setGenres = (shows) => {
+export function setGenres(shows) {
     shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
 }
 const selectedGenres = new Set();
@@ -96,25 +88,28 @@ export function GenreSelector() {
     }
 
     function filterByGenre(event) {
-        setPageNumber(1);
+        APP_STATE.setPageNumber(1);
         showPageSlider();
     
         const selectedGenre = event ? event.target.textContent : undefined;
     
         if (selectedGenre === "Remove filters!") {
-            setFilteredShows(allShows);
-            searchBar.value = "";
+            APP_STATE.setFilteredShows(APP_STATE.allShows);
+            APP_STATE.searchBar.element.value = "";
             
             selectedGenres.clear();
         } else {
-            setFilteredShows(
+            APP_STATE.setFilteredShows(
                 filterByGenres(
-                    filterByName(allShows, searchBar.value)
+                    APP_STATE.searchBar.filterByName(
+                        APP_STATE.allShows,
+                        APP_STATE.searchBar.element.value
+                    )
                 )
             );
         }
 
-        displayShows(filteredShows);
+        displayShows(APP_STATE.filteredShows);
     }
 }
 
