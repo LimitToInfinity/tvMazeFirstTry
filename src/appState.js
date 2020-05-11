@@ -6,6 +6,7 @@ export class AppState {
         this.allShows = [];
         this.filteredShows = [];
         this.searchBar = new SearchBar();
+        this.genres = new Set();
     }
     
     setPageNumber = (newNumber) => {
@@ -15,8 +16,16 @@ export class AppState {
     setAllShows = (shows) => {
         this.allShows = shows;
     }
-
+    
     setFilteredShows = (shows) => {
         this.filteredShows = shows;
+    }
+
+    setGenres = (shows) => {
+        shows.forEach(show => {
+            show.genres.forEach(genre => {
+                this.genres.add(genre);
+            });
+        });
     }
 }

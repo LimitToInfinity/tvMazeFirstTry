@@ -3,8 +3,6 @@ import { AppState } from "./appState.js";
 import { handleWindowScroll } from "./handleWindowScroll.js";
 
 import {
-    genres,
-    setGenres,
     GenreSelector,
     setGenreSelectors
 } from "./genreSelector.js";
@@ -58,8 +56,8 @@ export function displayShows(shows) {
     
     removeShowCards();
     
-    genres.clear();
-    setGenres(shows);
+    APP_STATE.genres.clear();
+    APP_STATE.setGenres(shows);
     setGenreSelectors();
     
     const sortedShows = sorter[sortBy.value](shows);

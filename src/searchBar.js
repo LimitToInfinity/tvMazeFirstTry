@@ -3,10 +3,7 @@ import {
     displayShows
 } from "./index.js";
 
-import {
-    genres,
-    filterByGenres
-} from "./genreSelector.js";
+import { filterByGenres } from "./genreSelector.js";
 
 import { showPageSlider } from "./pages.js";
 
@@ -48,7 +45,7 @@ export class SearchBar {
         );
         
         if (APP_STATE.filteredShows.length === 0) { 
-            genres.clear();
+            APP_STATE.genres.clear();
         }
         
         displayShows(APP_STATE.filteredShows);

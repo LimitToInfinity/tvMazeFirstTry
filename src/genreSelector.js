@@ -5,10 +5,6 @@ import {
 
 import { showPageSlider } from "./pages.js";
 
-export const genres = new Set();
-export function setGenres(shows) {
-    shows.forEach(show => show.genres.forEach(genre => genres.add(genre)));
-}
 const selectedGenres = new Set();
 
 export function GenreSelector() {
@@ -134,7 +130,7 @@ export function setGenreSelectors() {
 
     Array.from(selectedGenres)
         .forEach(createGenreSelector);
-    Array.from(genres)
+    Array.from(APP_STATE.genres)
         .filter(genre => !selectedGenres.has(genre))
         .sort()
         .forEach(createGenreSelector);
