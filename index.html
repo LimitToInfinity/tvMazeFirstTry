@@ -56,10 +56,10 @@
 
     <body>
         <header>
-            <div class="expander">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="hamburger expander">
+                <span class="expander"></span>
+                <span class="expander"></span>
+                <span class="expander"></span>
             </div>
             <h1>TV Show Finder!</h1>
         </header>
@@ -127,15 +127,17 @@
             </section>
 
             <ul class="genre-pills collapsed">
-                <li class="genre-pill-header bottom-sheet static-pill">
-                    <div class="expander">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                <li class="genre-pill-header static-pill expander">
+                    <div class="hamburger expander">
+                        <span class="expander"></span>
+                        <span class="expander"></span>
+                        <span class="expander"></span>
                     </div>
-                    <span class="genre-pill-header-text">Filter by genre(s)!</span>
+                    <span class="genre-pill-header-text expander">
+                        Filter by genre(s)!
+                    </span>
                 </li>
-                <li class="genre-pill static-pill">Remove filters!</li>
+                <li class="genre-pill-reset static-pill">Remove filters!</li>
             </ul>
         </main>
     </body>

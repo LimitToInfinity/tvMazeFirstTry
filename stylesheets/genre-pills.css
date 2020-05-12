@@ -35,14 +35,10 @@
     cursor: pointer;
     font-size: 1.2rem;
     margin-bottom: 0.8rem;
-}
-
-.bottom-sheet {
-    background-color: black;
     color: white;
 }
 
-.genre-pill-header > .expander > span {
+.genre-pill-header > .hamburger > span {
     background-color: white;
 }
 
@@ -50,12 +46,12 @@
     width: min-content;
 }
 
-.expander {
+.hamburger {
     padding-right: 1rem;
     cursor: pointer;
 }
 
-.genre-pill {
+.genre-pill, .genre-pill-reset {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,6 +64,11 @@
     cursor: pointer;
     min-width: 9rem;
     font-size: 1.3rem;
+}
+
+.genre-pill-reset:hover {
+    background-color: rgb(108, 0, 0);
+    color: white;
 }
 
 .genre-pill:not(.highlighted):hover {
