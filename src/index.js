@@ -13,7 +13,7 @@ import {
     flattenResponses
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 0);
+const apiShowsPages = createRangeFromTo(0, 191);
 const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
 Promise.all(fetchCalls)
