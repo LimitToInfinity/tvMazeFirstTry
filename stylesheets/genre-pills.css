@@ -1,5 +1,4 @@
 .genre-pills {
-    color: black;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -9,6 +8,7 @@
     top: 0;
     left: 0;
     height: 100vh;
+    width: min-content;
     padding: 1.5rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
@@ -17,25 +17,22 @@
 }
 
 .collapsed {
-    align-items: flex-end;
-    overflow-y: unset;
     left: -15rem;
-}
-
-.expanded {
-    color: white;
 }
 
 .genre-pill-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 0.4rem;
-    width: 9rem;
     cursor: pointer;
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
     color: white;
+}
+
+.genre-pill-header > .hamburger {
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .genre-pill-header > .hamburger > span {
@@ -44,11 +41,7 @@
 
 .genre-pill-header-text {
     width: min-content;
-}
-
-.hamburger {
-    padding-right: 1rem;
-    cursor: pointer;
+    font-size: 2rem;
 }
 
 .genre-pill, .genre-pill-reset {

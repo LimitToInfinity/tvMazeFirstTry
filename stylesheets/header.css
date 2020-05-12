@@ -4,6 +4,11 @@ header {
     margin: 2rem;
 }
 
+header > .hamburger {
+    padding-right: 1rem;
+    cursor: pointer;
+}
+
 .hamburger > span {
     width: 25px;
     height: 4px;
@@ -11,7 +16,7 @@ header {
     display: block;
     margin: 5px 0;
     border-radius: 5px;
-    transition: all 0.2s;
+    transition: all 0.1s;
 }
 
 .hamburger > span:nth-child(1).fold {

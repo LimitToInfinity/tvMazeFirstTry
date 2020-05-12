@@ -43,7 +43,7 @@ export class Pages {
     handleRangeInput = (event) => {
         const { pageSlider, pageSliderOutput } = this;
 
-        pageSlider.value = event
+        pageSlider.value = event && event.target.value
             ? event.target.value
             : APP_STATE.pageNumber;
         

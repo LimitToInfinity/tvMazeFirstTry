@@ -14,25 +14,6 @@
         border-top-right-radius: 100px;
     }
 
-    .genre-pill-header > .hamburger > span {
-        height: 6px;
-        width: 45px;
-    }
-
-    .genre-pill-header > .hamburger > span:nth-child(1).fold {
-        -webkit-transform: rotate(-45deg) translate(-10px, 9px);
-        transform: rotate(-45deg) translate(-10px, 8px);
-    }
-    
-    .genre-pill-header > .hamburger > span:nth-child(3).fold {
-        -webkit-transform: rotate(45deg) translate(-4px, -3px);
-        transform: rotate(45deg) translate(-7px, -6px);
-    }
-
-    .genre-pill-header-text {
-        width: unset;
-    }
-
     .collapsed {
         max-height: 7.5rem;
     }
@@ -46,12 +27,51 @@
         color: white;
         display: flex;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         padding: 1rem 0;
         width: unset;
         min-width: 100vw;
         font-size: 5rem;
         transition: border-radius 0.8s, background-color 0.8s, color 0.2s;
+    }
+
+    .genre-pill-header > .hamburger {
+        padding-right: 2.5rem;
+        padding-bottom: 0rem;
+    }
+
+    .genre-pill-header > .hamburger > span {
+        height: 6px;
+        width: 45px;
+    }
+    
+    .genre-pill-header > .hamburger > span:nth-child(1) {
+        -webkit-transform: rotate(135deg) translate(14px, 7px);
+        transform: rotate(135deg) translate(14px, 7px);
+    }
+
+    .genre-pill-header > .hamburger > span:nth-child(2) {
+        display: none;
+    }
+
+    .genre-pill-header > .hamburger > span:nth-child(3) {
+        -webkit-transform: rotate(45deg) translate(5px, -13px);
+        transform: rotate(45deg) translate(5px, -13px);
+    }
+
+    .genre-pill-header > .hamburger > span:nth-child(1).fold {
+        -webkit-transform: rotate(225deg) translate(5px, -12px);
+        transform: rotate(225deg) translate(5px, -12px);
+    }
+    
+    .genre-pill-header > .hamburger > span:nth-child(3).fold {
+        -webkit-transform: rotate(-45deg) translate(16px, 7px);
+        transform: rotate(-45deg) translate(16px, 7px);
+    }
+
+    .genre-pill-header-text {
+        width: unset;
+        font-size: 5rem;
     }
 
     .genre-pill, .genre-pill-reset {

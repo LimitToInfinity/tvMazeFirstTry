@@ -65,32 +65,6 @@
         </header>
 
         <main>
-            <div class="search-container">
-                <form>
-                    <label class="search-bar-label" for="search-bar">Filter by name</label>
-                    <input 
-                        type="text"
-                        name="search-bar"
-                        id="search-bar"
-                    />
-                </form>
-            </div>
-
-            <div class="sort-container">
-                <h3>Sort by</h3>
-                <select class="sort-by">
-                    <option value="Most popular">Most popular</option>
-                    <option value="Least popular">Least popular</option>
-                    <option value="Highest rating">Highest rating</option>
-                    <option value="Lowest rating">Lowest rating</option>
-                    <option value="Most recent">Most recent</option>
-                    <option value="Least recent">Least recent</option>
-                    <option value="A to Z">A to Z</option>
-                    <option value="Z to A">Z to A</option>
-                </select>
-            </div>
-
-            
             <section class="show-cards-container">
                 <div class="loading">
                     <img
@@ -134,9 +108,35 @@
                         <span class="expander"></span>
                     </div>
                     <span class="genre-pill-header-text expander">
-                        Filter by genre(s)!
+                        Search
                     </span>
                 </li>
+
+                <div class="sort-container">
+                    <h3>Sort by</h3>
+                    <select class="sort-by">
+                        <option value="Most popular">Most popular</option>
+                        <option value="Least popular">Least popular</option>
+                        <option value="Highest rating">Highest rating</option>
+                        <option value="Lowest rating">Lowest rating</option>
+                        <option value="Most recent">Most recent</option>
+                        <option value="Least recent">Least recent</option>
+                        <option value="A to Z">A to Z</option>
+                        <option value="Z to A">Z to A</option>
+                    </select>
+                </div>
+
+                <div class="search-container">
+                    <form>
+                        <label class="search-bar-label" for="search-bar">Filter by name</label>
+                        <input 
+                            type="text"
+                            name="search-bar"
+                            id="search-bar"
+                        />
+                    </form>
+                </div>
+
                 <li class="genre-pill-reset static-pill">Remove filters!</li>
             </ul>
         </main>

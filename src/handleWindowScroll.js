@@ -1,4 +1,7 @@
-export function handleWindowScroll() {
+import { APP_STATE } from "./index.js"
+
+export function handleWindowListeners() {
+    window.addEventListener("resize", APP_STATE.pages.handleRangeInput);
     window.addEventListener("scroll", handleScroll);
 
     const showCardsContainer = document.querySelector(".show-cards-container");

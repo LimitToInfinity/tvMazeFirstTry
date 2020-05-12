@@ -1,6 +1,6 @@
 import { AppState } from "./AppState.js";
 
-import { handleWindowScroll } from "./handleWindowScroll.js";
+import { handleWindowListeners } from "./handleWindowScroll.js";
 
 import { handleShowCardClick } from "./showCard.js";
 
@@ -24,7 +24,7 @@ Promise.all(fetchCalls)
 
 export const APP_STATE = new AppState();
 
-handleWindowScroll();
+handleWindowListeners();
 handleShowCardClick();
 
 function setAllShows(shows) {
