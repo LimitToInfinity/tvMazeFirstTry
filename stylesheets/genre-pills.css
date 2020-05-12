@@ -70,9 +70,9 @@
     font-size: 1.3rem;
 }
 
-.genre-pill:hover {
-    background-color: white;
-    color: black;
+.genre-pill:not(.highlighted):hover {
+    background-color: #545863;
+    color: white;
 }
 
 .highlighted {

@@ -1,29 +1,63 @@
 export const sorter = {
-    "Most popular": (shows) => { return sortShowsByMostPopular(
-        sortShowsByHighestRating( sortShowsByMostRecent(shows) ) );
+    "Most popular": (shows) => {
+        return sortShowsByMostPopular(
+            sortShowsByHighestRating(
+                sortShowsByMostRecent(shows)
+            )
+        );
     },
-    "Least popular": (shows) => { return sortShowsByLeastPopular(
-        sortShowsByLowestRating( sortShowsByLeastRecent(shows) ) );
+    "Least popular": (shows) => {
+        return sortShowsByLeastPopular(
+            sortShowsByLowestRating(
+                sortShowsByLeastRecent(shows)
+            )
+        );
     },
-    "Highest rating": (shows) => { return sortShowsByHighestRating(
-        sortShowsByMostPopular( sortShowsByMostRecent(shows) ) );
+    "Highest rating": (shows) => {
+        return sortShowsByHighestRating(
+            sortShowsByMostPopular(
+                sortShowsByMostRecent(shows)
+            )
+        );
     },
-    "Lowest rating": (shows) => { return sortShowsByLowestRating(
-        sortShowsByLeastPopular( sortShowsByLeastRecent(shows) ) );
+    "Lowest rating": (shows) => {
+        return sortShowsByLowestRating(
+            sortShowsByLeastPopular(
+                sortShowsByLeastRecent(shows)
+            )
+        );
     },
-    "Most recent": (shows) => { return sortShowsByMostRecent(
-        sortShowsByMostPopular( sortShowsByHighestRating(shows) ) );
+    "Most recent": (shows) => {
+        return sortShowsByMostRecent(
+            sortShowsByMostPopular(
+                sortShowsByHighestRating(shows)
+            )
+        );
     },
-    "Least recent": (shows) => { return sortShowsByLeastRecent(
-        sortShowsByLeastPopular( sortShowsByHighestRating(shows) ) );
+    "Least recent": (shows) => {
+        return sortShowsByLeastRecent(
+            sortShowsByLeastPopular(
+                sortShowsByHighestRating(shows)
+            )
+        );
     },
-    "A to Z": (shows) => { return sortShowsAToZ(
-        sortShowsByMostPopular( sortShowsByHighestRating( 
-        sortShowsByMostRecent(shows) ) ) );
+    "A to Z": (shows) => {
+        return sortShowsAToZ(
+            sortShowsByMostPopular(
+                sortShowsByHighestRating(
+                    sortShowsByMostRecent(shows)
+                )
+            )
+        );
     },
-    "Z to A": (shows) => { return sortShowsZToA(
-        sortShowsByMostPopular( sortShowsByHighestRating( 
-        sortShowsByMostRecent(shows) ) ) );
+    "Z to A": (shows) => {
+        return sortShowsZToA(
+            sortShowsByMostPopular(
+                sortShowsByHighestRating(
+                    sortShowsByMostRecent(shows)
+                )
+            )
+        );
     },
 }
 
