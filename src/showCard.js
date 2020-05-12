@@ -50,7 +50,7 @@ function makeShowCard() {
 
 function makeImage(show) {
     const image = createElementWithAttributes("img", {
-        src: show.image.medium
+        src: "https" + show.image.medium.slice(4)
     });
     return addClassesTo(image, "show-image");
 }
