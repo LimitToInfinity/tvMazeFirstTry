@@ -13,7 +13,7 @@ import {
     flattenResponses
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 191);
+const apiShowsPages = createRangeFromTo(0, 0);
 const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
 Promise.all(fetchCalls)
@@ -56,11 +56,12 @@ export function displayShows(shows) {
 }
 
 function scrollViewToTopOfPage() {
-    if (!window.matchMedia('(max-device-width: 600px)').matches) {
-        window.scroll({ top: 0, behavior: 'smooth' });
-    } else if (window.matchMedia('(max-device-width: 600px)').matches) {
-        window.scroll({top: 0});
-    }
+    const isMobile = 
+        window.matchMedia('(max-device-width: 600px)').matches;
+
+    isMobile
+        ? window.scroll({top: 0})
+        : window.scroll({ top: 0, behavior: 'smooth' });
 }
 
 function removePreviousShowCards() {

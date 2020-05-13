@@ -16,9 +16,9 @@ export class GenreSelector {
         this.hamburgerBars =
             Array.from(
                 this.sidebarExpander.querySelectorAll("span")
-            ).concat( Array.from(
+            ).concat(Array.from(
                 this.headerExpander.querySelectorAll("span")
-            ) );
+            ));
         
         this.genrePillContainer
             .addEventListener("click", this.handleGenrePill);

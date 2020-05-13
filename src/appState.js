@@ -1,7 +1,7 @@
-import { SearchBar } from "./SearchBar.js";
-import { GenreSelector } from "./GenreSelector.js";
 import { Pages } from "./Pages.js";
+import { SearchBar } from "./SearchBar.js";
 import { SortBy } from "./SortBy.js";
+import { GenreSelector } from "./GenreSelector.js";
 
 export class AppState {
     constructor() {
@@ -12,9 +12,9 @@ export class AppState {
 
         this.genres = new Set();
         
+        this.pages = new Pages();
         this.searchBar = new SearchBar();
         this.sortBy = new SortBy();
-        this.pages = new Pages();
         this.genreSelector = new GenreSelector();
     }
     
