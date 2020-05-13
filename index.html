@@ -112,6 +112,16 @@
                     </span>
                 </li>
 
+                <div class="web-networks">
+                    <input list="web-networks-search" autocomplete="on" />
+                    <datalist id="web-networks-search">
+                        <option
+                            class="web-network-reset"
+                            value="All networks"
+                        >All networks</option>
+                    </datalist>
+                </div>
+
                 <div class="sort-container">
                     <h3>Sort by</h3>
                     <select class="sort-by">
@@ -128,7 +138,10 @@
 
                 <div class="search-container">
                     <form>
-                        <label class="search-bar-label" for="search-bar">Filter by name</label>
+                        <label
+                            class="search-bar-label"
+                            for="search-bar"
+                        >Filter by name</label>
                         <input 
                             type="text"
                             name="search-bar"

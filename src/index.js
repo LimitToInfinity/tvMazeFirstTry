@@ -47,6 +47,10 @@ export function displayShows(shows) {
     APP_STATE.setGenres(shows);
     APP_STATE.genreSelector.setGenreSelectors();
     
+    APP_STATE.webNetworks.clear();
+    APP_STATE.setWebNetworks(shows);
+    APP_STATE.webNetworkSelector.setWebNetworkOptions();
+    
     const sortedShows = sorter[APP_STATE.sortBy.element.value](shows);
 
     const allPages = createRangeFromTo(1, Math.ceil(shows.length/50));

@@ -104,7 +104,7 @@ export class GenreSelector {
             document.querySelectorAll(".genre-pills > li")
         );
         const previousDynamicPills = allPreviousPills.filter(
-            selector => !selector.classList.contains("static-pill")
+            selector => selector.classList.contains("dynamic-pill")
         );
     
         previousDynamicPills.forEach(pill => pill.remove());

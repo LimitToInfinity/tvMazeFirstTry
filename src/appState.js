@@ -1,6 +1,7 @@
 import { Pages } from "./Pages.js";
-import { SearchBar } from "./SearchBar.js";
+import { WebNetworkSelector } from "./WebNetworkSelector.js";
 import { SortBy } from "./SortBy.js";
+import { SearchBar } from "./SearchBar.js";
 import { GenreSelector } from "./GenreSelector.js";
 
 export class AppState {
@@ -11,10 +12,12 @@ export class AppState {
         this.filteredShows = [];
 
         this.genres = new Set();
+        this.webNetworks = new Set();
         
         this.pages = new Pages();
-        this.searchBar = new SearchBar();
+        this.webNetworkSelector = new WebNetworkSelector();
         this.sortBy = new SortBy();
+        this.searchBar = new SearchBar();
         this.genreSelector = new GenreSelector();
     }
     
@@ -35,6 +38,14 @@ export class AppState {
             show.genres.forEach(genre => {
                 this.genres.add(genre);
             });
+        });
+    }
+
+    setWebNetworks = (shows) => {
+        shows.forEach(show => {
+            show.webChannel
+                ? this.webNetworks.add(show.webChannel.name)
+                : undefined;
         });
     }
 }
