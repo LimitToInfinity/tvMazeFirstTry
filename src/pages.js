@@ -158,9 +158,9 @@ export class Pages {
     }
 
     hideAllPagesContainerChildren = () => {
-        const pagesContainerElements = Array.from( this.container.children );
+        const pagesContainerChildren = Array.from( this.container.children );
 
-        pagesContainerElements.forEach(
+        pagesContainerChildren.forEach(
             element => element.classList.add("hidden")
         );
     }

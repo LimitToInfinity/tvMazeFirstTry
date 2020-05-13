@@ -7,14 +7,14 @@
 }
 
 .pages-container > h2 {
-    margin: 0 0.5rem 0.2rem;
-    padding: 0 0.5rem;
+    margin-right: 1.3rem;
     font-size: 2rem;
 }
 
 .page-numbers {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-flow: wrap;
     min-height: 5rem;
 }
@@ -40,7 +40,7 @@
     background-color: hsl(0, 0%, 98%);
     border-color: hsl(0, 0%, 98%);
     font-size: 2rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
     cursor: pointer;
     outline: none;
     -webkit-appearance: media-slider;
