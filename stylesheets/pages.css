@@ -42,7 +42,8 @@
     font-size: 2rem;
     margin-left: 1rem;
     cursor: pointer;
-    outline: none;
+    outline-style: none;
+    border-style: none;
     -webkit-appearance: media-slider;
 }
 

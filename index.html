@@ -112,14 +112,21 @@
                     </span>
                 </li>
 
-                <div class="web-networks">
-                    <input list="web-networks-search" autocomplete="on" />
-                    <datalist id="web-networks-search">
-                        <option
-                            class="web-network-reset"
-                            value="All networks"
-                        >All networks</option>
-                    </datalist>
+                <div class="web-networks-container">
+                    <div>
+                        <input
+                            type="text"
+                            id="web-networks-search"
+                            list="web-networks"
+                            autocomplete="on"
+                        />
+                        <datalist id="web-networks">
+                            <option
+                                class="web-network-reset"
+                                value="All networks"
+                            >All networks</option>
+                        </datalist>
+                    </div>
                 </div>
 
                 <div class="sort-container">
@@ -137,17 +144,17 @@
                 </div>
 
                 <div class="search-container">
-                    <form>
+                    <div>
                         <label
                             class="search-bar-label"
                             for="search-bar"
                         >Filter by name</label>
                         <input 
                             type="text"
-                            name="search-bar"
                             id="search-bar"
+                            autocomplete="on"
                         />
-                    </form>
+                    </div>
                 </div>
 
                 <li class="genre-pill-reset static-pill">Remove filters!</li>

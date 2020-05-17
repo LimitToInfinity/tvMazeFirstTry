@@ -10,11 +10,17 @@ export class WebNetworkSelector {
         this.selectedWebNetworks = new Set();
         
         this.webNetworksContainer = document
-            .querySelector(".web-networks");
+            .querySelector(".web-networks-container");
         this.webNetworksSearch = this.webNetworksContainer
             .querySelector("input");
         this.webNetworksList = this.webNetworksContainer
             .querySelector("datalist");
+
+        this.handleWebNetwork = this.handleWebNetwork.bind(this);
+        this.showHasSelectedWebNetwork =
+            this.showHasSelectedWebNetwork.bind(this);
+        this.createWebNetworkOption =
+            this.createWebNetworkOption.bind(this);
         
         this.webNetworksSearch
             .addEventListener("change", this.handleWebNetwork);
@@ -24,7 +30,7 @@ export class WebNetworkSelector {
             .addEventListener("blur", this.clearText);
     }
 
-    handleWebNetwork = (event) => {
+    handleWebNetwork(event) {
         const { value } = event.target;
 
         const selectedWebNetwork =
@@ -46,11 +52,11 @@ export class WebNetworkSelector {
         }
     }
 
-    clearText = (event) => {
+    clearText(event) {
         event.target.value = "";
     }
 
-    filterByWebNetwork = (event) => {
+    filterByWebNetwork(event) {
         APP_STATE.setPageNumber(1);
         APP_STATE.pages.displayPagesView();
     
@@ -77,20 +83,19 @@ export class WebNetworkSelector {
         displayShows(APP_STATE.filteredShows);
     }
 
-    filterByWebNetworks = (shows) => {
-        console.log(this.isAllNetworks);
+    filterByWebNetworks(shows) {
         return this.isAllNetworks
             ? shows
             : shows.filter(this.showHasSelectedWebNetwork);
     }
 
-    showHasSelectedWebNetwork = (show) => {
+    showHasSelectedWebNetwork(show) {
         return show.webChannel
             ? this.selectedWebNetworks.has(show.webChannel.name)
             : false;
     }
     
-    setWebNetworkOptions = () => {
+    setWebNetworkOptions() {
         this.removePreviousWebNetworkOptions();
     
         Array.from(this.selectedWebNetworks)
@@ -101,7 +106,7 @@ export class WebNetworkSelector {
             .forEach(this.createWebNetworkOption);
     }
 
-    removePreviousWebNetworkOptions = () => {
+    removePreviousWebNetworkOptions() {
         const allWebNetworks = Array.from(
             this.webNetworksList.querySelectorAll("option")
         );
@@ -112,7 +117,7 @@ export class WebNetworkSelector {
         previousWebNetworks.forEach(option => option.remove());
     } 
     
-    createWebNetworkOption = (webNetwork) => {
+    createWebNetworkOption(webNetwork) {
         const option = document.createElement("option");
         option.classList.add("web-network");
         option.classList.add("dynamic-web-network");

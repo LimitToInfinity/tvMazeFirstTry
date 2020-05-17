@@ -20,13 +20,19 @@ export class GenreSelector {
                 this.headerExpander.querySelectorAll("span")
             ));
         
+        this.handleGenrePill = this.handleGenrePill.bind(this);
+        this.toggleGenrePillsDisplay =
+            this.toggleGenrePillsDisplay.bind(this);
+        this.showHasSelectedGenre = this.showHasSelectedGenre.bind(this);
+        this.createGenreSelector = this.createGenreSelector.bind(this);
+
         this.genrePillContainer
             .addEventListener("click", this.handleGenrePill);
         this.headerExpander
             .addEventListener("click", this.toggleGenrePillsDisplay);
     }
 
-    handleGenrePill = (event) => {
+    handleGenrePill(event) {
         const { textContent, classList } = event.target;
 
         switch (true) {
@@ -47,13 +53,13 @@ export class GenreSelector {
         }
     }
 
-    toggleGenrePillsDisplay = () => {
+    toggleGenrePillsDisplay() {
         this.hamburgerBars.forEach(bar => bar.classList.toggle("fold"));
         this.genrePillContainer.classList.toggle("collapsed");
         this.genrePillContainer.classList.toggle("expanded");
     }
 
-    filterByGenre = (event) => {
+    filterByGenre(event) {
         APP_STATE.setPageNumber(1);
         APP_STATE.pages.displayPagesView();
     
@@ -78,17 +84,17 @@ export class GenreSelector {
         displayShows(APP_STATE.filteredShows);
     }
 
-    filterByGenres = (shows) => {
+    filterByGenres(shows) {
         return shows.filter(this.showHasSelectedGenre);
     }
 
-    showHasSelectedGenre = (show) => {
+    showHasSelectedGenre(show) {
         const allSelectedGenres = Array.from(this.selectedGenres);
         return allSelectedGenres
             .every(selectedGenre => show.genres.includes(selectedGenre));
     }
     
-    setGenreSelectors = () => {
+    setGenreSelectors() {
         this.removePreviousGenrePills();
     
         Array.from(this.selectedGenres)
@@ -99,7 +105,7 @@ export class GenreSelector {
             .forEach(this.createGenreSelector);
     }
 
-    removePreviousGenrePills = () => {
+    removePreviousGenrePills() {
         const allPreviousPills = Array.from(
             document.querySelectorAll(".genre-pills > li")
         );
@@ -110,7 +116,7 @@ export class GenreSelector {
         previousDynamicPills.forEach(pill => pill.remove());
     } 
     
-    createGenreSelector = (genre) => {
+    createGenreSelector(genre) {
         const selector = document.createElement("li");
         selector.classList.add("genre-pill");
         selector.classList.add("dynamic-pill");

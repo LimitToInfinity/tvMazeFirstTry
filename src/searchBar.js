@@ -7,18 +7,22 @@ export class SearchBar {
     constructor(cssSelector = "#search-bar") {
         this.element = document.querySelector(cssSelector);
         this.label = this.element.labels[0];
+
+        this.addShrinkClass = this.addShrinkClass.bind(this);
+        this.removeShrinkClass = this.removeShrinkClass.bind(this);
+        this.filterShows = this.filterShows.bind(this);
         
         this.element.addEventListener("focus", this.addShrinkClass);
         this.element.addEventListener("blur", this.removeShrinkClass);
         this.element.addEventListener("input", this.filterShows);
     }
     
-    addShrinkClass = () => {
+    addShrinkClass() {
         this.label.classList.remove("shrink-uncolored");
         this.label.classList.add("shrink-colored");
     }
     
-    removeShrinkClass = () => {
+    removeShrinkClass() {
         if (!this.element.value) {
             this.label.classList.remove("shrink-colored");
             this.label.classList.remove("shrink-uncolored");
@@ -28,7 +32,7 @@ export class SearchBar {
         }
     }
 
-    filterShows = (event) => {
+    filterShows(event) {
         APP_STATE.setPageNumber(1);
         APP_STATE.pages.displayPagesView();
         
@@ -47,7 +51,7 @@ export class SearchBar {
         displayShows(APP_STATE.filteredShows);
     }
 
-    filterByName = (shows, searchTerm) => {
+    filterByName(shows, searchTerm) {
         return shows.filter(show => (
             show.name.toLowerCase()
             .includes(searchTerm.toLowerCase())

@@ -33,6 +33,9 @@ export class Pages {
         this.pagesToggle = this.container.querySelector(".pages-toggle");
         this.pagesToggleImage = this.pagesToggle.querySelector("i");
 
+        this.handleRangeInput = this.handleRangeInput.bind(this);
+        this.togglePagesView = this.togglePagesView.bind(this);
+
         this.pageSlider.addEventListener("input", this.handleRangeInput);
         this.pageSlider.addEventListener("change", () => {
             displayShows(APP_STATE.filteredShows)
@@ -40,7 +43,7 @@ export class Pages {
         this.pagesToggle.addEventListener("click", this.togglePagesView);
     }
 
-    handleRangeInput = (event) => {
+    handleRangeInput(event) {
         const { pageSlider, pageSliderOutput } = this;
 
         pageSlider.value = event && event.target.value
@@ -55,7 +58,7 @@ export class Pages {
         pageSliderOutput.textContent = pageSlider.value;
     }
 
-    togglePagesView = () => {
+    togglePagesView() {
         this.hideAllPagesContainerChildren();
 
         this.isSlider
@@ -65,7 +68,7 @@ export class Pages {
         this.isSlider = !this.isSlider;
     }
 
-    handleShowsDisplay = (sortedShows) => {
+    handleShowsDisplay(sortedShows) {
         this.noShowsFoundText.classList.add("hidden");
         this.hideAllPagesContainerChildren();
         
@@ -80,7 +83,7 @@ export class Pages {
         }
     }
 
-    displayPage = (sortedShows) => {
+    displayPage(sortedShows) {
         const end = sortedShows.length < (APP_STATE.pageNumber * 50)
             ? sortedShows.length
             : APP_STATE.pageNumber * 50;
@@ -91,18 +94,18 @@ export class Pages {
         });
     }
 
-    displaySinglePage = () => {
+    displaySinglePage() {
         this.pageText.classList.remove("hidden");
         this.pageNumbers.classList.remove("hidden");
     }
 
-    displayPagesView = () => {
+    displayPagesView() {
         this.isSlider
             ? this.displayPageSlider()
             : this.displayPageNumbers();
     }
 
-    setPageNumbers = (allPages, shows) => {
+    setPageNumbers(allPages, shows) {
         this.clearPreviousPageNumbers();
         this.createPageNumbers(allPages, shows);
         
@@ -110,7 +113,7 @@ export class Pages {
         this.pageSliderRangeMax.textContent = allPages.length;
     }
     
-    clearPreviousPageNumbers = () => {
+    clearPreviousPageNumbers() {
         const previousPageNumbers = Array.from(
             this.pageNumbers.querySelectorAll("li")
         );
@@ -119,7 +122,7 @@ export class Pages {
         );
     }
     
-    createPageNumbers = (allPages, shows) => {
+    createPageNumbers(allPages, shows) {
         let currentPages;
         if (APP_STATE.pageNumber < 6) {
             currentPages = allPages.slice(0, 9);
@@ -136,7 +139,7 @@ export class Pages {
         });
     }
     
-    createPageNumber = (currentPageNumber, shows) => {
+    createPageNumber(currentPageNumber, shows) {
         const pageNumberLi = document.createElement("li");
         pageNumberLi.classList.add("page-number");
         pageNumberLi.textContent = currentPageNumber;
@@ -151,13 +154,13 @@ export class Pages {
         this.pageNumbers.append(pageNumberLi);
     }
     
-    setPage = (event, shows) => {
+    setPage(event, shows) {
         APP_STATE.setPageNumber( parseInt(event.target.textContent, 10) );
         this.handleRangeInput();
         displayShows(shows);
     }
 
-    hideAllPagesContainerChildren = () => {
+    hideAllPagesContainerChildren() {
         const pagesContainerChildren = Array.from( this.container.children );
 
         pagesContainerChildren.forEach(
@@ -165,7 +168,7 @@ export class Pages {
         );
     }
 
-    displayPageNumbers = () => {
+    displayPageNumbers() {
         this.pageText.classList.remove("hidden");
         this.pageNumbers.classList.remove("hidden");
         this.pagesToggle.classList.remove("hidden");
@@ -174,7 +177,7 @@ export class Pages {
         this.pagesToggleImage.classList.add("fa-toggle-off");
     }
     
-    displayPageSlider = () => {
+    displayPageSlider() {
         this.pageText.classList.remove("hidden");
         this.pageSliderForm.classList.remove("hidden");
         this.pagesToggle.classList.remove("hidden");
@@ -185,7 +188,7 @@ export class Pages {
         this.handleRangeInput();
     }
 
-    calculateNewPosition = () => {
+    calculateNewPosition() {
         const { pageSlider } = this;
         
         const isMobile =

@@ -1,0 +1,14 @@
+@media only screen and (max-device-width: 600px) {
+    .web-networks-container {
+        width: 80%;
+        margin-bottom: 2rem;
+    }
+
+    #web-networks-search {
+        height: 8rem;
+        padding: 2.7rem 0.5rem 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        font-size: 4rem;
+    }
+}

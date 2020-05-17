@@ -21,19 +21,19 @@ export class AppState {
         this.genreSelector = new GenreSelector();
     }
     
-    setPageNumber = (newNumber) => {
+    setPageNumber(newNumber) {
         this.pageNumber = newNumber;
     }
     
-    setAllShows = (shows) => {
+    setAllShows(shows) {
         this.allShows = shows;
     }
     
-    setFilteredShows = (shows) => {
+    setFilteredShows(shows) {
         this.filteredShows = shows;
     }
 
-    setGenres = (shows) => {
+    setGenres(shows) {
         shows.forEach(show => {
             show.genres.forEach(genre => {
                 this.genres.add(genre);
@@ -41,7 +41,7 @@ export class AppState {
         });
     }
 
-    setWebNetworks = (shows) => {
+    setWebNetworks(shows) {
         shows.forEach(show => {
             show.webChannel
                 ? this.webNetworks.add(show.webChannel.name)
