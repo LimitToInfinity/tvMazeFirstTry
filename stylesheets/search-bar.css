@@ -44,9 +44,8 @@
 
 .search-bar-label {
     position: absolute;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: rgb(104, 104, 104);
-    font-family: Roboto, sans-serif;
     transition: all 0.3s;
     pointer-events: none;
     align-self: center;

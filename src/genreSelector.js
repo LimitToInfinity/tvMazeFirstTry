@@ -1,7 +1,4 @@
-import {
-    APP_STATE,
-    displayShows
-} from "./index.js";
+import { APP_STATE } from "./index.js";
 
 export class GenreSelector {
     constructor() {
@@ -20,19 +17,19 @@ export class GenreSelector {
                 this.headerExpander.querySelectorAll("span")
             ));
         
-        this.handleGenrePill = this.handleGenrePill.bind(this);
+        this.toggleMenuAndGenrePills = this.toggleMenuAndGenrePills.bind(this);
         this.toggleGenrePillsDisplay =
             this.toggleGenrePillsDisplay.bind(this);
         this.showHasSelectedGenre = this.showHasSelectedGenre.bind(this);
         this.createGenreSelector = this.createGenreSelector.bind(this);
 
         this.genrePillContainer
-            .addEventListener("click", this.handleGenrePill);
+            .addEventListener("click", this.toggleMenuAndGenrePills);
         this.headerExpander
             .addEventListener("click", this.toggleGenrePillsDisplay);
     }
 
-    handleGenrePill(event) {
+    toggleMenuAndGenrePills(event) {
         const { textContent, classList } = event.target;
 
         switch (true) {
@@ -43,7 +40,7 @@ export class GenreSelector {
                     : this.selectedGenres.add(textContent);
                 
             case classList.contains("genre-pill-reset"):
-                this.filterByGenre(event);
+                this.handleSelectedGenre(textContent);
                 break;
             case classList.contains("expander"):
                 this.toggleGenrePillsDisplay();
@@ -59,29 +56,14 @@ export class GenreSelector {
         this.genrePillContainer.classList.toggle("expanded");
     }
 
-    filterByGenre(event) {
-        APP_STATE.setPageNumber(1);
-        APP_STATE.pages.displayPagesView();
-    
-        const selectedGenre = event ? event.target.textContent : undefined;
-    
+    handleSelectedGenre(selectedGenre) {
         if (selectedGenre === "Remove filters!") {
-            APP_STATE.setFilteredShows(APP_STATE.allShows);
             APP_STATE.searchBar.element.value = "";
-            
+            APP_STATE.webNetworkSelector.selectedWebNetwork = undefined;
             this.selectedGenres.clear();
-        } else {
-            APP_STATE.setFilteredShows(
-                this.filterByGenres(
-                    APP_STATE.searchBar.filterByName(
-                        APP_STATE.allShows,
-                        APP_STATE.searchBar.element.value
-                    )
-                )
-            );
         }
 
-        displayShows(APP_STATE.filteredShows);
+        APP_STATE.setAndDisplayFilteredShows();
     }
 
     filterByGenres(shows) {

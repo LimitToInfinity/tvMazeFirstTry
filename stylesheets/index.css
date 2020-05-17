@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Spectral|Staatliches|Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Jost|Spectral|Staatliches|Righteous&display=swap');
 
 * {
     box-sizing: border-box;
@@ -6,6 +6,7 @@
 
 body {
     background-color: hsl(0, 0%, 98%);
+    font-family: Jost, sans-serif;
 }
 
 main {

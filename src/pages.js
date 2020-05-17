@@ -37,9 +37,7 @@ export class Pages {
         this.togglePagesView = this.togglePagesView.bind(this);
 
         this.pageSlider.addEventListener("input", this.handleRangeInput);
-        this.pageSlider.addEventListener("change", () => {
-            displayShows(APP_STATE.filteredShows)
-        });
+        this.pageSlider.addEventListener("change", displayShows);
         this.pagesToggle.addEventListener("click", this.togglePagesView);
     }
 
@@ -50,7 +48,7 @@ export class Pages {
             ? event.target.value
             : APP_STATE.pageNumber;
         
-        APP_STATE.setPageNumber( parseInt(pageSlider.value, 10) );
+        APP_STATE.pageNumber = parseInt(pageSlider.value, 10);
        
         const newPosition = this.calculateNewPosition();
     
@@ -68,29 +66,30 @@ export class Pages {
         this.isSlider = !this.isSlider;
     }
 
-    handleShowsDisplay(sortedShows) {
+    handleShowsDisplay() {
         this.noShowsFoundText.classList.add("hidden");
         this.hideAllPagesContainerChildren();
         
-        if (sortedShows.length === 0) {
+        if (APP_STATE.filteredShows.length === 0) {
             this.noShowsFoundText.classList.remove("hidden");
-        } else if (sortedShows.length < 51) {
-            this.displayPage(sortedShows);
+        } else if (APP_STATE.filteredShows.length < 51) {
+            this.displayPage();
             this.displaySinglePage();
         } else {
-            this.displayPage(sortedShows);
+            this.displayPage();
             this.displayPagesView();
         }
     }
 
-    displayPage(sortedShows) {
-        const end = sortedShows.length < (APP_STATE.pageNumber * 50)
-            ? sortedShows.length
-            : APP_STATE.pageNumber * 50;
+    displayPage() {
+        const end =
+            APP_STATE.filteredShows.length < (APP_STATE.pageNumber * 50)
+                ? APP_STATE.filteredShows.length
+                : APP_STATE.pageNumber * 50;
         const start = ((end - 50) < 0) ? 0 : (end - 50);
         
         createRangeFromTo( start, (end - 1) ).forEach(number => {
-            createShowCard(sortedShows[number]);
+            createShowCard(APP_STATE.filteredShows[number]);
         });
     }
 
@@ -105,9 +104,14 @@ export class Pages {
             : this.displayPageNumbers();
     }
 
-    setPageNumbers(allPages, shows) {
+    setPageNumbers() {
+        const allPages = createRangeFromTo(
+            1,
+            Math.ceil(APP_STATE.filteredShows.length/50)
+        );
+
         this.clearPreviousPageNumbers();
-        this.createPageNumbers(allPages, shows);
+        this.createPageNumbers(allPages);
         
         this.pageSlider.max = allPages.length;
         this.pageSliderRangeMax.textContent = allPages.length;
@@ -122,7 +126,7 @@ export class Pages {
         );
     }
     
-    createPageNumbers(allPages, shows) {
+    createPageNumbers(allPages) {
         let currentPages;
         if (APP_STATE.pageNumber < 6) {
             currentPages = allPages.slice(0, 9);
@@ -135,11 +139,11 @@ export class Pages {
         }
     
         currentPages.forEach(currentPageNumber => {
-            this.createPageNumber(currentPageNumber, shows);
+            this.createPageNumber(currentPageNumber);
         });
     }
     
-    createPageNumber(currentPageNumber, shows) {
+    createPageNumber(currentPageNumber) {
         const pageNumberLi = document.createElement("li");
         pageNumberLi.classList.add("page-number");
         pageNumberLi.textContent = currentPageNumber;
@@ -148,16 +152,16 @@ export class Pages {
         }
         pageNumberLi.addEventListener(
             "click", 
-            (event) => this.setPage(event, shows)
+            (event) => this.setPage(event)
         );
         
         this.pageNumbers.append(pageNumberLi);
     }
     
-    setPage(event, shows) {
-        APP_STATE.setPageNumber( parseInt(event.target.textContent, 10) );
+    setPage(event) {
+        APP_STATE.pageNumber = parseInt(event.target.textContent, 10);
         this.handleRangeInput();
-        displayShows(shows);
+        displayShows();
     }
 
     hideAllPagesContainerChildren() {
@@ -168,15 +172,6 @@ export class Pages {
         );
     }
 
-    displayPageNumbers() {
-        this.pageText.classList.remove("hidden");
-        this.pageNumbers.classList.remove("hidden");
-        this.pagesToggle.classList.remove("hidden");
-
-        this.pagesToggleImage.classList.remove("fa-toggle-on");
-        this.pagesToggleImage.classList.add("fa-toggle-off");
-    }
-    
     displayPageSlider() {
         this.pageText.classList.remove("hidden");
         this.pageSliderForm.classList.remove("hidden");
@@ -186,6 +181,15 @@ export class Pages {
         this.pagesToggleImage.classList.add("fa-toggle-on");
 
         this.handleRangeInput();
+    }
+
+    displayPageNumbers() {
+        this.pageText.classList.remove("hidden");
+        this.pageNumbers.classList.remove("hidden");
+        this.pagesToggle.classList.remove("hidden");
+
+        this.pagesToggleImage.classList.remove("fa-toggle-on");
+        this.pagesToggleImage.classList.add("fa-toggle-off");
     }
 
     calculateNewPosition() {

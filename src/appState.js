@@ -4,6 +4,9 @@ import { SortBy } from "./SortBy.js";
 import { SearchBar } from "./SearchBar.js";
 import { GenreSelector } from "./GenreSelector.js";
 
+import { sorter } from "./sort.js";
+import { displayShows } from "./index.js";
+
 export class AppState {
     constructor() {
         this.pageNumber = 1;
@@ -21,28 +24,31 @@ export class AppState {
         this.genreSelector = new GenreSelector();
     }
     
-    setPageNumber(newNumber) {
-        this.pageNumber = newNumber;
-    }
-    
-    setAllShows(shows) {
-        this.allShows = shows;
-    }
-    
-    setFilteredShows(shows) {
-        this.filteredShows = shows;
+    setAndDisplayFilteredShows() {
+        const shows = this.genreSelector.filterByGenres(
+            this.webNetworkSelector.filterByWebNetwork(
+                this.searchBar.filterByName()
+            )
+        );
+        const sortedShows =
+            sorter[this.sortBy.element.value](shows);
+        this.filteredShows = sortedShows;
+        
+        this.pageNumber = 1;
+        this.pages.displayPagesView();    
+        displayShows();
     }
 
-    setGenres(shows) {
-        shows.forEach(show => {
+    setGenres() {
+        this.filteredShows.forEach(show => {
             show.genres.forEach(genre => {
                 this.genres.add(genre);
             });
         });
     }
 
-    setWebNetworks(shows) {
-        shows.forEach(show => {
+    setWebNetworks() {
+        this.filteredShows.forEach(show => {
             show.webChannel
                 ? this.webNetworks.add(show.webChannel.name)
                 : undefined;

@@ -4,8 +4,6 @@ import { handleWindowListeners } from "./handleWindowScroll.js";
 
 import { handleShowCardClick } from "./showCard.js";
 
-import { sorter } from "./sort.js";
-
 import {
     createRangeFromTo,
     makeFetchCalls,
@@ -13,50 +11,44 @@ import {
     flattenResponses
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 191);
+const apiShowsPages = createRangeFromTo(0, 0);
 const fetchCalls = apiShowsPages.map(makeFetchCalls);
 
 Promise.all(fetchCalls)
     .then(parseAllToJSON)
     .then(flattenResponses)
-    .then(setAllShows)
-    .then(displayShows);
+    .then(setAndDisplayAllShows);
 
 export const APP_STATE = new AppState();
 
 handleWindowListeners();
 handleShowCardClick();
 
-function setAllShows(shows) {
-    APP_STATE.setAllShows(shows);
-    APP_STATE.setFilteredShows(shows);
+function setAndDisplayAllShows(shows) {
+    APP_STATE.allShows = shows;
+    APP_STATE.setAndDisplayFilteredShows();
     
     document.querySelector(".loading").remove();
     document.querySelector(".pages-container")
         .classList.remove("hidden");
-
-    return APP_STATE.allShows;
 }
 
-export function displayShows(shows) {
+export function displayShows() {
     scrollViewToTopOfPage();
 
     removePreviousShowCards();
     
     APP_STATE.genres.clear();
-    APP_STATE.setGenres(shows);
+    APP_STATE.setGenres();
     APP_STATE.genreSelector.setGenreSelectors();
     
     APP_STATE.webNetworks.clear();
-    APP_STATE.setWebNetworks(shows);
+    APP_STATE.setWebNetworks();
     APP_STATE.webNetworkSelector.setWebNetworkOptions();
-    
-    const sortedShows = sorter[APP_STATE.sortBy.element.value](shows);
 
-    const allPages = createRangeFromTo(1, Math.ceil(shows.length/50));
-    APP_STATE.pages.setPageNumbers(allPages, shows);
+    APP_STATE.pages.setPageNumbers();
 
-    APP_STATE.pages.handleShowsDisplay(sortedShows);
+    APP_STATE.pages.handleShowsDisplay();
 }
 
 function scrollViewToTopOfPage() {

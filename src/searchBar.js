@@ -1,7 +1,4 @@
-import {
-    APP_STATE,
-    displayShows
-} from "./index.js";
+import { APP_STATE } from "./index.js";
 
 export class SearchBar {
     constructor(cssSelector = "#search-bar") {
@@ -10,7 +7,6 @@ export class SearchBar {
 
         this.addShrinkClass = this.addShrinkClass.bind(this);
         this.removeShrinkClass = this.removeShrinkClass.bind(this);
-        this.filterShows = this.filterShows.bind(this);
         
         this.element.addEventListener("focus", this.addShrinkClass);
         this.element.addEventListener("blur", this.removeShrinkClass);
@@ -32,29 +28,14 @@ export class SearchBar {
         }
     }
 
-    filterShows(event) {
-        APP_STATE.setPageNumber(1);
-        APP_STATE.pages.displayPagesView();
-        
-        const searchTerm = event.target.value;
-    
-        APP_STATE.setFilteredShows( 
-            APP_STATE.genreSelector.filterByGenres(
-                this.filterByName(APP_STATE.allShows, searchTerm)
-            )
-        );
-        
-        if (APP_STATE.filteredShows.length === 0) { 
-            APP_STATE.genres.clear();
-        }
-        
-        displayShows(APP_STATE.filteredShows);
+    filterShows() {
+        APP_STATE.setAndDisplayFilteredShows();
     }
 
-    filterByName(shows, searchTerm) {
-        return shows.filter(show => (
+    filterByName() {
+        return APP_STATE.allShows.filter(show => (
             show.name.toLowerCase()
-            .includes(searchTerm.toLowerCase())
+                .includes(this.element.value.toLowerCase())
         ));
     }
 }
