@@ -46,10 +46,10 @@ export class WebNetworkSelector {
     }
 
     handleWebNetworks(event) {
-        const selectedWebNetwork = event.target.value;
+        const selectedWebNetwork = event.target.value.toLowerCase();
 
         switch (true) {
-            case selectedWebNetwork !== "All networks":
+            case selectedWebNetwork !== "all networks":
                 const selectedWebNetworkOption = document.querySelector(
                     `option[value="${selectedWebNetwork}"]`
                 );
@@ -69,7 +69,7 @@ export class WebNetworkSelector {
     }
 
     handleSelectedWebNetwork(selectedWebNetwork) {
-        if (selectedWebNetwork === "All networks") {
+        if (selectedWebNetwork === "all networks") {
             this.selectedWebNetwork = undefined;
         }
 
@@ -84,7 +84,8 @@ export class WebNetworkSelector {
 
     showHasSelectedWebNetwork(show) {
         return show.webChannel
-            ? this.selectedWebNetwork === show.webChannel.name
+            ? this.selectedWebNetwork
+                === show.webChannel.name.toLowerCase()
             : false;
     }
     
