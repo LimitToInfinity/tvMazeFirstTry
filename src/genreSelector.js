@@ -60,6 +60,8 @@ export class GenreSelector {
         if (selectedGenre === "Remove filters!") {
             APP_STATE.searchBar.element.value = "";
             APP_STATE.webNetworkSelector.selectedWebNetwork = undefined;
+            APP_STATE.webNetworkSelector.webNetworksSearch.value = "";
+            APP_STATE.webNetworkSelector.removeShrinkClass();
             this.selectedGenres.clear();
         }
 
