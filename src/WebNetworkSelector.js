@@ -8,9 +8,12 @@ export class WebNetworkSelector {
             .querySelector(".web-networks-container");
         this.webNetworksSearch = this.webNetworksContainer
             .querySelector("input");
+        this.label = this.webNetworksSearch.labels[0];
         this.webNetworksList = this.webNetworksContainer
             .querySelector("datalist");
 
+        this.addShrinkClass = this.addShrinkClass.bind(this);
+        this.removeShrinkClass = this.removeShrinkClass.bind(this);
         this.handleWebNetworks = this.handleWebNetworks.bind(this);
         this.showHasSelectedWebNetwork =
             this.showHasSelectedWebNetwork.bind(this);
@@ -18,11 +21,28 @@ export class WebNetworkSelector {
             this.createWebNetworkOption.bind(this);
         
         this.webNetworksSearch
+            .addEventListener("focus", this.addShrinkClass);
+        this.webNetworksSearch
+            .addEventListener("blur", this.removeShrinkClass);
+        this.webNetworksSearch
             .addEventListener("change", this.handleWebNetworks);
         this.webNetworksSearch
             .addEventListener("click", this.clearText);
-        this.webNetworksSearch
-            .addEventListener("blur", this.clearText);
+    }
+        
+    addShrinkClass() {
+        this.label.classList.remove("shrink-uncolored");
+        this.label.classList.add("shrink-colored");
+    }
+    
+    removeShrinkClass() {
+        if (!this.webNetworksSearch.value) {
+            this.label.classList.remove("shrink-colored");
+            this.label.classList.remove("shrink-uncolored");
+        } else {
+            this.label.classList.remove("shrink-colored");
+            this.label.classList.add("shrink-uncolored");
+        }
     }
 
     handleWebNetworks(event) {

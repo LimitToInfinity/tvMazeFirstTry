@@ -6,16 +6,16 @@ import { handleShowCardClick } from "./showCard.js";
 
 import {
     createRangeFromTo,
-    makeFetchCalls,
-    parseAllToJSON,
+    fetchShowsPage,
+    parseResponsesToJSON,
     flattenResponses
 } from "./utilities.js";
 
 const apiShowsPages = createRangeFromTo(0, 191);
-const fetchCalls = apiShowsPages.map(makeFetchCalls);
+const fetchCalls = apiShowsPages.map(fetchShowsPage);
 
 Promise.all(fetchCalls)
-    .then(parseAllToJSON)
+    .then(parseResponsesToJSON)
     .then(flattenResponses)
     .then(setAndDisplayAllShows);
 
@@ -56,8 +56,8 @@ function scrollViewToTopOfPage() {
         window.matchMedia('(max-device-width: 600px)').matches;
 
     isMobile
-        ? window.scroll({top: 0})
-        : window.scroll({ top: 0, behavior: 'smooth' });
+        ? window.scroll( { top: 0 } )
+        : window.scroll( { top: 0, behavior: 'smooth' } );
 }
 
 function removePreviousShowCards() {

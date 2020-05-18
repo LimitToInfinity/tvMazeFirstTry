@@ -51,16 +51,3 @@
     align-self: center;
     left: 1.9rem;
 }
-
-.shrink-colored {
-    color: midnightblue;
-    font-size: 0.8rem;
-    transform: translateY(-20px);
-    transition: all 0.3s;
-    z-index: 10;
-}
-
-.shrink-uncolored {
-    font-size: 0.8rem;
-    transform: translateY(-20px);
-}

@@ -16,7 +16,7 @@ export function addClassesTo(element, ...classNames) {
     return element;
 }
 
-export function makeFetchCalls(showsPage) {
+export function fetchShowsPage(showsPage) {
     const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
     return fetch(url);
 }
@@ -30,7 +30,7 @@ export function flattenResponses(arrays) {
     return arrays.flat();
 }
 
-export function parseAllToJSON(responses) {
+export function parseResponsesToJSON(responses) {
     return Promise.all(responses.map(parseJSON));
 }
 
