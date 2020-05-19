@@ -8,6 +8,8 @@
 .web-networks-container > div {
     display: flex;
     flex: 1;
+    color: red;
+    background-color: green;
 }
 
 #web-networks-search {
@@ -33,10 +35,10 @@
 
 #web-networks-search:focus {
     background-color: hsl(0, 0%, 88%);
-    border-bottom: midnightblue;
+    border-bottom: #004BA8;
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    caret-color: midnightblue;
+    caret-color: #004BA8;
     outline: none;  
     transition: all 0.3s;
 }
@@ -66,7 +68,7 @@
 }
 
 .shrink-colored {
-    color: midnightblue;
+    color: #004BA8;
     font-size: 0.8rem;
     transform: translateY(-20px);
     transition: all 0.3s;
@@ -76,4 +78,9 @@
 .shrink-uncolored {
     font-size: 0.8rem;
     transform: translateY(-20px);
+}
+
+.chosen {
+    color: green;
+    background-color: red;
 }

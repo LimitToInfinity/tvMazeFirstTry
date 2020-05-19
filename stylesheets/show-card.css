@@ -17,7 +17,7 @@
     flex-direction: column;
     flex-basis: 13rem;
     margin: 10px 5px;
-    box-shadow: 15px 15px 10px rgb(148, 148, 148);
+    box-shadow: 5px 5px 10px rgb(148, 148, 148);
     transition: transform 0.2s;
     cursor: pointer;
 }
@@ -25,7 +25,7 @@
 .show-card:hover {
     transform: scale3d(1.25, 1.25, 1.25);
     transition: transform 0.2s;
-    box-shadow: 1px 1px 8px rgb(180, 180, 180), -1px 1px 8px rgb(180, 180, 180), 1px -1px 8px rgb(180, 180, 180), -1px -1px 8px rgb(180, 180, 180);
+    box-shadow: 1px 1px 8px #D8D8C6, -1px 1px 8px #D8D8C6, 1px -1px 8px #D8D8C6, -1px -1px 8px #D8D8C6;
     z-index: 30;
 }
 

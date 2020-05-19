@@ -14,7 +14,7 @@
 
     .page-slider-form > output:after { 
         width: 3px;
-        border-top: 25px solid midnightblue;
+        border-top: 25px solid #031A6B;
     }
 
     #page-slider {
@@ -28,7 +28,7 @@
         border-radius: 15px;
         cursor: pointer;
         animation: 0.2s;
-        background: midnightblue;
+        background: #031A6B;
     }
     
     #page-slider::-webkit-slider-thumb {
@@ -42,7 +42,7 @@
     }
     
     #page-slider:focus::-webkit-slider-runnable-track {
-        background: midnightblue;
+        background: #031A6B;
     }
     
     #page-slider::-moz-range-track {
@@ -50,7 +50,7 @@
         height: 25px;
         cursor: pointer;
         animation: 0.2s;
-        background: midnightblue;
+        background: #031A6B;
     }
     
     #page-slider::-moz-range-thumb {
@@ -72,12 +72,12 @@
     }
     
     #page-slider::-ms-fill-lower {
-        background: midnightblue;
+        background: #031A6B;
         border-radius: 15px;
     }
     
     #page-slider::-ms-fill-upper {
-        background: midnightblue;
+        background: #031A6B;
         border-radius: 15px;
     }
     
@@ -90,11 +90,11 @@
     }
     
     #page-slider:focus::-ms-fill-lower {
-        background: midnightblue;
+        background: #031A6B;
     }
     
     #page-slider:focus::-ms-fill-upper {
-        background: midnightblue;
+        background: #031A6B;
     }
 
     .page-slider-form > span {

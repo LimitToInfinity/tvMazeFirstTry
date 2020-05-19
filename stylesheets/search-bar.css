@@ -34,10 +34,10 @@
 
 #search-bar:focus {
     background-color: hsl(0, 0%, 88%);
-    border-bottom: midnightblue;
+    border-bottom: #004BA8;
     border-bottom-style: solid;
     border-bottom-width: 1.3px;
-    caret-color: midnightblue;
+    caret-color: #004BA8;
     outline: none;  
     transition: all 0.3s;
 }

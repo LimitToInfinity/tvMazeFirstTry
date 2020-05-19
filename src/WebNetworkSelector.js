@@ -48,14 +48,14 @@ export class WebNetworkSelector {
     handleWebNetworks(event) {
         const selectedWebNetwork = event.target.value.toLowerCase();
 
+        const selectedWebNetworkOption = document.querySelector(
+            `option[data-web-network="${selectedWebNetwork}"]`
+        );
+
         switch (true) {
+            case !selectedWebNetworkOption:
+                break;
             case selectedWebNetwork !== "all networks":
-                const selectedWebNetworkOption = document.querySelector(
-                    `option[value="${selectedWebNetwork}"]`
-                );
-                if (selectedWebNetworkOption) {
-                    selectedWebNetworkOption.classList.toggle("selected");
-                }
                 this.selectedWebNetwork = selectedWebNetwork;
 
             default:
@@ -112,10 +112,10 @@ export class WebNetworkSelector {
         const option = document.createElement("option");
         option.classList.add("web-network");
         option.classList.add("dynamic-web-network");
-        option.textContent = webNetwork;
         option.value = webNetwork;
-        if (this.selectedWebNetwork === webNetwork) {
-            option.classList.add("selected");
+        option.dataset.webNetwork = webNetwork.toLowerCase();
+        if (this.selectedWebNetwork === webNetwork.toLowerCase()) {
+            option.classList.add("chosen");
         }
         
         this.webNetworksList.append(option);

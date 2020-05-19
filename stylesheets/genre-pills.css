@@ -62,16 +62,16 @@
 }
 
 .genre-pill-reset:hover {
-    background-color: rgb(108, 0, 0);
+    background-color: #6A041D;
     color: white;
 }
 
 .genre-pill:not(.highlighted):hover {
-    background-color: #545863;
+    background-color: #133C55;
     color: white;
 }
 
 .highlighted {
-    background-color: white;
-    color: black;
+    background-color: #004BA8;
+    color: white;
 }
