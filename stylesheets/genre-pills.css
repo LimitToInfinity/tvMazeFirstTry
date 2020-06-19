@@ -1,77 +1,77 @@
 .genre-pills {
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    z-index: 40;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: min-content;
-    min-width: 13rem;
-    padding: 1.5rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    overflow-y: scroll;
-    transition: all 0.8s;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  z-index: 40;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: min-content;
+  min-width: 13rem;
+  padding: 1.5rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+  transition: all 0.8s;
 }
 
 .collapsed {
-    left: -15rem;
+  left: -15rem;
 }
 
 .genre-pill-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    min-height: 3rem;
-    margin-bottom: 0.6rem;
-    color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 3rem;
+  margin-bottom: 0.6rem;
+  color: white;
 }
 
 .genre-pill-header > .hamburger {
-    padding-right: 0.5rem;
-    cursor: pointer;
+  padding-right: 0.5rem;
+  cursor: pointer;
 }
 
 .genre-pill-header > .hamburger > span {
-    background-color: white;
+  background-color: white;
 }
 
 .genre-pill-header-text {
-    width: min-content;
-    font-size: 2rem;
+  width: min-content;
+  font-size: 2rem;
 }
 
 .genre-pill, .genre-pill-reset {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 0.3rem 0;
-    border-radius: 15px;
-    color: white;
-    border: white 1px solid;
-    cursor: pointer;
-    min-width: 9rem;
-    min-height: 1.9rem;
-    font-size: 1.3rem;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0.3rem 0;
+  border-radius: 15px;
+  color: white;
+  border: white 1px solid;
+  cursor: pointer;
+  min-width: 9rem;
+  min-height: 1.9rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .genre-pill-reset:hover {
-    background-color: #6A041D;
-    color: white;
+  background-color: #6A041D;
+  color: white;
 }
 
 .genre-pill:not(.highlighted):hover {
-    background-color: #133C55;
-    color: white;
+  background-color: #133C55;
+  color: white;
 }
 
 .highlighted {
-    background-color: #004BA8;
-    color: white;
+  background-color: #004BA8;
+  color: white;
 }

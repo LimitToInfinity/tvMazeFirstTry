@@ -1,85 +1,85 @@
 @media only screen and (max-device-width: 600px) {
-    .genre-pills {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        bottom: 0;
-        top: unset;
-        left: unset;
-        padding: 0 0 2rem;
-        margin: 0;
-        min-width: 100vw;
-        transition: max-height 0.8s, bottom 0.8s;
-        border-top-left-radius: 100px;
-        border-top-right-radius: 100px;
-    }
+  .genre-pills {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    bottom: 0;
+    top: unset;
+    left: unset;
+    padding: 0 0 2rem;
+    margin: 0;
+    min-width: 100vw;
+    transition: max-height 0.8s, bottom 0.8s;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+  }
 
-    .collapsed {
-        max-height: 7.5rem;
-    }
+  .collapsed {
+    max-height: 7.5rem;
+  }
 
-    .expanded {
-        max-height: 25rem;
-        border: black solid;
-    }
+  .expanded {
+    max-height: 25rem;
+    border: black solid;
+  }
 
-    .genre-pill-header {
-        color: white;
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding: 1rem 0;
-        width: unset;
-        min-width: 100vw;
-        font-size: 5rem;
-        transition: border-radius 0.8s, background-color 0.8s, color 0.2s;
-    }
+  .genre-pill-header {
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+    width: unset;
+    min-width: 100vw;
+    font-size: 5rem;
+    transition: border-radius 0.8s, background-color 0.8s, color 0.2s;
+  }
 
-    .genre-pill-header > .hamburger {
-        padding-right: 2.5rem;
-        padding-bottom: 0rem;
-    }
+  .genre-pill-header > .hamburger {
+    padding-right: 2.5rem;
+    padding-bottom: 0rem;
+  }
 
-    .genre-pill-header > .hamburger > span {
-        height: 6px;
-        width: 45px;
-    }
-    
-    .genre-pill-header > .hamburger > span:nth-child(1) {
-        -webkit-transform: rotate(135deg) translate(14px, 7px);
-        transform: rotate(135deg) translate(14px, 7px);
-    }
+  .genre-pill-header > .hamburger > span {
+    height: 6px;
+    width: 45px;
+  }
+  
+  .genre-pill-header > .hamburger > span:nth-child(1) {
+    -webkit-transform: rotate(135deg) translate(14px, 7px);
+    transform: rotate(135deg) translate(14px, 7px);
+  }
 
-    .genre-pill-header > .hamburger > span:nth-child(2) {
-        display: none;
-    }
+  .genre-pill-header > .hamburger > span:nth-child(2) {
+    display: none;
+  }
 
-    .genre-pill-header > .hamburger > span:nth-child(3) {
-        -webkit-transform: rotate(45deg) translate(5px, -13px);
-        transform: rotate(45deg) translate(5px, -13px);
-    }
+  .genre-pill-header > .hamburger > span:nth-child(3) {
+    -webkit-transform: rotate(45deg) translate(5px, -13px);
+    transform: rotate(45deg) translate(5px, -13px);
+  }
 
-    .genre-pill-header > .hamburger > span:nth-child(1).fold {
-        -webkit-transform: rotate(225deg) translate(5px, -12px);
-        transform: rotate(225deg) translate(5px, -12px);
-    }
-    
-    .genre-pill-header > .hamburger > span:nth-child(3).fold {
-        -webkit-transform: rotate(-45deg) translate(16px, 7px);
-        transform: rotate(-45deg) translate(16px, 7px);
-    }
+  .genre-pill-header > .hamburger > span:nth-child(1).fold {
+    -webkit-transform: rotate(225deg) translate(5px, -12px);
+    transform: rotate(225deg) translate(5px, -12px);
+  }
 
-    .genre-pill-header-text {
-        width: unset;
-        font-size: 5rem;
-    }
+  .genre-pill-header > .hamburger > span:nth-child(3).fold {
+    -webkit-transform: rotate(-45deg) translate(16px, 7px);
+    transform: rotate(-45deg) translate(16px, 7px);
+  }
 
-    .genre-pill, .genre-pill-reset {
-        margin-top: 1.5rem;
-        margin-left: 1rem;
-        min-height: 5rem;
-        min-width: 25rem;
-        border-radius: 50px;
-        font-size: 3rem;
-    }
+  .genre-pill-header-text {
+    width: unset;
+    font-size: 5rem;
+  }
+
+  .genre-pill, .genre-pill-reset {
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+    min-height: 5rem;
+    min-width: 25rem;
+    border-radius: 50px;
+    font-size: 3rem;
+  }
 }

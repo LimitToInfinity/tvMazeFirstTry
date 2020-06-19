@@ -1,27 +1,27 @@
 @media only screen and (max-device-width: 600px) {
-    .pages-container {
-        margin: 1rem 0 3rem;
-    }
-    
-    .pages-container > h2 {
-        margin: 0;
-        font-size: 4.5rem;
-    }
+  .pages-container {
+    margin: 1rem 0 3rem;
+  }
 
-    .page-numbers {
-        width: 30rem;
-        margin: 0 2rem;
-    }
+  .pages-container > h2 {
+    margin: 0;
+    font-size: 4.5rem;
+  }
 
-    .page-number {
-        margin: 2rem 1.5rem;
-        font-size: 6rem;
-        min-width: 7rem;
-        text-align: center;
-    }
+  .page-numbers {
+    width: 30rem;
+    margin: 0 2rem;
+  }
 
-    .pages-toggle {
-        margin: 0;
-        font-size: 6rem;
-    }
+  .page-number {
+    margin: 2rem 1.5rem;
+    font-size: 6rem;
+    min-width: 7rem;
+    text-align: center;
+  }
+
+  .pages-toggle {
+    margin: 0;
+    font-size: 6rem;
+  }
 }

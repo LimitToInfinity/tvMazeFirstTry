@@ -1,112 +1,112 @@
 @media only screen and (max-device-width: 600px) {
-    .page-slider-form {
-        margin: 5rem;
-    }
+  .page-slider-form {
+    margin: 5rem;
+  }
 
-    .page-slider-form > output {
-        width: 100px;
-        height: 75px;
-        border-radius: 15px;
-        bottom: 135%;
-        left: -34px;
-        font: bold 56px/78px Roboto;
-    }
+  .page-slider-form > output {
+    width: 100px;
+    height: 75px;
+    border-radius: 15px;
+    bottom: 135%;
+    left: -34px;
+    font: bold 56px/78px Roboto;
+  }
 
-    .page-slider-form > output:after { 
-        width: 3px;
-        border-top: 25px solid #031A6B;
-    }
+  .page-slider-form > output:after { 
+    width: 3px;
+    border-top: 25px solid #031A6B;
+  }
 
-    #page-slider {
-        background-color: white;
-        width: 40vw;
-    }
+  #page-slider {
+    background-color: white;
+    width: 40vw;
+  }
 
-    #page-slider::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 25px;
-        border-radius: 15px;
-        cursor: pointer;
-        animation: 0.2s;
-        background: #031A6B;
-    }
-    
-    #page-slider::-webkit-slider-thumb {
-        height: 60px;
-        width: 30px;
-        border-radius: 15px;
-        background: black;
-        cursor: pointer;
-        -webkit-appearance: none;
-        margin-top: -17px;
-    }
-    
-    #page-slider:focus::-webkit-slider-runnable-track {
-        background: #031A6B;
-    }
-    
-    #page-slider::-moz-range-track {
-        width: 100%;
-        height: 25px;
-        cursor: pointer;
-        animation: 0.2s;
-        background: #031A6B;
-    }
-    
-    #page-slider::-moz-range-thumb {
-        height: 60px;
-        width: 30px;
-        border-radius: 15px;
-        background: black;
-        cursor: pointer;
-    }
-    
-    #page-slider::-ms-track {
-        width: 100%;
-        height: 25px;
-        cursor: pointer;
-        animation: 0.2s;
-        background: transparent;
-        border-color: transparent;
-        color: transparent;
-    }
-    
-    #page-slider::-ms-fill-lower {
-        background: #031A6B;
-        border-radius: 15px;
-    }
-    
-    #page-slider::-ms-fill-upper {
-        background: #031A6B;
-        border-radius: 15px;
-    }
-    
-    #page-slider::-ms-thumb {
-        height: 60px;
-        width: 30px;
-        border-radius: 15px;
-        background: black;
-        cursor: pointer;
-    }
-    
-    #page-slider:focus::-ms-fill-lower {
-        background: #031A6B;
-    }
-    
-    #page-slider:focus::-ms-fill-upper {
-        background: #031A6B;
-    }
+  #page-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: #031A6B;
+  }
 
-    .page-slider-form > span {
-        top: 100%;
-        font-size: 5rem;
-    }
+  #page-slider::-webkit-slider-thumb {
+    height: 60px;
+    width: 30px;
+    border-radius: 15px;
+    background: black;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -17px;
+  }
 
-    .range-min {
-        left: -15px;
-    }
+  #page-slider:focus::-webkit-slider-runnable-track {
+    background: #031A6B;
+  }
 
-    .range-max {
-        right: -25px;
-    }
+  #page-slider::-moz-range-track {
+    width: 100%;
+    height: 25px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: #031A6B;
+  }
+
+  #page-slider::-moz-range-thumb {
+    height: 60px;
+    width: 30px;
+    border-radius: 15px;
+    background: black;
+    cursor: pointer;
+  }
+
+  #page-slider::-ms-track {
+    width: 100%;
+    height: 25px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  #page-slider::-ms-fill-lower {
+    background: #031A6B;
+    border-radius: 15px;
+  }
+
+  #page-slider::-ms-fill-upper {
+    background: #031A6B;
+    border-radius: 15px;
+  }
+
+  #page-slider::-ms-thumb {
+    height: 60px;
+    width: 30px;
+    border-radius: 15px;
+    background: black;
+    cursor: pointer;
+  }
+
+  #page-slider:focus::-ms-fill-lower {
+    background: #031A6B;
+  }
+
+  #page-slider:focus::-ms-fill-upper {
+    background: #031A6B;
+  }
+
+  .page-slider-form > span {
+    top: 100%;
+    font-size: 5rem;
+  }
+
+  .range-min {
+    left: -15px;
+  }
+
+  .range-max {
+    right: -25px;
+  }
 }

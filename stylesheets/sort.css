@@ -1,15 +1,15 @@
 .sort-container {
 	display: flex;
-    flex-direction: column;
-    align-items: center;
+	flex-direction: column;
+	align-items: center;
 	margin-bottom: 0.8rem;
 	min-height: 5rem;
 }
 
 .sort-container > label {
 	color: white;
-    margin-bottom: 0.4rem;
-    font-size: 1.5rem;
+	margin-bottom: 0.4rem;
+	font-size: 1.5rem;
 }
 
 #sort-by {
@@ -30,7 +30,7 @@
 		linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
 	background-repeat: no-repeat, repeat;
 	background-position: right 0.3em top 50%, 0 0;
-    background-size: 0.6em auto, 100%;
+	background-size: 0.6em auto, 100%;
 }
 
 #sort-by::-ms-expand {

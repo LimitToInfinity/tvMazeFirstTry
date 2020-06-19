@@ -1,15 +1,15 @@
 @media only screen and (max-device-width: 600px) {
-    header {
-        display: flex;
-        justify-content: center;
-        margin: 4rem 0 5rem;
-    }
+  header {
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0 5rem;
+  }
 
-    header > .hamburger {
-        display: none;
-    }
+  header > .hamburger {
+    display: none;
+  }
 
-    h1 {
-        font-size: 7rem;
-    }
+  h1 {
+    font-size: 7rem;
+  }
 }

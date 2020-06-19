@@ -1,11 +1,11 @@
 @media only screen and (max-device-width: 600px) {
-    .loading {
-        height: 25vh;
-        width: 50%;
-    }
+  .loading {
+    height: 25vh;
+    width: 50%;
+  }
 
-    .loading > img {
-        height: 100%;
-        width: 100%;
-    }
+  .loading > img {
+    height: 100%;
+    width: 100%;
+  }
 }

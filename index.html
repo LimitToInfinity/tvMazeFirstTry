@@ -1,175 +1,175 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        
-        <title>TV Show Finder</title>
+  <head>
+    <meta charset="utf-8" />
 
-        <script src="./src/index.js" type="module"></script>
-        
-        <link rel="stylesheet" href="./stylesheets/app.css" />
-        
-        <link
-            rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-            integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-            crossorigin="anonymous"
-        />
+    <title>TV Show Finder</title>
 
-        <link
-            rel="icon"
-            sizes="16x16"
-            href="./assets/favicon-16x16.png"
-            type="./assets/favicon-16x16.png"
-        />
-        <link
-            rel="icon"
-            sizes="32x32"
-            href="./assets/favicon-32x32.png"
-            type="./assets/favicon-32x32.png"
-        />
-        <link
-            rel="icon"
-            sizes="48x48"
-            href="./assets/favicon-48x48.png"
-            type="./assets/favicon-48x48.png"
-        />
-        <link
-            rel="icon"
-            sizes="192x192"
-            href="./assets/favicon-192x192.png"
-            type="./assets/favicon-192x192.png"
-        />
-        <link
-            rel="icon"
-            sizes="512x512"
-            href="./assets/favicon-512x512.png"
-            type="./assets/favicon-512x512.png"
-        />
-        <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="./assets/apple-touch-icon.png"
-            type="./assets/apple-touch-icon.png"
-        />
-    </head>
+    <script src="./src/index.js" type="module"></script>
 
-    <body>
-        <header>
-            <div class="hamburger expander">
-                <span class="expander"></span>
-                <span class="expander"></span>
-                <span class="expander"></span>
-            </div>
-            <h1>TV Show Finder!</h1>
-        </header>
+    <link rel="stylesheet" href="./stylesheets/app.css" />
 
-        <main>
-            <section class="show-cards-container">
-                <div class="loading">
-                    <img
-                        src="https://thumbs.gfycat.com/ConventionalOblongFairybluebird-max-1mb.gif"
-                    />
-                </div>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
 
-                <h2 class="no-shows-found hidden">No shows found!</h2>
+    <link
+      rel="icon"
+      sizes="16x16"
+      href="./assets/favicon-16x16.png"
+      type="./assets/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="./assets/favicon-32x32.png"
+      type="./assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      sizes="48x48"
+      href="./assets/favicon-48x48.png"
+      type="./assets/favicon-48x48.png"
+    />
+    <link
+      rel="icon"
+      sizes="192x192"
+      href="./assets/favicon-192x192.png"
+      type="./assets/favicon-192x192.png"
+    />
+    <link
+      rel="icon"
+      sizes="512x512"
+      href="./assets/favicon-512x512.png"
+      type="./assets/favicon-512x512.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/apple-touch-icon.png"
+      type="./assets/apple-touch-icon.png"
+    />
+  </head>
 
-                <div class="pages-container hidden">
-                    <h2>Page</h2>
-                    <ul class="page-numbers hidden"></ul>
-                    <form class="page-slider-form">
-                        <output 
-                            for="page-slider"
-                            onforminput="value = page-slider.valueAsNumber"
-                        >1</output>
-                        <input
-                            type="range"
-                            name="page-slider"
-                            id="page-slider"
-                            min="1"
-                            max="919"
-                            step="1"
-                            value="1"
-                        />
-                        <span class="range-min">1</span>
-                        <span class="range-max">919</span>
-                    </form>
-                    <button class="pages-toggle">
-                        <i class="fas fa-toggle-on"></i>
-                    </button>
-                </div>
-            </section>
+  <body>
+    <header>
+      <div class="hamburger expander">
+        <span class="expander"></span>
+        <span class="expander"></span>
+        <span class="expander"></span>
+      </div>
+      <h1>TV Show Finder!</h1>
+    </header>
 
-            <ul class="genre-pills collapsed">
-                <li class="genre-pill-header static-pill expander">
-                    <div class="hamburger expander">
-                        <span class="expander"></span>
-                        <span class="expander"></span>
-                        <span class="expander"></span>
-                    </div>
-                    <span class="genre-pill-header-text expander">
-                        Search
-                    </span>
-                </li>
+    <main>
+      <section class="show-cards-container">
+        <div class="loading">
+          <img
+            src="https://thumbs.gfycat.com/ConventionalOblongFairybluebird-max-1mb.gif"
+          />
+        </div>
 
-                <div class="web-networks-container">
-                    <div>
-                        <label
-                        class="web-networks-label"
-                        for="web-networks-search"
-                        >
-                            <i class="fas fa-search"></i>
-                            Filter by network
-                        </label>
-                        <input
-                            type="text"
-                            id="web-networks-search"
-                            list="web-networks"
-                            autocomplete="on"
-                        />
-                        <datalist id="web-networks">
-                            <option
-                                class="web-network-reset"
-                                value="All networks"
-                                data-web-network="all networks"
-                            ></option>
-                        </datalist>
-                    </div>
-                </div>
+        <h2 class="no-shows-found hidden">No shows found!</h2>
 
-                <div class="sort-container">
-                    <label for="sort-by">Sort by</label>
-                    <select id="sort-by">
-                        <option value="Most popular">Most popular</option>
-                        <option value="Least popular">Least popular</option>
-                        <option value="Highest rating">Highest rating</option>
-                        <option value="Lowest rating">Lowest rating</option>
-                        <option value="Most recent">Most recent</option>
-                        <option value="Least recent">Least recent</option>
-                        <option value="A to Z">A to Z</option>
-                        <option value="Z to A">Z to A</option>
-                    </select>
-                </div>
+        <div class="pages-container hidden">
+          <h2>Page</h2>
+          <ul class="page-numbers hidden"></ul>
+          <form class="page-slider-form">
+            <output 
+              for="page-slider"
+              onforminput="value = page-slider.valueAsNumber"
+            >1</output>
+            <input
+              type="range"
+              name="page-slider"
+              id="page-slider"
+              min="1"
+              max="919"
+              step="1"
+              value="1"
+            />
+            <span class="range-min">1</span>
+            <span class="range-max">2</span>
+          </form>
+          <button class="pages-toggle">
+            <i class="fas fa-toggle-on"></i>
+          </button>
+        </div>
+      </section>
 
-                <div class="search-container">
-                    <div>
-                        <label
-                            class="search-bar-label"
-                            for="search-bar"
-                        >
-                            <i class="fas fa-search"></i>    
-                            Filter by name
-                        </label>
-                        <input 
-                            type="text"
-                            id="search-bar"
-                            autocomplete="on"
-                        />
-                    </div>
-                </div>
+      <ul class="genre-pills collapsed">
+        <li class="genre-pill-header static-pill expander">
+          <div class="hamburger expander">
+            <span class="expander"></span>
+            <span class="expander"></span>
+            <span class="expander"></span>
+          </div>
+          <span class="genre-pill-header-text expander">
+            Search
+          </span>
+        </li>
 
-                <li class="genre-pill-reset static-pill">Remove filters!</li>
-            </ul>
-        </main>
-    </body>
+        <div class="web-networks-container">
+          <div>
+            <label
+              class="web-networks-label"
+              for="web-networks-search"
+            >
+              <i class="fas fa-search"></i>
+              Filter by network
+            </label>
+            <input
+              type="text"
+              id="web-networks-search"
+              list="web-networks"
+              autocomplete="on"
+            />
+            <datalist id="web-networks">
+              <option
+                class="web-network-reset"
+                value="All networks"
+                data-web-network="all networks"
+              ></option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="sort-container">
+          <label for="sort-by">Sort by</label>
+          <select id="sort-by">
+            <option value="Most popular">Most popular</option>
+            <option value="Least popular">Least popular</option>
+            <option value="Highest rating">Highest rating</option>
+            <option value="Lowest rating">Lowest rating</option>
+            <option value="Most recent">Most recent</option>
+            <option value="Least recent">Least recent</option>
+            <option value="A to Z">A to Z</option>
+            <option value="Z to A">Z to A</option>
+          </select>
+        </div>
+
+        <div class="search-container">
+          <div>
+            <label
+              class="search-bar-label"
+              for="search-bar"
+            >
+              <i class="fas fa-search"></i>    
+              Filter by name
+            </label>
+            <input 
+              type="text"
+              id="search-bar"
+              autocomplete="on"
+            />
+          </div>
+        </div>
+
+        <li class="genre-pill-reset static-pill">Remove filters!</li>
+      </ul>
+    </main>
+  </body>
 </html>

@@ -1,132 +1,132 @@
 .page-slider-form {
-    display: flex;
-    align-items: center;
-    position: relative;
-    min-height: 5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-height: 5rem;
 }
 
 .page-slider-form > output {
-    position: absolute;
-    background-color: #031A6B;
-    width: 40px;
-    height: 30px;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-    display: inline-block;
-    bottom: 95%;
-    left: -10px;
-    font: bold 15px/30px Roboto;
+  position: absolute;
+  background-color: #031A6B;
+  width: 40px;
+  height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  bottom: 95%;
+  left: -10px;
+  font: bold 15px/30px Roboto;
 }
 
 .page-slider-form > output:after { 
-    content: "";
-    position: absolute; 
-    width: 0;
-    height: 0;
-    border-top: 10px solid #031A6B;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    margin-top: -1px;
+  content: "";
+  position: absolute; 
+  width: 0;
+  height: 0;
+  border-top: 10px solid #031A6B;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -1px;
 }
 
 #page-slider {
-    -webkit-appearance: none;
-    width: 30vw;
-    z-index: 20;
+  -webkit-appearance: none;
+  width: 30vw;
+  z-index: 20;
 }
 
 #page-slider:focus {
-    outline: none;
+  outline: none;
 }
 
 #page-slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8px;
-    cursor: pointer;
-    animation: 0.2s;
-    background: #031A6B;
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  animation: 0.2s;
+  background: #031A6B;
 }
 
 #page-slider::-webkit-slider-thumb {
-    height: 30px;
-    width: 15px;
-    border-radius: 15px;
-    background: black;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -11px;
+  height: 30px;
+  width: 15px;
+  border-radius: 15px;
+  background: black;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -11px;
 }
 
 #page-slider:focus::-webkit-slider-runnable-track {
-    background: #031A6B;
+  background: #031A6B;
 }
 
 #page-slider::-moz-range-track {
-    width: 100%;
-    height: 8px;
-    cursor: pointer;
-    animation: 0.2s;
-    background: #031A6B;
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  animation: 0.2s;
+  background: #031A6B;
 }
 
 #page-slider::-moz-range-thumb {
-    height: 30px;
-    width: 15px;
-    border-radius: 15px;
-    background: black;
-    cursor: pointer;
+  height: 30px;
+  width: 15px;
+  border-radius: 15px;
+  background: black;
+  cursor: pointer;
 }
 
 #page-slider::-ms-track {
-    width: 100%;
-    height: 8px;
-    cursor: pointer;
-    animation: 0.2s;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  animation: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
 }
 
 #page-slider::-ms-fill-lower {
-    background: #031A6B;
-    border-radius: 15px;
+  background: #031A6B;
+  border-radius: 15px;
 }
 
 #page-slider::-ms-fill-upper {
-    background: #031A6B;
-    border-radius: 15px;
+  background: #031A6B;
+  border-radius: 15px;
 }
 
 #page-slider::-ms-thumb {
-    height: 30px;
-    width: 15px;
-    border-radius: 15px;
-    background: black;
-    cursor: pointer;
+  height: 30px;
+  width: 15px;
+  border-radius: 15px;
+  background: black;
+  cursor: pointer;
 }
 
 #page-slider:focus::-ms-fill-lower {
-    background: #031A6B;
+  background: #031A6B;
 }
 
 #page-slider:focus::-ms-fill-upper {
-    background: #031A6B;
+  background: #031A6B;
 }
 
 .page-slider-form > span {
-    position: absolute;
-    top: 90%;
-    font-size: 2rem;
+  position: absolute;
+  top: 90%;
+  font-size: 2rem;
 }
 
 .range-min {
-    left: 1px;
+  left: 1px;
 }
 
 .range-max {
-    right: -22px;
+  right: -22px;
 }
