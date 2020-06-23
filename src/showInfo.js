@@ -24,7 +24,7 @@ function createShowInfoElements(show) {
     year: show.premiered ? makeYear(show) : "",
     runtime: show.runtime ? makeRuntime(show) : "",
     genresDisplayer: show.genres.length === 0 
-      ? makeNoGenres() : makeGenres(show),
+      ? makeNoGenres() : makeGenres(show.genres),
     officialSite: show.officialSite ? makeOfficialSite(show) : "",
   };
 }
@@ -81,16 +81,16 @@ function makeNoGenres() {
   return addClassesTo(noGenres, "show-detail");
 }
 
-function makeGenres(show) {
-  const genresDisplayer = show.genres.length === 1
+function makeGenres(showGenres) {
+  const genresDisplayer = showGenres.length === 1
     ? createElementWithAttributes("ul", { textContent: "Genre" })
     : createElementWithAttributes("ul", { textContent: "Genres" });
 
-  return appendAndReturnSortedGenres(show, genresDisplayer);
+  return appendAndReturnSortedGenres(showGenres, genresDisplayer);
 }
 
-function appendAndReturnSortedGenres(show, genresDisplayer) {
-  show.genres.sort()
+function appendAndReturnSortedGenres(showGenres, genresDisplayer) {
+  showGenres.sort()
     .forEach(genre => appendGenre(genresDisplayer, genre));
 
   return addClassesTo(genresDisplayer, "show-detail");
@@ -100,7 +100,10 @@ function appendGenre(genresDisplayer, genre) {
   const genreDisplay = createElementWithAttributes("li", {
     textContent: genre
   });
-  return appendElementsTo(genresDisplayer, genreDisplay);
+  
+  appendElementsTo(genresDisplayer,
+    addClassesTo(genreDisplay, "genre")
+  );
 }
 
 function makeOfficialSite(show) {

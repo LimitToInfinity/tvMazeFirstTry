@@ -24,8 +24,7 @@ function displayShowInfo(event) {
   const {
     classList,
     nextElementSibling,
-    parentNode,
-    nodeName
+    parentNode
   } = event.target;
 
   if (classList.contains("show-info")) {
@@ -34,15 +33,15 @@ function displayShowInfo(event) {
     slideDown(nextElementSibling);
   } else if (classList.contains("show-detail")) {
     slideDown(parentNode);
-  } else if (nodeName === "LI") {
+  } else if (classList.contains("genre")) {
     slideDown(parentNode.parentNode);
   }
 }
 
 function slideDown(showInfo) {
   showInfo.classList.contains("slide-down")
-      ? showInfo.classList.remove("slide-down")
-      : showInfo.classList.add("slide-down");
+    ? showInfo.classList.remove("slide-down")
+    : showInfo.classList.add("slide-down");
 }
 
 function createShowCardElements(show) {
