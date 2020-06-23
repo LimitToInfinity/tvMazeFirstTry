@@ -80,6 +80,7 @@
 }
 
 .show-info > ul {
+  font-family: Spectral, Arial, serif;
   display: flex;
   flex-flow: wrap;
   margin: 0 0.6rem 0.5rem;
