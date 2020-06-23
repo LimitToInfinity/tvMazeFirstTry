@@ -21,13 +21,28 @@ export function handleShowCardClick() {
 }
 
 function displayShowInfo(event) {
-  const { classList, nextElementSibling } = event.target;
+  const {
+    classList,
+    nextElementSibling,
+    parentNode,
+    nodeName
+  } = event.target;
 
-  if (classList.contains("show-image")) {
-    nextElementSibling.classList.contains("hidden")
-      ? nextElementSibling.classList.remove("hidden")
-      : nextElementSibling.classList.add("hidden");
+  if (classList.contains("show-info")) {
+    slideDown(event.target);
+  } else if (classList.contains("show-image")) {
+    slideDown(nextElementSibling);
+  } else if (classList.contains("show-detail")) {
+    slideDown(parentNode);
+  } else if (nodeName === "LI") {
+    slideDown(parentNode.parentNode);
   }
+}
+
+function slideDown(showInfo) {
+  showInfo.classList.contains("slide-down")
+      ? showInfo.classList.remove("slide-down")
+      : showInfo.classList.add("slide-down");
 }
 
 function createShowCardElements(show) {

@@ -13,6 +13,7 @@
 }
 
 .show-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-basis: 13rem;
@@ -43,14 +44,26 @@
 }
 
 .show-info {
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
   background-color: rgba(255, 232, 232, 0.845);
+  overflow-y: hidden;
+  width: 100%;
+  max-height: 100%;
+  transition: max-height 1s;
 }
 
-.hidden {
-  display: none;
+.slide-down {
+  overflow-y: hidden;
+  max-height: 0;
+  transition: max-height 0.3s;
+}
+
+.show-info * {
+  width: fit-content;
 }
 
 .show-title {

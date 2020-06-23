@@ -31,7 +31,7 @@ function createShowInfoElements(show) {
 
 function makeShowInfoCard() {
   const showInfo = createElement("div");
-  return addClassesTo(showInfo, "show-info", "hidden");
+  return addClassesTo(showInfo, "show-info", "slide-down");
 }
 
 function makeName(show) {
