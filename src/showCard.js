@@ -22,8 +22,9 @@ export function handleShowCardClick() {
 
 function displayShowInfo(event) {
   const showInfo = findShowInfo(event.target);
-
-  if (showInfo && !event.target.classList.contains("site-link")) {
+  const isSiteLink = event.target.classList.contains("site-link");
+  
+  if (showInfo && !isSiteLink) {
     slide(showInfo);
   }
 }
@@ -45,7 +46,8 @@ function slide(showInfo) {
 function createShowCardElements(show) {
   return {
     showCard: makeShowCard(),
-    display: show.image ? makeImage(show) : makeTitle(show),
+    display: show.image
+      ? makeImage(show.image.medium) : makeTitle(show.name),
     showInfo: createShowInfo(show)
   };
 }
@@ -60,16 +62,16 @@ function makeShowCard() {
   return addClassesTo(showCard, "show-card");
 }
 
-function makeImage(show) {
+function makeImage(showImage) {
   const image = createElementWithAttributes("img", {
-    src: "https" + show.image.medium.slice(4)
+    src: "https" + showImage.slice(4)
   });
   return addClassesTo(image, "show-image");
 }
 
-function makeTitle(show) {
-  const title = createElementWithAttributes("h3", {
-    textContent: show.name
+function makeTitle(showName) {
+  const title = createElementWithAttributes("img", {
+    src: "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png"
   });
   return addClassesTo(title, "show-image");
 }
