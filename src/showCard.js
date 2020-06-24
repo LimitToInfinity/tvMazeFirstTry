@@ -46,8 +46,7 @@ function slide(showInfo) {
 function createShowCardElements(show) {
   return {
     showCard: makeShowCard(),
-    display: show.image
-      ? makeImage(show.image.medium) : makeTitle(show.name),
+    display: show.image ? makeImage(show.image.medium) : makeNoImage(),
     showInfo: createShowInfo(show)
   };
 }
@@ -69,9 +68,9 @@ function makeImage(showImage) {
   return addClassesTo(image, "show-image");
 }
 
-function makeTitle(showName) {
-  const title = createElementWithAttributes("img", {
+function makeNoImage() {
+  const noImage = createElementWithAttributes("img", {
     src: "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png"
   });
-  return addClassesTo(title, "show-image");
+  return addClassesTo(noImage, "show-image");
 }
