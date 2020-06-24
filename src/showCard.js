@@ -21,24 +21,22 @@ export function handleShowCardClick() {
 }
 
 function displayShowInfo(event) {
-  const {
-    classList,
-    nextElementSibling,
-    parentNode
-  } = event.target;
+  const showInfo = findShowInfo(event.target);
 
-  if (classList.contains("show-info")) {
-    slideDown(event.target);
-  } else if (classList.contains("show-image")) {
-    slideDown(nextElementSibling);
-  } else if (classList.contains("show-detail")) {
-    slideDown(parentNode);
-  } else if (classList.contains("genre")) {
-    slideDown(parentNode.parentNode);
+  if (showInfo && !event.target.classList.contains("site-link")) {
+    slide(showInfo);
   }
 }
 
-function slideDown(showInfo) {
+function findShowInfo(target) {
+  const showCard = target.closest(".show-card");
+
+  return showCard
+    ? showCard.querySelector(".show-info")
+    : undefined;
+}
+
+function slide(showInfo) {
   showInfo.classList.contains("slide-down")
     ? showInfo.classList.remove("slide-down")
     : showInfo.classList.add("slide-down");

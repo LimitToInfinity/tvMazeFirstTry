@@ -107,10 +107,12 @@ function appendGenre(genresDisplayer, genre) {
 }
 
 function makeOfficialSite(show) {
-  return createElementWithAttributes("a", {
+  const site = createElementWithAttributes("a", {
     textContent: "Official Site",
     href: show.officialSite,
     target: "_blank",
     rel: "noopener noreferrer"
   });
+
+  return addClassesTo(site, "site-link");
 }
