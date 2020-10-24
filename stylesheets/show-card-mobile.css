@@ -13,17 +13,17 @@
     transform: scale3d(1.15, 1.15, 1.15);
   }
 
-  .show-info > h4 {
+  .show-title {
     font-size: 2.8rem;
     margin: 1rem 0.6rem;
   }
 
-  .show-info > p {
+  .show-details > p {
     font-size: 2.8rem;
     margin-bottom: 1rem;
   }
 
-  .show-info > ul {
+  .show-details > ul {
     font-size: 2.8rem;
     margin-bottom: 1rem;
   }
