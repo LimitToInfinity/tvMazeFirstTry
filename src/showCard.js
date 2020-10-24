@@ -12,35 +12,59 @@ const showCardsContainer =
 export function createShowCard(show) {
   const { showCard, display, showInfo } =
     createShowCardElements(show);
-
   fillAndDisplayShowCard(showCard, display, showInfo);
 }
 
-export function handleShowCardClick() {
-  showCardsContainer.addEventListener("click", displayShowInfo);
+export function handleShowCardEvents() {
+  showCardsContainer.addEventListener("mouseover", displayShowTitle);
+  showCardsContainer.addEventListener("mouseout", hideShowInfo);
+  showCardsContainer.addEventListener("click", hideOrDisplayShowDetails);
 }
 
-function displayShowInfo(event) {
-  const showInfo = findShowInfo(event.target);
-  const isSiteLink = event.target.classList.contains("site-link");
-  
-  if (showInfo && !isSiteLink) {
-    slide(showInfo);
-  }
+function displayShowTitle(event) {
+  const showTitle = findShowElement(event.target, ".show-title");
+  if (showTitle) { slideUp(showTitle); }
 }
 
-function findShowInfo(target) {
+function hideShowInfo({ target }) {
+  const { showTitle, showDetails } = getTitleAndDetails(target);
+  if (showTitle
+    && !showTitle.classList.contains("no-image")
+    && showDetails.classList.contains("slide-down")
+  ) { slideDown(showTitle); }
+}
+
+function getTitleAndDetails(target) {
+  return {
+    showTitle: findShowElement(target, ".show-title"),
+    showDetails: findShowElement(target, ".show-details")
+  };
+}
+
+function hideOrDisplayShowDetails(event) {
+  const showDetails = findShowElement(event.target, ".show-details");
+  if (showDetails) { slideShowDetails(showDetails); }
+}
+
+function findShowElement(target, className) {
   const showCard = target.closest(".show-card");
-
   return showCard
-    ? showCard.querySelector(".show-info")
+    ? showCard.querySelector(className)
     : undefined;
 }
 
-function slide(showInfo) {
-  showInfo.classList.contains("slide-down")
-    ? showInfo.classList.remove("slide-down")
-    : showInfo.classList.add("slide-down");
+function slideUp(showElement) {
+  showElement.classList.remove("slide-down");
+}
+
+function slideDown(showElement) {
+  showElement.classList.add("slide-down");
+}
+
+function slideShowDetails(showDetails) {
+  showDetails.classList.contains("slide-down")
+    ? showDetails.classList.remove("slide-down")
+    : showDetails.classList.add("slide-down");
 }
 
 function createShowCardElements(show) {

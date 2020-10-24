@@ -2,7 +2,7 @@ import { AppState } from "./AppState.js";
 
 import { handleWindowListeners } from "./handleWindowScroll.js";
 
-import { handleShowCardClick } from "./showCard.js";
+import { handleShowCardEvents } from "./showCard.js";
 
 import {
   createRangeFromTo,
@@ -22,7 +22,7 @@ Promise.all(fetchCalls)
 export const APP_STATE = new AppState();
 
 handleWindowListeners();
-handleShowCardClick();
+handleShowCardEvents();
 
 function setAndDisplayAllShows(shows) {
   APP_STATE.allShows = shows;
