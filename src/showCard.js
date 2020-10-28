@@ -70,7 +70,7 @@ function slideShowDetails(showDetails) {
 function createShowCardElements(show) {
   return {
     showCard: makeShowCard(),
-    display: show.image ? makeImage(show.image.medium) : makeNoImage(),
+    display: show.image ? makeImage(show) : makeNoImage(),
     showInfo: createShowInfo(show)
   };
 }
@@ -85,11 +85,12 @@ function makeShowCard() {
   return addClassesTo(showCard, "show-card");
 }
 
-function makeImage(showImage) {
-  const image = createElementWithAttributes("img", {
-    src: "https" + showImage.slice(4)
+function makeImage({ image, name }) {
+  const imageEl = createElementWithAttributes("img", {
+    src: "https" + image.medium.slice(4),
+    alt: `${name} poster`
   });
-  return addClassesTo(image, "show-image");
+  return addClassesTo(imageEl, "show-image");
 }
 
 function makeNoImage() {
