@@ -94,13 +94,8 @@ function sortShowsZToA(shows) {
 }
 
 function byWeightPlusRating(a, b, isByMost) {
-  const aPopular = a.rating
-    ? a.weight + a.rating.average
-    : a.weight;
-
-  const bPopular = b.rating
-    ? b.weight + b.rating.average
-    : b.weight;
+  const aPopular = a.weight;
+  const bPopular = b.weight;
 
   return isByMost ? byMostPopular(aPopular, bPopular)
     : byLeastPopular(aPopular, bPopular);
