@@ -87,7 +87,7 @@ function makeShowCard() {
 
 function makeImage({ image, name }) {
   const imageEl = createElementWithAttributes("img", {
-    src: "https" + image.medium.slice(4),
+    src: "http" + image.medium.slice(4),
     alt: `${name} poster`
   });
   return addClassesTo(imageEl, "show-image");

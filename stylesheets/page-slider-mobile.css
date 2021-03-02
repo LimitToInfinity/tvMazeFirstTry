@@ -109,4 +109,11 @@
   .range-max {
     right: -25px;
   }
+
+  .form-mini-loading {
+    top: -3%;
+    right: -118px;
+    height: 5rem;
+    width: 5rem;
+  }
 }

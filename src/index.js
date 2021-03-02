@@ -11,13 +11,20 @@ import {
   flattenResponses
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 205);
-const fetchCalls = apiShowsPages.map(fetchShowsPage);
+const apiShowsPages = createRangeFromTo(0, 215);
+function makeFetchCalls() {
+  const portionOfShowsPages = apiShowsPages.slice(0, 25);
+  const fetchCalls = portionOfShowsPages.map(fetchShowsPage);
+  apiShowsPages.splice(0, 25);
 
-Promise.all(fetchCalls)
-  .then(parseResponsesToJSON)
-  .then(flattenResponses)
-  .then(setAndDisplayAllShows);
+  Promise.all(fetchCalls)
+    .then(parseResponsesToJSON)
+    .then(flattenResponses)
+    .then(setAndDisplayAllShows)
+    .then(ifMorePagesMakeFetchCalls);
+}
+
+makeFetchCalls();
 
 export const APP_STATE = new AppState();
 
@@ -25,12 +32,23 @@ handleWindowListeners();
 handleShowCardEvents();
 
 function setAndDisplayAllShows(shows) {
-  APP_STATE.allShows = shows;
+  APP_STATE.allShows = [...APP_STATE.allShows, ...shows];
   APP_STATE.setAndDisplayFilteredShows();
 
-  document.querySelector(".loading").remove();
-  document.querySelector(".pages-container")
-    .classList.remove("hidden");
+  const loadingGif = document.querySelector(".loading");
+  if (loadingGif) {
+    loadingGif.remove();
+    loadingGif.classList.add('form-mini-loading');
+    document.querySelector('.page-slider-form').append(loadingGif);
+    document.querySelector(".pages-container")
+      .classList.remove("hidden");
+  }
+}
+
+function ifMorePagesMakeFetchCalls() {
+  apiShowsPages.length
+    ? makeFetchCalls()
+    : document.querySelector(".loading").remove();
 }
 
 export function displayShows() {

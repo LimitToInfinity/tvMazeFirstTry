@@ -130,3 +130,14 @@
 .range-max {
   right: -22px;
 }
+
+.form-mini-loading {
+  position: absolute;
+  top: -26%;
+  right: -85px;
+  height: 3.5rem;
+}
+
+.form-mini-loading > img {
+  height: 100%;
+}
