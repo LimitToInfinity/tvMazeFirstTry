@@ -1,4 +1,4 @@
-import { AppState } from "./AppState.js";
+import { AppState } from "./appState.js";
 
 import { handleWindowListeners } from "./handleWindowScroll.js";
 
