@@ -1,8 +1,8 @@
-import { Pages } from "./Pages.js";
-import { WebNetworkSelector } from "./WebNetworkSelector.js";
-import { SortBy } from "./SortBy.js";
-import { SearchBar } from "./SearchBar.js";
-import { GenreSelector } from "./GenreSelector.js";
+import { Pages } from "./pages.js";
+import { WebNetworkSelector } from "./webNetworkSelector.js";
+import { SortBy } from "./sortBy.js";
+import { SearchBar } from "./searchBar.js";
+import { GenreSelector } from "./genreSelector.js";
 
 import { sorter } from "./sort.js";
 import { displayShows } from "./index.js";
