@@ -51,7 +51,7 @@ export class AppState {
 
   setWebNetworks() {
     this.filteredShows.forEach(show => {
-      show.webChannel
+      show.webChannel?.name
         ? this.webNetworks.add(show.webChannel.name)
         : undefined;
     });

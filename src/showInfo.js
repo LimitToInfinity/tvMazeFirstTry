@@ -34,10 +34,10 @@ function makeTitle({ name, image }) {
 
 function createShowDetails(show) {
   const {
-    showDetails, rating, year, runtime, genresDisplayer, officialSite
+    showDetails, rating, year, runtime, network, genresDisplayer, officialSite
   } = createShowDetailsElements(show);
   return appendElementsTo(showDetails,
-    rating, year, runtime, genresDisplayer, officialSite
+    rating, year, runtime, network, genresDisplayer, officialSite
   );
 }
 
@@ -47,7 +47,8 @@ function createShowDetailsElements(show) {
     rating: show.rating.average
       ? makeRating(show) : makeNoRating(),
     year: show.premiered ? makeYear(show) : "",
-    runtime: show.runtime ? makeRuntime(show) : "",
+    runtime: show.averageRuntime ? makeRuntime(show) : "",
+    network: show.webChannel?.name ? makeNetwork(show) : "",
     genresDisplayer: show.genres.length
       ? makeGenres(show) : makeNoGenres() ,
     officialSite: show.officialSite ? makeOfficialSite(show) : ""
@@ -80,11 +81,28 @@ function makeYear({ premiered }) {
   return addClassesTo(year, "show-detail");
 }
 
-function makeRuntime({ runtime }) {
+function makeRuntime({ averageRuntime }) {
   const runtimeEl = createElementWithAttributes("p", {
-    textContent: `Runtime ${runtime} mins`
+    textContent: `Runtime ${averageRuntime} mins`
   });
   return addClassesTo(runtimeEl, "show-detail");
+}
+
+function makeNetwork({ webChannel }) {
+  const networkEl = createElementWithAttributes("p", {
+    textContent: "On "
+  });
+  appendNetwork(webChannel.name, networkEl);
+  return addClassesTo(networkEl, "show-detail");
+}
+
+function appendNetwork(webChannelName, networkEl) {
+  const networkNameDisplay = createElementWithAttributes("span", {
+    textContent: webChannelName
+  });
+  appendElementsTo(networkEl,
+    addClassesTo(networkNameDisplay, "network-name")
+  );
 }
 
 function makeNoGenres() {
