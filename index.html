@@ -115,28 +115,20 @@
           </span>
         </li>
 
-        <div class="web-networks-container">
+        <div class="search-container">
           <div>
             <label
-              class="web-networks-label"
-              for="web-networks-search"
+              class="search-bar-label"
+              for="search-bar"
             >
-              <i class="fas fa-search"></i>
-              Filter by network
+              <i class="fas fa-search"></i>    
+              Name
             </label>
-            <input
+            <input 
               type="text"
-              id="web-networks-search"
-              list="web-networks"
+              id="search-bar"
               autocomplete="on"
             />
-            <datalist id="web-networks">
-              <option
-                class="web-network-reset"
-                value="All networks"
-                data-web-network="all networks"
-              ></option>
-            </datalist>
           </div>
         </div>
 
@@ -154,20 +146,28 @@
           </select>
         </div>
 
-        <div class="search-container">
+        <div class="web-networks-container">
           <div>
             <label
-              class="search-bar-label"
-              for="search-bar"
+              class="web-networks-label"
+              for="web-networks-search"
             >
-              <i class="fas fa-search"></i>    
-              Filter by name
+              <i class="fas fa-search"></i>
+              Network
             </label>
-            <input 
+            <input
               type="text"
-              id="search-bar"
+              id="web-networks-search"
+              list="web-networks"
               autocomplete="on"
             />
+            <datalist id="web-networks">
+              <option
+                class="web-network-reset"
+                value="All networks"
+                data-web-network="all networks"
+              ></option>
+            </datalist>
           </div>
         </div>
 
