@@ -20,7 +20,7 @@
 
   .show-details {
     max-height: 500px;
-    transition: max-height ease-in-out 0.5s;
+    transition-duration: 0.5s;
   }
 
   .show-details > p {
