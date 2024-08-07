@@ -9,6 +9,8 @@ import { displayShows } from "./index.js";
 
 export class AppState {
   constructor() {
+    this.isLastPageNoMoreShowsHit = false;
+
     this.pageNumber = 1;
 
     this.allShows = [];

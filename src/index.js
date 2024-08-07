@@ -11,11 +11,15 @@ import {
   flattenResponses
 } from "./utilities.js";
 
-const apiShowsPages = createRangeFromTo(0, 215);
+export const APP_STATE = new AppState();
+
+let firstPage = 0;
+let lastPage = 25;
+const pageIncrement = 25;
+
 function makeFetchCalls() {
-  const portionOfShowsPages = apiShowsPages.slice(0, 25);
-  const fetchCalls = portionOfShowsPages.map(fetchShowsPage);
-  apiShowsPages.splice(0, 25);
+  const portionOfApiShowsPages = createRangeFromTo(firstPage, lastPage);
+  const fetchCalls = portionOfApiShowsPages.map(fetchShowsPage);
 
   Promise.all(fetchCalls)
     .then(parseResponsesToJSON)
@@ -25,8 +29,6 @@ function makeFetchCalls() {
 }
 
 makeFetchCalls();
-
-export const APP_STATE = new AppState();
 
 handleWindowListeners();
 handleShowCardEvents();
@@ -46,9 +48,12 @@ function setAndDisplayAllShows(shows) {
 }
 
 function ifMorePagesMakeFetchCalls() {
-  apiShowsPages.length
-    ? makeFetchCalls()
-    : document.querySelector(".loading").remove();
+  firstPage += pageIncrement;
+  lastPage += pageIncrement;
+
+  APP_STATE.isLastPageNoMoreShowsHit
+    ? document.querySelector(".loading").remove()
+    : makeFetchCalls();
 }
 
 export function displayShows() {

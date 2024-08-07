@@ -1,3 +1,5 @@
+import { APP_STATE } from "./index.js";
+
 export function createElement(elementName) {
   return document.createElement(elementName);
 }
@@ -18,7 +20,12 @@ export function addClassesTo(element, ...classNames) {
 
 export function fetchShowsPage(showsPage) {
   const url = `https://api.tvmaze.com/shows?page=${showsPage}`;
-  return fetch(url);
+
+  return fetch(url)
+    .then(response => {
+      APP_STATE.isLastPageNoMoreShowsHit = !response.ok;
+      return response;
+    });
 }
 
 export function createRangeFromTo(start, end) {
