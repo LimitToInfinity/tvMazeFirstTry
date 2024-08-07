@@ -1,5 +1,5 @@
 import { Pages } from "./pages.js";
-import { WebNetworkSelector } from "./webNetworkSelector.js";
+import { WebNetworkSelector } from "./WebNetworkSelector.js";
 import { SortBy } from "./sortBy.js";
 import { SearchBar } from "./searchBar.js";
 import { GenreSelector } from "./genreSelector.js";
