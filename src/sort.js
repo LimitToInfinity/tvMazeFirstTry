@@ -27,6 +27,15 @@ export const sorter = {
       )
     );
   },
+  "Popular plus Rating": (shows) => {
+    return sortShowsByMostPopularPlusRating(
+      sortShowsByMostPopular(
+        sortShowsByHighestRating(
+          sortShowsByMostRecent(shows)
+        )
+      )
+    );
+  },
   "Most recent": (shows) => {
     return sortShowsByMostRecent(
       sortShowsByMostPopular(
@@ -62,11 +71,11 @@ export const sorter = {
 }
 
 function sortShowsByMostPopular(shows) {
-  return shows.sort((a, b) => byWeightPlusRating(a, b, true));
+  return shows.sort((a, b) => byWeight(a, b, true));
 }
 
 function sortShowsByLeastPopular(shows) {
-  return shows.sort((a, b) => byWeightPlusRating(a, b, false));
+  return shows.sort((a, b) => byWeight(a, b, false));
 }
 
 function sortShowsByHighestRating(shows) {
@@ -75,6 +84,10 @@ function sortShowsByHighestRating(shows) {
 
 function sortShowsByLowestRating(shows) {
   return shows.sort((a, b) => byRating(a, b, false));
+}
+
+function sortShowsByMostPopularPlusRating(shows) {
+  return shows.sort((a, b) => byWeightPlusRating(a, b, true));
 }
 
 function sortShowsByMostRecent(shows) {
@@ -93,11 +106,12 @@ function sortShowsZToA(shows) {
   return shows.sort(byZToA);
 }
 
-function byWeightPlusRating(a, b, isByMost) {
+function byWeight(a, b, isByMost) {
   const aPopular = a.weight;
   const bPopular = b.weight;
 
-  return isByMost ? byMostPopular(aPopular, bPopular)
+  return isByMost
+    ? byMostPopular(aPopular, bPopular)
     : byLeastPopular(aPopular, bPopular);
 }
 
@@ -136,6 +150,15 @@ function byLowestRating(ratingA, ratingB) {
   if (ratingB > ratingA) { return -1; }
   else if (ratingB < ratingA) { return 1; }
   else { return 0; }
+}
+
+function byWeightPlusRating(a, b, isByMost) {
+  const aPopularPlusWeight = a.weight + (a.rating?.average || 0);
+  const bPopularPlusWeight = b.weight + (b.rating?.average || 0);
+
+  return isByMost
+    ? byMostPopular(aPopularPlusWeight, bPopularPlusWeight)
+    : byLeastPopular(aPopularPlusWeight, bPopularPlusWeight);
 }
 
 function byRecent(a, b, isByMost) {
