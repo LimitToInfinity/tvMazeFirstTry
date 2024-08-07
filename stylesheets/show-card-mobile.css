@@ -18,6 +18,11 @@
     margin: 1rem 0.6rem;
   }
 
+  .show-details {
+    max-height: 500px;
+    transition: max-height ease-in-out 0.5s;
+  }
+
   .show-details > p {
     font-size: 2.8rem;
     margin-bottom: 1rem;
