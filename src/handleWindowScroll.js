@@ -2,10 +2,33 @@ import { APP_STATE } from "./index.js";
 
 export function handleWindowListeners() {
   window.addEventListener("resize", APP_STATE.pages.handleRangeInput);
+  window.addEventListener("click", handleCollapseSearch);
   window.addEventListener("scroll", handleScroll);
 
+  const searchContainer = document.querySelector(".genre-pills");
   const showCardsContainer = document.querySelector(".show-cards-container");
   const pagesContainer = document.querySelector(".pages-container");
+
+  function handleCollapseSearch(event) {
+    const isSearchContainerExpanded = searchContainer.classList.contains('expanded');
+    const isClickOutsideSearchContainer = !event.target.closest('.genre-pills');
+    const isClickNotGenre = !event.target.closest('.genre-pill');
+    const isClickNotHamburger = !event.target.closest('.hamburger');
+
+    if (isSearchContainerExpanded
+      && isClickOutsideSearchContainer
+      && isClickNotGenre
+      && isClickNotHamburger
+    ) {
+      searchContainer.classList.remove('expanded');
+      searchContainer.classList.add('collapsed');
+
+      const hamburgersOpen = Array.from(
+        document.querySelectorAll('.hamburger > .expander.fold')
+      );
+      hamburgersOpen.forEach(searchOpener => searchOpener.classList.remove('fold'));
+    }
+  }
 
   function handleScroll() {
     const isMobile =
