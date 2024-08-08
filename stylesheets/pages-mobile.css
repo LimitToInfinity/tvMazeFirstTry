@@ -8,6 +8,11 @@
     font-size: 4.5rem;
   }
 
+  .arrow {
+    border-width: 0 12px 12px 0;
+    padding: 12px;
+  }
+
   .page-numbers {
     width: 30rem;
     margin: 0 2rem;

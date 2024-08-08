@@ -1,6 +1,6 @@
 @media only screen and (max-device-width: 600px) {
   .page-slider-form {
-    margin: 5rem;
+    margin: 5rem 3rem 5rem 2rem;
   }
 
   .page-slider-form > output {

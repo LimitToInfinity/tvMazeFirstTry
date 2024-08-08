@@ -7,8 +7,32 @@
 }
 
 .pages-container > h2 {
-  margin-right: 1.3rem;
   font-size: 2rem;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.arrow:hover {
+  border-color: maroon;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  margin-left: 1rem;
+  margin-right: 1.3rem;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  margin-right: 1rem;
 }
 
 .page-numbers {

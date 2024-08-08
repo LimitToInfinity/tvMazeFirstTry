@@ -19,6 +19,9 @@ export class Pages {
     this.pageText = this.container
       .querySelector(".pages-container > h2");
 
+    this.arrowLeft = this.container.querySelector(".arrow.left");
+    this.arrowRight = this.container.querySelector(".arrow.right");
+
     this.pageNumbers = this.container.querySelector(".page-numbers");
 
     this.pageSliderForm = this.container
@@ -33,12 +36,26 @@ export class Pages {
     this.pagesToggle = this.container.querySelector(".pages-toggle");
     this.pagesToggleImage = this.pagesToggle.querySelector("i");
 
+    this.handlePageArrows = this.handlePageArrows.bind(this);
     this.handleRangeInput = this.handleRangeInput.bind(this);
     this.togglePagesView = this.togglePagesView.bind(this);
 
+    this.arrowLeft.addEventListener("click", this.handlePageArrows);
+    this.arrowRight.addEventListener("click", this.handlePageArrows);
     this.pageSlider.addEventListener("input", this.handleRangeInput);
     this.pageSlider.addEventListener("change", displayShows);
     this.pagesToggle.addEventListener("click", this.togglePagesView);
+  }
+
+  handlePageArrows(event) {
+    const isArrowLeft = event.target.classList.contains('left');
+    const isArrowRight = event.target.classList.contains('right');
+
+    if (isArrowLeft) {
+      this.setPage(APP_STATE.pageNumber - 1);
+    } else if (isArrowRight) {
+      this.setPage(APP_STATE.pageNumber + 1);
+    }
   }
 
   handleRangeInput(event) {
@@ -152,20 +169,21 @@ export class Pages {
     }
     pageNumberLi.addEventListener(
       "click", 
-      (event) => this.setPage(event)
+      (event) => this.setPage(parseInt(event.target.textContent, 10))
     );
 
     this.pageNumbers.append(pageNumberLi);
   }
 
-  setPage(event) {
-    APP_STATE.pageNumber = parseInt(event.target.textContent, 10);
+  setPage(newPageNumber) {
+    APP_STATE.pageNumber = newPageNumber;
     this.handleRangeInput();
     displayShows();
   }
 
   hideAllPagesContainerChildren() {
-    const pagesContainerChildren = Array.from( this.container.children );
+    const pagesContainerChildren = Array.from(this.container.children)
+      .filter(child => !child.classList.contains('arrow'));
 
     pagesContainerChildren.forEach(
       element => element.classList.add("hidden")
